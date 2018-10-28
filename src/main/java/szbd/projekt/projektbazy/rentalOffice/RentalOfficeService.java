@@ -23,7 +23,7 @@ public class RentalOfficeService {
 	}
 	
 	
-	public Optional<RentalOffice> getRentalOffice(String idRentalOffice) {
+	public Optional<RentalOffice> getRentalOffice(Integer idRentalOffice) {
 		return rentalOfficeRepository.findById(idRentalOffice);
 	}
 	
@@ -31,11 +31,11 @@ public class RentalOfficeService {
 		rentalOfficeRepository.save(rentalOffice);
 	}
 
-	public void updateRentalOffice(String idRentalOffice, RentalOffice rentalOffice) {
+	public void updateRentalOffice(Integer idRentalOffice, RentalOffice rentalOffice) {
 		rentalOfficeRepository.save(rentalOffice);
 	}
 	
-	public void deleteRentalOffice(String idRentalOffice) {
+	public void deleteRentalOffice(Integer idRentalOffice) {
 		rentalOfficeRepository.deleteById(idRentalOffice);
 	}
 	

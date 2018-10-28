@@ -4,5 +4,6 @@ import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-public interface RentalOfficeRepository extends CrudRepository<RentalOffice, String>{
+public interface RentalOfficeRepository extends CrudRepository<RentalOffice, Integer>{
+
 }

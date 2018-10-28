@@ -26,8 +26,8 @@ public class RentalOfficeController {
 		return rentalOfficeService.getAllRentalOffices();
 	}
 	
-	@RequestMapping("/rental officies/{idRentalOffice}")
-	public Optional<RentalOffice> getRentalOfficies(@PathVariable String idRentalOffice)
+	@RequestMapping("/rentalOffice/{idRentalOffice}")
+	public Optional<RentalOffice> getRentalOfficies(@PathVariable Integer idRentalOffice)
 	{
 		return rentalOfficeService.getRentalOffice(idRentalOffice);
 	}
@@ -39,14 +39,16 @@ public class RentalOfficeController {
 	}
 	
 	
-	@RequestMapping(method=RequestMethod.DELETE,value="/rentalOffices/{idRentalOffice}")
-	public void deleteRentalOffice(@PathVariable String idRentalOffice)
+	@RequestMapping(method=RequestMethod.DELETE,value="/rentalOffice/{idRentalOffice}")
+	public void deleteRentalOffice(@PathVariable Integer idRentalOffice)
 	{
-		 rentalOfficeService.deleteRentalOffice(idRentalOffice);
+		
+		rentalOfficeService.deleteRentalOffice(idRentalOffice);
+		System.out.println("XDDD");
 	}
 	
-	@RequestMapping(method=RequestMethod.PUT,value="/rentalOfficies/{idRentalOffice}")
-	public void updateBeer(@RequestBody RentalOffice rentalOffice,@PathVariable String idRentalOffice)
+	@RequestMapping(method=RequestMethod.PUT,value="/rentalOffice/{idRentalOffice}")
+	public void updateBeer(@RequestBody RentalOffice rentalOffice,@PathVariable Integer idRentalOffice)
 	{
 		 rentalOfficeService.updateRentalOffice(idRentalOffice, rentalOffice);
 	}
