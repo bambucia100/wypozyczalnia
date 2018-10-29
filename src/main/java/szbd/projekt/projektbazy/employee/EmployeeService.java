@@ -14,14 +14,16 @@ public class EmployeeService {
 	@Autowired
 	private EmployeeRepository employeeRepository;
 
-	public List<Employee> getAllEmployees(Integer idRentalOffice) {
+	public List<Employee> getAllEmployees() {
 		List<Employee> employees = new ArrayList<>();
-		employeeRepository.findByIdEmployee(idRentalOffice)
+		employeeRepository.findAll()
 		.forEach(employees::add);
 		return employees;
 	}
 	
-	
+	public List<Employee> getAllEmployees(Iterable<Integer> idEmployee) {
+		return (List<Employee>) employeeRepository.findAllById(idEmployee);
+	}
 	public Optional<Employee> getEmployee(Integer idEmployee) {
 		return employeeRepository.findById(idEmployee);
 	}

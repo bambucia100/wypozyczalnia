@@ -8,6 +8,4 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface EmployeeRepository extends CrudRepository<Employee, Integer>{
 	
-	public List<Employee> findByIdEmployee(Integer idEmployee);
-	
 }

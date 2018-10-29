@@ -20,17 +20,17 @@ public class Employee {
 	)
 	@Column(name = "id_employee", unique = true)
 	private int idEmployee;
-	@Column(name = "first_name")
+	@Column(name = "first_name", nullable = false)
 	private String firstName;
-	@Column(name = "last_name")
+	@Column(name = "last_name", nullable = false)
 	private String lastName;
 	private String position;
 	private String email;
 	private String phone;
-	@Column(name = "id_rental_office", unique = true)
-	private String idRentalOffice;
+
 	
 	@ManyToOne
+	@JoinColumn(name = "id_rental_office", nullable = false)
 	private RentalOffice rentalOffice;
 	
 	public Employee() {
@@ -83,13 +83,13 @@ public class Employee {
 	}
 	public void setPhone(String phone) {
 		this.phone = phone;
-	}
+	}/*
 	public String getIdRentalOffice() {
 		return idRentalOffice;
 	}
 	public void setIdRentalOffice(String idRentalOffice) {
 		this.idRentalOffice = idRentalOffice;
-	}
+	}*/
 	public RentalOffice getRentalOffice() {
 		return rentalOffice;
 	}

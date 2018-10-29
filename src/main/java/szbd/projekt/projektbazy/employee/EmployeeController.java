@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import szbd.projekt.projektbazy.rentalOffice.RentalOffice;
 
 
-
+	
 @RestController
 public class EmployeeController {
 
@@ -23,7 +23,7 @@ public class EmployeeController {
 	@RequestMapping(method=RequestMethod.GET,value="/rentalOffice/{idRentalOffice}/employees")
 	public List<Employee> getAllEmployees(@PathVariable Integer idRentalOffice)
 	{
-	  return employeeService.getAllEmployees(idRentalOffice);
+	  return employeeService.getAllEmployees();
 	}
 	
 	@RequestMapping(method=RequestMethod.GET,value="/rentalOffice/{idRentalOffice}/employees/{idEmployee}")
