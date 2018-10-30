@@ -1,5 +1,7 @@
 package szbd.projekt.projektbazy.moviesWarehouse;
 
-public class MoviesWarehouseRepository {
+import org.springframework.data.repository.CrudRepository;
+
+public interface MoviesWarehouseRepository extends CrudRepository<MoviesWarehouse, Integer>{
 
 }

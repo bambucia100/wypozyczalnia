@@ -4,12 +4,10 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -19,9 +17,8 @@ public class RentalOfficeController {
 
 	@Autowired
 	private RentalOfficeService rentalOfficeService;
-	@Autowired RentalOfficeRepository rentalOfficeRepository;
 	
-	@RequestMapping(method=RequestMethod.GET,value="/rental officies")
+	@RequestMapping(method=RequestMethod.GET,value="/rentalOffice/all")
 	public List<RentalOffice> getAllRentalOfficies() {
 		return rentalOfficeService.getAllRentalOffices();
 	}
@@ -44,7 +41,6 @@ public class RentalOfficeController {
 	{
 		
 		rentalOfficeService.deleteRentalOffice(idRentalOffice);
-		System.out.println("XDDD");
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT,value="/rentalOffice/{idRentalOffice}")

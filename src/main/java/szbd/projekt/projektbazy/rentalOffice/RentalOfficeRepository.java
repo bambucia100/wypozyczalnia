@@ -1,6 +1,6 @@
 package szbd.projekt.projektbazy.rentalOffice;
 
-import java.util.List;
+
 
 import org.springframework.data.repository.CrudRepository;
 

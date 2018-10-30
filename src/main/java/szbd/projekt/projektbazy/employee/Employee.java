@@ -83,13 +83,7 @@ public class Employee {
 	}
 	public void setPhone(String phone) {
 		this.phone = phone;
-	}/*
-	public String getIdRentalOffice() {
-		return idRentalOffice;
 	}
-	public void setIdRentalOffice(String idRentalOffice) {
-		this.idRentalOffice = idRentalOffice;
-	}*/
 	public RentalOffice getRentalOffice() {
 		return rentalOffice;
 	}
