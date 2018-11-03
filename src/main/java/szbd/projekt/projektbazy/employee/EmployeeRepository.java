@@ -1,8 +1,6 @@
 package szbd.projekt.projektbazy.employee;
 
-import java.util.List;
 
-import javax.persistence.*;
 
 import org.springframework.data.repository.CrudRepository;
 

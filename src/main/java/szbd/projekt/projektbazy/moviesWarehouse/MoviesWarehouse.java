@@ -4,16 +4,30 @@ import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+
+import org.hibernate.annotations.GenericGenerator;
 
 import szbd.projekt.projektbazy.rentalOffice.RentalOffice;
 
 @Entity
 public class MoviesWarehouse {
 	
-	
+	@Id
+	@GeneratedValue(
+		    strategy= GenerationType.AUTO, 
+		    generator="native"
+		)
+		@GenericGenerator(
+		    name = "native", 
+		    strategy = "native"
+		)
+	@Column(name = "id_warehouse", nullable = true)
+	private int idMovieWarehouse;
 	@Column(name = "quantity", nullable = false)
 	private int quantity;
 	@Column(name = "charge", nullable = false, scale = 2)
@@ -22,7 +36,6 @@ public class MoviesWarehouse {
 	@OneToOne( optional = false)
 	@JoinColumn(name = "id_rental_office", nullable = false)
 	private RentalOffice idRentalOffice;
-	@Id
 	@Column(name = "id_movie", nullable = true)
 	private int idMovie;
 	
@@ -30,11 +43,28 @@ public class MoviesWarehouse {
 		
 	}
 	
-	public MoviesWarehouse(int quantity, double charge, int idRentalOffice, int idMovie) {
+	public MoviesWarehouse(int idMovieWarehouse, int quantity, double charge, int idRentalOffice, int idMovie) {
+		this.idMovieWarehouse = idMovieWarehouse;
 		this.quantity = quantity;
 		this.charge = charge;
 		this.idRentalOffice = new RentalOffice(idRentalOffice, "");
 		this.idMovie = idMovie;
+	}
+	
+	public int getIdMovieWarehouse() {
+		return idMovieWarehouse;
+	}
+
+	public void setIdMovieWarehouse(int idMovieWarehouse) {
+		this.idMovieWarehouse = idMovieWarehouse;
+	}
+
+	public RentalOffice getIdRentalOffice() {
+		return idRentalOffice;
+	}
+
+	public void setIdRentalOffice(RentalOffice idRentalOffice) {
+		this.idRentalOffice = idRentalOffice;
 	}
 
 	public int getQuantity() {

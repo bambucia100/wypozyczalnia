@@ -17,19 +17,19 @@ public class MoviesWarehouseService {
 	public List<MoviesWarehouse> getAllMoviesWarehouse(Iterable<Integer> idRentalOffice) {
 		return (List<MoviesWarehouse>) moviesWarehouseRepository.findAllById(idRentalOffice);
 	}
-	public Optional<MoviesWarehouse> getMoviesWarehouse(Integer idRentalOffice) {
-		return moviesWarehouseRepository.findById(idRentalOffice);
+	public Optional<MoviesWarehouse> getMoviesWarehouse(Integer idMovieWarehouse) {
+		return moviesWarehouseRepository.findById(idMovieWarehouse);
 	}
 	
 	public void addMoviesWarehouse(MoviesWarehouse moviesWarehouse) {
 		moviesWarehouseRepository.save(moviesWarehouse);
 	}
 
-	public void updateMoviesWarehouse(Integer idRentalOffice, MoviesWarehouse moviesWarehouse) {
+	public void updateMoviesWarehouse(Integer idMoviesWarehouse, MoviesWarehouse moviesWarehouse) {
 		moviesWarehouseRepository.save(moviesWarehouse);
 	}
 	
-	public void deleteMoviesWarehouse(Integer idRentalOffice) {
-		moviesWarehouseRepository.deleteById(idRentalOffice);
+	public void deleteMoviesWarehouse(Integer idMoviesWarehouse) {
+		moviesWarehouseRepository.deleteById(idMoviesWarehouse);
 	}
 }

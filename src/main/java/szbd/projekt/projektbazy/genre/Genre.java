@@ -23,10 +23,10 @@ public class Genre {
 	@Column(name = "genre_description", unique = true)
 	private String genreDescription;
 	
-	private Genre() {
+	public Genre() {
 		
 	}
-	private Genre(int idGenre, String genreName, String genreDescription) {
+	public Genre(int idGenre, String genreName, String genreDescription) {
 		super();
 		this.idGenre = idGenre;
 		this.genreName = genreName;

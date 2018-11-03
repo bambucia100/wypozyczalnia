@@ -44,7 +44,7 @@ public class RentalOfficeController {
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT,value="/rentalOffice/{idRentalOffice}")
-	public void updateBeer(@RequestBody RentalOffice rentalOffice,@PathVariable Integer idRentalOffice)
+	public void updateRentalOffice(@RequestBody RentalOffice rentalOffice,@PathVariable Integer idRentalOffice)
 	{
 		 rentalOfficeService.updateRentalOffice(idRentalOffice, rentalOffice);
 	}
