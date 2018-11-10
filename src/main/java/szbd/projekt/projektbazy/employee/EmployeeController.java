@@ -37,14 +37,14 @@ public class EmployeeController {
 		employeeService.addEmployee(employee);
 	}
 	@RequestMapping(method=RequestMethod.PUT,value="/rentalOffice/{idRentalOffice}/employees/{idEmployee}")
-	public void updateBeer(@RequestBody Employee employee,@PathVariable Integer idEmployee,
+	public void updateEmployee(@RequestBody Employee employee,@PathVariable Integer idEmployee,
 			@PathVariable Integer idRentalOffice)
 	{
 		employee.setRentalOffice(new RentalOffice(idRentalOffice,""));
 		employeeService.updateEmployee(idEmployee, employee);
 	}
 	@RequestMapping(method=RequestMethod.DELETE,value="/rentalOffice/{idRentalOffice}/employees/{idEmployee}")
-	public void deleteBeer(@PathVariable Integer idEmployee)
+	public void deleteEmployee(@PathVariable Integer idEmployee)
 	{
 		 employeeService.deleteEmployee(idEmployee);
 	}

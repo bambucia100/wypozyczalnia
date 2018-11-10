@@ -21,8 +21,7 @@ public class RentalOfficeService {
 		.forEach(rentalOffices::add);
 		return rentalOffices;
 	}
-	
-	
+
 	public Optional<RentalOffice> getRentalOffice(Integer idRentalOffice) {
 		return rentalOfficeRepository.findById(idRentalOffice);
 	}

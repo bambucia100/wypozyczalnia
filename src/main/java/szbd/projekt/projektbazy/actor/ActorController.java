@@ -18,7 +18,7 @@ public class ActorController {
 	private ActorService actorService;
 
 	@RequestMapping(method=RequestMethod.GET,value="/actor/all")
-	public List<Actor> getAllActors() {
+	public List<Actor> getAllActors() {	
 		return actorService.getAllActors();
 	}
 	

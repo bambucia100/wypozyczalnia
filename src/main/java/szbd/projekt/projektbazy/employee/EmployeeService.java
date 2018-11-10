@@ -21,9 +21,6 @@ public class EmployeeService {
 		return employees;
 	}
 	
-	public List<Employee> getAllEmployees(Iterable<Integer> idEmployee) {
-		return (List<Employee>) employeeRepository.findAllById(idEmployee);
-	}
 	public Optional<Employee> getEmployee(Integer idEmployee) {
 		return employeeRepository.findById(idEmployee);
 	}

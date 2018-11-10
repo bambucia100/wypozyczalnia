@@ -21,8 +21,8 @@ public class Movie {
 	private int idMovie;
 	@Column(name = "title")
 	private String title;
-	@Column(name = "lenght")
-	private int lenght;
+	@Column(name = "length")
+	private int length;
 	@Column(name = "director")
 	private String director;
 	@Column(name = "rating", nullable = true)
@@ -30,16 +30,18 @@ public class Movie {
 	@Column(name = "description", nullable = true)
 	private String description;
 	@ManyToOne
-	@JoinColumn(name = "id_genres", nullable = false)
+	@JoinColumn(name = "id_genre", nullable = false)
 	private Genre genre;
 	
 	public Movie() {
 		
 	}
+	
 	public Movie(int idMovie, String title, int length, String director, double rating, String description, int idGenre) {
+		super();
 		this.idMovie = idMovie;
 		this.title = title;
-		this.lenght = length;
+		this.length = length;
 		this.director = director;
 		this.rating = rating;
 		this.description = description;
@@ -58,12 +60,6 @@ public class Movie {
 	}
 	public void setTitle(String title) {
 		this.title = title;
-	}
-	public int getLenght() {
-		return lenght;
-	}
-	public void setLenght(int lenght) {
-		this.lenght = lenght;
 	}
 	public String getDirector() {
 		return director;
@@ -89,6 +85,13 @@ public class Movie {
 	public void setGenre(Genre genre) {
 		this.genre = genre;
 	}
+	public int getLength() {
+		return length;
+	}
+	public void setLength(int length) {
+		this.length = length;
+	}
+	
 	
 	
 }

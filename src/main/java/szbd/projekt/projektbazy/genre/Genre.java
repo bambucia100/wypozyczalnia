@@ -16,7 +16,7 @@ public class Genre {
 	    name = "native", 
 	    strategy = "native"
 	)
-	@Column(name = "id_genres", unique = true)
+	@Column(name = "id_genre", unique = true)
 	private int idGenre;
 	@Column(name = "genre_name", unique = true)
 	private String genreName;

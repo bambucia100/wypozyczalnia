@@ -33,6 +33,7 @@ public class Actor {
 		
 	}
 	public Actor(int idActor, String actorFirstName, String actorLastName, Date dateOfBirth, double rating) {
+		super();
 		this.idActor = idActor;
 		this.actorFirstName = actorFirstName;
 		this.actorLastName = actorLastName;
