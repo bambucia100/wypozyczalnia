@@ -31,7 +31,7 @@ public class EmployeeController {
 		return employeeService.getEmployee(idEmployee);
 	}
 	
-	@RequestMapping(method=RequestMethod.POST,value="/rentalOffice/{idRentalOffice}/employees/")
+	@RequestMapping(method=RequestMethod.POST,value="/rentalOffice/{idRentalOffice}/employees")
 	public void addEmployee(@RequestBody Employee employee, @PathVariable Integer idRentalOffice) {
 		employee.setRentalOffice(new RentalOffice(idRentalOffice, ""));
 		employeeService.addEmployee(employee);
