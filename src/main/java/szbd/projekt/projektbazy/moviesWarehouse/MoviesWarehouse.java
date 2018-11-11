@@ -6,10 +6,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import szbd.projekt.projektbazy.movie.Movie;
 import szbd.projekt.projektbazy.rentalOffice.RentalOffice;
 
 @Entity
@@ -31,11 +33,13 @@ public class MoviesWarehouse {
 	@Column(name = "charge", nullable = false, scale = 2)
 	private double charge;
 	
-	@OneToOne( optional = false)
+	@OneToOne()
 	@JoinColumn(name = "id_rental_office", nullable = false)
-	private RentalOffice idRentalOffice;
-	@Column(name = "id_movie", nullable = true)
-	private int idMovie;
+	private RentalOffice rentalOffice;
+	
+	@ManyToOne(optional = true)
+	@JoinColumn(name = "id_movie", nullable = true)
+	private Movie movie;
 	
 	public MoviesWarehouse() {
 		
@@ -45,8 +49,8 @@ public class MoviesWarehouse {
 		this.idMovieWarehouse = idMovieWarehouse;
 		this.quantity = quantity;
 		this.charge = charge;
-		this.idRentalOffice = new RentalOffice(idRentalOffice, "");
-		this.idMovie = idMovie;
+		this.rentalOffice = new RentalOffice(idRentalOffice, "");
+		this.movie = new Movie(idMovie, "", 0, "", 0, "", 0);
 	}
 	
 	public int getIdMovieWarehouse() {
@@ -58,11 +62,11 @@ public class MoviesWarehouse {
 	}
 
 	public RentalOffice getIdRentalOffice() {
-		return idRentalOffice;
+		return rentalOffice;
 	}
 
 	public void setIdRentalOffice(RentalOffice idRentalOffice) {
-		this.idRentalOffice = idRentalOffice;
+		this.rentalOffice = idRentalOffice;
 	}
 
 	public int getQuantity() {
@@ -82,20 +86,22 @@ public class MoviesWarehouse {
 	}
 
 	public RentalOffice getRentalOffice() {
-		return idRentalOffice;
+		return rentalOffice;
 	}
 
 	public void setRentalOffice(RentalOffice rentalOffice) {
-		this.idRentalOffice = rentalOffice;
+		this.rentalOffice = rentalOffice;
 	}
 
-	public int getIdMovie() {
-		return idMovie;
+	public Movie getMovie() {
+		return movie;
 	}
 
-	public void setIdMovie(int idMovie) {
-		this.idMovie = idMovie;
+	public void setMovie(Movie movie) {
+		this.movie = movie;
 	}
+
+	
 	
 	
 	

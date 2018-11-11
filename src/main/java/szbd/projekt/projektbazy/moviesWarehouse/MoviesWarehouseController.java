@@ -1,5 +1,6 @@
 package szbd.projekt.projektbazy.moviesWarehouse;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import szbd.projekt.projektbazy.movie.Movie;
 import szbd.projekt.projektbazy.rentalOffice.RentalOffice;
 
 @RestController
@@ -17,26 +19,38 @@ public class MoviesWarehouseController {
 	@Autowired
 	private MoviesWarehouseService  moviesWarehouseService;
 	
-	@RequestMapping(method=RequestMethod.GET,value="/rentalOffice/{idRentalOffice}/warehouse")
-	public Optional<MoviesWarehouse> getMoviesWarehouse(@PathVariable Integer idRentalOffice) {
-		return moviesWarehouseService.getMoviesWarehouse(idRentalOffice);
+	@RequestMapping(method=RequestMethod.GET, value="/rentalOffice/{idRentalOffice}/warehouse/all")
+	public List<MoviesWarehouse> getAllMoviesWarehouse(@PathVariable Integer idRentalOffice) {
+		
+		return moviesWarehouseService.getAllMoviesWarehouse();
 	}
 	
-	@RequestMapping(method=RequestMethod.POST,value="/rentalOffice/{idRentalOffice}/warehouse")
-	public void addMoviesWarehouse(@RequestBody MoviesWarehouse moviesWarehouse, @PathVariable Integer idRentalOffice) {
+	@RequestMapping(method=RequestMethod.GET,value="/rentalOffice/{idRentalOffice}/warehouse/{idMoviesWarehouse}")
+	public Optional<MoviesWarehouse> getMoviesWarehouse(@PathVariable Integer idMoviesWarehouse) {
+		
+		return moviesWarehouseService.getMoviesWarehouse(idMoviesWarehouse);
+	}
+	
+	@RequestMapping(method=RequestMethod.POST,value="/rentalOffice/{idRentalOffice}/warehouse/{idMovie}")
+	public void addMoviesWarehouse(@RequestBody MoviesWarehouse moviesWarehouse, @PathVariable Integer idRentalOffice,
+			@PathVariable Integer idMovie) {
+		
+		moviesWarehouse.setMovie(new Movie(idMovie,  "", 0, "", 0, "", 0));
 		moviesWarehouse.setRentalOffice(new RentalOffice(idRentalOffice, ""));
 		moviesWarehouseService.addMoviesWarehouse(moviesWarehouse);;
 	}
-	@RequestMapping(method=RequestMethod.PUT,value="/rentalOffice/{idRentalOffice}/warehouse")
-	public void updateBeer(@RequestBody MoviesWarehouse moviesWarehouse,@PathVariable Integer idRentalOffice)
-	{
+	@RequestMapping(method=RequestMethod.PUT,value="/rentalOffice/{idRentalOffice}/warehouse/{idMovie}/{idMoviesWarehouse}")
+	public void updateBeer(@RequestBody MoviesWarehouse moviesWarehouse,@PathVariable Integer idRentalOffice,
+			@PathVariable Integer idMovie, @PathVariable Integer idMoviesWarehouse) {
+		
+		moviesWarehouse.setMovie(new Movie(idMovie,  "", 0, "", 0, "", 0));
 		moviesWarehouse.setRentalOffice(new RentalOffice(idRentalOffice,""));
-		moviesWarehouseService.updateMoviesWarehouse(idRentalOffice, moviesWarehouse);
+		moviesWarehouseService.updateMoviesWarehouse(idMoviesWarehouse, moviesWarehouse);
 	}
-	@RequestMapping(method=RequestMethod.DELETE,value="/rentalOffice/{idRentalOffice}/warehouse")
-	public void deleteBeer(@PathVariable Integer idRentalOffice)
-	{
-		 moviesWarehouseService.deleteMoviesWarehouse(idRentalOffice);
+	@RequestMapping(method=RequestMethod.DELETE,value="/rentalOffice/{idRentalOffice}/warehouse/{idMoviesWarehouse}")
+	public void deleteBeer(@PathVariable Integer idMoviesWarehouse) {
+		
+		 moviesWarehouseService.deleteMoviesWarehouse(idMoviesWarehouse);
 	}
 	
 }
