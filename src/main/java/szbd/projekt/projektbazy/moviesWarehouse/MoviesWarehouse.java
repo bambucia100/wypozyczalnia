@@ -26,7 +26,7 @@ public class MoviesWarehouse {
 		    name = "native", 
 		    strategy = "native"
 		)
-	@Column(name = "id_warehouse", nullable = true)
+	@Column(name = "id_warehouse", nullable = false)
 	private int idMovieWarehouse;
 	@Column(name = "quantity", nullable = false)
 	private int quantity;

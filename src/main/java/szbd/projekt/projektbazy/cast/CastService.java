@@ -33,7 +33,6 @@ public class CastService {
 	}
 
 	public void updateCast(Integer idCast, Cast cast) {
-		
 		castRepository.save(cast);
 	}
 	
