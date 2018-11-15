@@ -1,29 +1,19 @@
 package szbd.projekt.projektbazy.cast;
 
+import java.io.Serializable;
 
-import javax.persistence.*;
-
+import javax.persistence.Embeddable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import szbd.projekt.projektbazy.actor.Actor;
 import szbd.projekt.projektbazy.movie.Movie;
 
+@Embeddable
+public class CastId  implements Serializable {
+	
 
-@Entity
-public class Cast{
-
+	private static final long   serialVersionUID    = 1L;
 	
-	@PrePersist
-	   private void prePersiste() {
-	       if (getId() == null) {
-	           CastId pk = new CastId();
-	           pk.setMovie(getMovie());
-	           pk.setActor(getActor());
-	           setId(pk);
-	       }
-	   }
-	
-	
-	@EmbeddedId
-	private CastId id;
 	
 	@ManyToOne
 	@JoinColumn(name = "id_movie", nullable = false, insertable = false, updatable = false)
@@ -33,33 +23,35 @@ public class Cast{
 	@ManyToOne
 	@JoinColumn(name = "id_actor", nullable = false, insertable = false, updatable = false)
 	private Actor actor;
-	
-	public Cast() {
+
+	public CastId() {
 		
 	}
-	public Cast(Integer idMovie, Integer idActor) {
+	public CastId(Integer idMovie, Integer idActor) {
 		super();
 		this.movie = new Movie(idMovie, "", 0, "", 0, "", 0);
 		this.actor = new Actor(idActor, "", "", null, 0);
 	}
+	
 	public Movie getMovie() {
 		return movie;
 	}
+
+
 	public void setMovie(Movie movie) {
 		this.movie = movie;
 	}
+
+
 	public Actor getActor() {
 		return actor;
 	}
+
+
 	public void setActor(Actor actor) {
 		this.actor = actor;
 	}
-	public CastId getId() {
-		return id;
-	}
-	public void setId(CastId id) {
-		this.id = id;
-	}
 	
 	
+
 }

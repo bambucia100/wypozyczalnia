@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
-public interface CastRepository extends CrudRepository<Cast, Integer> {
+public interface CastRepository extends CrudRepository<Cast, CastId> {
 
 	@Query(value = "Select c.id_movie, a.actor_first_name, a.actor_last_name from Cast c, Actor a "
 			+ "where "

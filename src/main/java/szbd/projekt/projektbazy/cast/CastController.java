@@ -22,45 +22,48 @@ public class CastController {
 	CastRepository castRepository;
 	
 	@RequestMapping(method=RequestMethod.GET,value="/movie/cast")
-	public List<Cast> getAllCast()
-	{
+	public List<Cast> getAllCast() {
+		
 	  return castService.getAllCast();
 	}
 	
 	@RequestMapping(method=RequestMethod.POST,value="/movie/cast/{idMovie}/{idActor}")
-	public void addEmployee(@RequestBody Cast cast, @PathVariable Integer idMovie, 
+	public void addCast(@RequestBody Cast cast, @PathVariable Integer idMovie, 
 			@PathVariable Integer idActor) {
+		
 		cast.setMovie(new Movie(idMovie, "", 0, "", 0, "", 0));
 		cast.setActor(new Actor(idActor, "", "", null, 0));
 		castService.addCast(cast);
 	}
-	@RequestMapping(method=RequestMethod.PUT,value="/movie/cast/{idCast}/{idMovie}/{idActor}")
-	public void updateEmployee(@RequestBody Cast cast,@PathVariable Integer idMovie,
-			@PathVariable Integer idActor, @PathVariable Integer idCast)
-	{
+	
+	@RequestMapping(method=RequestMethod.PUT,value="/movie/cast/{idMovie}/{idActor}")
+	public void updateCast(@RequestBody Cast cast,@PathVariable Integer idMovie,
+			@PathVariable Integer idActor) {
+		
+		CastId idCast = new CastId(idMovie, idActor);
 		cast.setMovie(new Movie(idMovie, "", 0, "", 0, "", 0));
 		cast.setActor(new Actor(idActor, "", "", null, 0));
 		castService.updateCast(idCast, cast);
 	}
-	@RequestMapping(method=RequestMethod.DELETE,value="/movie/cast/{idMovie}/{idCast}")
-	public void deleteEmployee(@PathVariable Integer idCast)
-	{
-		 castService.deleteCast(idCast);
+	
+	@RequestMapping(method=RequestMethod.DELETE,value="/movie/cast/{idMovie}/{idActor}")
+	public void deleteCast(@PathVariable Integer idMovie, @PathVariable Integer idActor) {
+		
+		CastId idCast = new CastId(idMovie, idActor);
+		castService.deleteCast(idCast);
 	}
 	
 	@RequestMapping(method=RequestMethod.GET, value="/movie/cast/full")
 	public List<String> getAllActors() {
+		
 		List<Object[]> lst = castRepository.getAllActorsByMovie();
 		List<String> actorsList = new ArrayList<String>();
 		for (Object o[] : lst) {
 			Integer im = (Integer) o[0];
 			String fn = (String) o[1];
 			String ln = (String) o[2];
-			
-			actorsList.add(im.toString());
-			actorsList.add(fn);
-			actorsList.add(ln);
-			System.out.printf("\nIMovie: %s \n Actor First name: %s \n Actor last name: %s \n", im, fn, ln);
+			actorsList.add(im.toString() + " " + fn + " " + ln);
+			System.out.println(actorsList);
 		}
 		return actorsList;
 	}

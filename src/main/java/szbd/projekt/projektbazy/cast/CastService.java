@@ -24,7 +24,7 @@ public class CastService {
 	}
 	
 	
-	public Optional<Cast> getCast(Integer idCast) {
+	public Optional<Cast> getCast(CastId idCast) {
 		return castRepository.findById(idCast);
 	}
 	
@@ -32,11 +32,12 @@ public class CastService {
 		castRepository.save(cast);
 	}
 
-	public void updateCast(Integer idCast, Cast cast) {
+	public void updateCast(CastId idCast, Cast cast) {
 		castRepository.save(cast);
 	}
 	
-	public void deleteCast(Integer idCast) {
+	public void deleteCast(CastId idCast) {
 		castRepository.deleteById(idCast);
 	}
+
 }
