@@ -22,7 +22,7 @@ public class MoviesWarehouseService {
 	}
 	
 	
-	public Optional<MoviesWarehouse> getMoviesWarehouse(Integer idMovieWarehouse) {
+	public Optional<MoviesWarehouse> getMoviesWarehouse(MoviesWarehouseId idMovieWarehouse) {
 		return moviesWarehouseRepository.findById(idMovieWarehouse);
 	}
 	
@@ -30,11 +30,11 @@ public class MoviesWarehouseService {
 		moviesWarehouseRepository.save(moviesWarehouse);
 	}
 
-	public void updateMoviesWarehouse(Integer idMoviesWarehouse, MoviesWarehouse moviesWarehouse) {
+	public void updateMoviesWarehouse(MoviesWarehouseId idMoviesWarehouse, MoviesWarehouse moviesWarehouse) {
 		moviesWarehouseRepository.save(moviesWarehouse);
 	}
 	
-	public void deleteMoviesWarehouse(Integer idMoviesWarehouse) {
+	public void deleteMoviesWarehouse(MoviesWarehouseId idMoviesWarehouse) {
 		moviesWarehouseRepository.deleteById(idMoviesWarehouse);
 	}
 }

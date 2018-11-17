@@ -25,9 +25,11 @@ public class MoviesWarehouseController {
 		return moviesWarehouseService.getAllMoviesWarehouse();
 	}
 	
-	@RequestMapping(method=RequestMethod.GET,value="/rentalOffice/{idRentalOffice}/warehouse/{idMoviesWarehouse}")
-	public Optional<MoviesWarehouse> getMoviesWarehouse(@PathVariable Integer idMoviesWarehouse) {
+	@RequestMapping(method=RequestMethod.GET,value="/rentalOffice/{idRentalOffice}/warehouse/{idMovie}")
+	public Optional<MoviesWarehouse> getMoviesWarehouse(@PathVariable Integer idRentalOffice,
+			@PathVariable Integer idMovie) {
 		
+		MoviesWarehouseId idMoviesWarehouse = new MoviesWarehouseId(idRentalOffice, idMovie);
 		return moviesWarehouseService.getMoviesWarehouse(idMoviesWarehouse);
 	}
 	
@@ -39,18 +41,22 @@ public class MoviesWarehouseController {
 		moviesWarehouse.setRentalOffice(new RentalOffice(idRentalOffice, ""));
 		moviesWarehouseService.addMoviesWarehouse(moviesWarehouse);;
 	}
-	@RequestMapping(method=RequestMethod.PUT,value="/rentalOffice/{idRentalOffice}/warehouse/{idMovie}/{idMoviesWarehouse}")
+	@RequestMapping(method=RequestMethod.PUT,value="/rentalOffice/{idRentalOffice}/warehouse/{idMovie}")
 	public void updateBeer(@RequestBody MoviesWarehouse moviesWarehouse,@PathVariable Integer idRentalOffice,
-			@PathVariable Integer idMovie, @PathVariable Integer idMoviesWarehouse) {
+			@PathVariable Integer idMovie) {
 		
+
+		MoviesWarehouseId idMoviesWarehouse = new MoviesWarehouseId(idRentalOffice, idMovie);
 		moviesWarehouse.setMovie(new Movie(idMovie,  "", 0, "", 0, "", 0));
 		moviesWarehouse.setRentalOffice(new RentalOffice(idRentalOffice,""));
 		moviesWarehouseService.updateMoviesWarehouse(idMoviesWarehouse, moviesWarehouse);
 	}
-	@RequestMapping(method=RequestMethod.DELETE,value="/rentalOffice/{idRentalOffice}/warehouse/{idMoviesWarehouse}")
-	public void deleteBeer(@PathVariable Integer idMoviesWarehouse) {
+	@RequestMapping(method=RequestMethod.DELETE,value="/rentalOffice/{idRentalOffice}/warehouse/{idMovie}")
+	public void deleteBeer(@PathVariable Integer idRentalOffice, @PathVariable Integer idMovie) {
 		
-		 moviesWarehouseService.deleteMoviesWarehouse(idMoviesWarehouse);
+
+		MoviesWarehouseId idMoviesWarehouse = new MoviesWarehouseId(idRentalOffice, idMovie);
+		moviesWarehouseService.deleteMoviesWarehouse(idMoviesWarehouse);
 	}
 	
 }
