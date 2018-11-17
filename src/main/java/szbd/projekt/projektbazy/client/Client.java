@@ -9,9 +9,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import szbd.projekt.projektbazy.adress.Adress;
 import szbd.projekt.projektbazy.rentalOffice.RentalOffice;
 
 @Entity
@@ -40,13 +42,16 @@ public class Client {
 	@ManyToOne
 	@JoinColumn(name = "id_rental_office", nullable = false)
 	private RentalOffice rentalOffice;
+	@OneToOne
+	@JoinColumn(name = "id_adress", nullable = false)
+	private Adress adress;
 	
 	public Client() {
 		
 	}
 	
 	public Client(int idClient, String clientFirstName, String clientLastName, Date registrationDate, 
-			String email, int number, int idRentalOffice) {
+			String email, int number, int idRentalOffice, int idAdress) {
 		super();
 		this.idClient = idClient;
 		this.clientFirstName = clientFirstName;
@@ -54,7 +59,8 @@ public class Client {
 		this.registrationDate = registrationDate;
 		this.email = email;
 		this.number = number;
-		this.rentalOffice = new RentalOffice(idRentalOffice,"");
+		this.rentalOffice = new RentalOffice(idRentalOffice, "", 0);
+		this.adress = new Adress(idAdress, "", "", "", "", "");
 	}
 
 	public int getIdClient() {
@@ -111,6 +117,14 @@ public class Client {
 
 	public void setRentalOffice(RentalOffice rentalOffice) {
 		this.rentalOffice = rentalOffice;
+	}
+
+	public Adress getAdress() {
+		return adress;
+	}
+
+	public void setAdress(Adress adress) {
+		this.adress = adress;
 	}
 	
 	

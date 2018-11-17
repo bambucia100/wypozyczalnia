@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import szbd.projekt.projektbazy.adress.Adress;
 import szbd.projekt.projektbazy.rentalOffice.RentalOffice;
 
 @RestController
@@ -30,18 +31,21 @@ public class ClientController {
 		return clientService.getClient(idClient);
 	}
 	
-	@RequestMapping(method=RequestMethod.POST,value="rentalOffice/{idRentalOffice}/clients")
-	public void getAllClients(@RequestBody Client client, @PathVariable Integer idRentalOffice) {
+	@RequestMapping(method=RequestMethod.POST,value="rentalOffice/{idRentalOffice}/clients/{idAdress}")
+	public void getAllClients(@RequestBody Client client, @PathVariable Integer idRentalOffice,
+			@PathVariable Integer idAdress) {
 		
-		client.setRentalOffice(new RentalOffice(idRentalOffice, ""));
+		client.setAdress(new Adress(idAdress, "", "", "", "", ""));
+		client.setRentalOffice(new RentalOffice(idRentalOffice, "", 0));
 		clientService.addClient(client);
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT,value="/rentalOffice/{idRentalOffice}/clients/{idClient}")
 	public void updateClient(@RequestBody Client client, @PathVariable Integer idClient,
-			@PathVariable Integer idRentalOffice) {
+			@PathVariable Integer idRentalOffice, @PathVariable Integer idAdress) {
 		
-		client.setRentalOffice(new RentalOffice(idRentalOffice, ""));
+		client.setAdress(new Adress(idAdress, "", "", "", "", ""));
+		client.setRentalOffice(new RentalOffice(idRentalOffice, "", 0));
 		clientService.updateClient(idClient, client);
 	}
 	

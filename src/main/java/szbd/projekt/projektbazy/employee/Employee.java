@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import szbd.projekt.projektbazy.adress.Adress;
 import szbd.projekt.projektbazy.rentalOffice.RentalOffice;
 
 @Entity
@@ -28,16 +29,18 @@ public class Employee {
 	private String email;
 	private String phone;
 
-	
 	@ManyToOne
 	@JoinColumn(name = "id_rental_office", nullable = false)
 	private RentalOffice rentalOffice;
+	@OneToOne
+	@JoinColumn(name = "id_adress", nullable = false)
+	private Adress adress;
 	
 	public Employee() {
 		
 	}
 	public Employee(int idEmployee, String firstName, String lastName,
-			String position, String email, String phone, int idRentalOffice) {
+			String position, String email, String phone, int idRentalOffice, int idAdress) {
 		super();
 		this.idEmployee = idEmployee;
 		this.firstName = firstName;
@@ -45,7 +48,8 @@ public class Employee {
 		this.position = position;
 		this.email = email;
 		this.phone = phone;
-		this.rentalOffice = new RentalOffice(idRentalOffice," ");
+		this.rentalOffice = new RentalOffice(idRentalOffice, "", 0);
+		this.adress = new Adress(idAdress, "", "", "", "", "");
 	}
 	
 	public int getIdEmployee() {
@@ -89,6 +93,12 @@ public class Employee {
 	}
 	public void setRentalOffice(RentalOffice rentalOffice) {
 		this.rentalOffice = rentalOffice;
+	}
+	public Adress getAdress() {
+		return adress;
+	}
+	public void setAdress(Adress adress) {
+		this.adress = adress;
 	}
 	
 	

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import szbd.projekt.projektbazy.adress.Adress;
 import szbd.projekt.projektbazy.rentalOffice.RentalOffice;
 
 
@@ -31,16 +32,26 @@ public class EmployeeController {
 		return employeeService.getEmployee(idEmployee);
 	}
 	
-	@RequestMapping(method=RequestMethod.POST,value="/rentalOffice/{idRentalOffice}/employees")
-	public void addEmployee(@RequestBody Employee employee, @PathVariable Integer idRentalOffice) {
-		employee.setRentalOffice(new RentalOffice(idRentalOffice, ""));
+	@RequestMapping(method=RequestMethod.POST,value="/rentalOffice/{idRentalOffice}/employees/{idAdress}")
+	public void addEmployee(@RequestBody Employee employee, @PathVariable Integer idRentalOffice, 
+			@PathVariable Integer idAdress) {
+		employee.setAdress(new Adress(idAdress, "", "", "", "", ""));
+		employee.setRentalOffice(new RentalOffice(idRentalOffice, "", 0));
 		employeeService.addEmployee(employee);
 	}
 	@RequestMapping(method=RequestMethod.PUT,value="/rentalOffice/{idRentalOffice}/employees/{idEmployee}")
 	public void updateEmployee(@RequestBody Employee employee,@PathVariable Integer idEmployee,
 			@PathVariable Integer idRentalOffice)
 	{
-		employee.setRentalOffice(new RentalOffice(idRentalOffice,""));
+		employee.setRentalOffice(new RentalOffice(idRentalOffice,"", 0));
+		employeeService.updateEmployee(idEmployee, employee);
+	}
+	@RequestMapping(method=RequestMethod.PUT,value="/rentalOffice/{idRentalOffice}/employees/{idEmployee}/{idAdress}")
+	public void updateEmployee(@RequestBody Employee employee,@PathVariable Integer idEmployee,
+			@PathVariable Integer idRentalOffice, @PathVariable Integer idAdress)
+	{
+		employee.setAdress(new Adress(idAdress, "", "", "", "", ""));
+		employee.setRentalOffice(new RentalOffice(idRentalOffice,"", 0));
 		employeeService.updateEmployee(idEmployee, employee);
 	}
 	@RequestMapping(method=RequestMethod.DELETE,value="/rentalOffice/{idRentalOffice}/employees/{idEmployee}")

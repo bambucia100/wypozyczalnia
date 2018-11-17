@@ -5,14 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-
 import org.hibernate.annotations.GenericGenerator;
-
-import szbd.projekt.projektbazy.client.Client;
-import szbd.projekt.projektbazy.employee.Employee;
-import szbd.projekt.projektbazy.rentalOffice.RentalOffice;
 
 @Entity
 public class Adress {
@@ -34,32 +27,19 @@ public class Adress {
 	private String street;
 	@Column(name = "house_number", nullable = false)
 	private String houseNumber;
-	@OneToOne()
-	@JoinColumn(name = "id_rental_office", nullable = true)
-	private RentalOffice rentalOffice;
-	@OneToOne()
-	@JoinColumn(name = "id_employee", nullable = true)
-	private Employee employee;
-	@OneToOne()
-	@JoinColumn(name = "id_client", nullable = true)
-	private Client client;
 	
 	public Adress() {
 		
 	}
 	
-	public Adress(Integer idAdress, String country, String province, String city, String street, String houseNumber,
-			Integer idRentalOffice, Integer idEmployee, Integer idClient) {
+	public Adress(Integer idAdress, String country, String province, String city, String street, String houseNumber) {
 		super();
 		this.idAdress = idAdress;
 		this.country = country;
 		this.province = province;
 		this.city = city;
 		this.street = street;
-		this.houseNumber = houseNumber;
-		this.rentalOffice = new RentalOffice(idRentalOffice, "");
-		this.employee = new Employee(idEmployee, "", "", "", "", "", 0);
-		this.client = new Client(idClient, "", "", null, "", 0, 0);
+		this.houseNumber = houseNumber;	
 	}
 
 	public int getIdAdress() {
@@ -109,30 +89,5 @@ public class Adress {
 	public void setHouseNumber(String houseNumber) {
 		this.houseNumber = houseNumber;
 	}
-
-	public RentalOffice getRentalOffice() {
-		return rentalOffice;
-	}
-
-	public void setRentalOffice(RentalOffice rentalOffice) {
-		this.rentalOffice = rentalOffice;
-	}
-
-	public Employee getEmployee() {
-		return employee;
-	}
-
-	public void setEmployee(Employee employee) {
-		this.employee = employee;
-	}
-
-	public Client getClient() {
-		return client;
-	}
-
-	public void setClient(Client client) {
-		this.client = client;
-	}
-		
 	
 }

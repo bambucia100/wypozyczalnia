@@ -38,7 +38,7 @@ public class MoviesWarehouseController {
 			@PathVariable Integer idMovie) {
 		
 		moviesWarehouse.setMovie(new Movie(idMovie,  "", 0, "", 0, "", 0));
-		moviesWarehouse.setRentalOffice(new RentalOffice(idRentalOffice, ""));
+		moviesWarehouse.setRentalOffice(new RentalOffice(idRentalOffice, "", 0));
 		moviesWarehouseService.addMoviesWarehouse(moviesWarehouse);;
 	}
 	@RequestMapping(method=RequestMethod.PUT,value="/rentalOffice/{idRentalOffice}/warehouse/{idMovie}")
@@ -48,7 +48,7 @@ public class MoviesWarehouseController {
 
 		MoviesWarehouseId idMoviesWarehouse = new MoviesWarehouseId(idRentalOffice, idMovie);
 		moviesWarehouse.setMovie(new Movie(idMovie,  "", 0, "", 0, "", 0));
-		moviesWarehouse.setRentalOffice(new RentalOffice(idRentalOffice,""));
+		moviesWarehouse.setRentalOffice(new RentalOffice(idRentalOffice, "", 0));
 		moviesWarehouseService.updateMoviesWarehouse(idMoviesWarehouse, moviesWarehouse);
 	}
 	@RequestMapping(method=RequestMethod.DELETE,value="/rentalOffice/{idRentalOffice}/warehouse/{idMovie}")
