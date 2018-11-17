@@ -35,16 +35,19 @@ public class MovieController {
 		movie.setGenre(new Genre(idGenre, "", ""));
 		movieService.addMovie(movie);
 	}
+	@RequestMapping(method=RequestMethod.POST,value="/movie")
+	public void addMovie(@RequestBody Movie movie) {
+		//movie.setGenre(new Genre(idGenre, "", ""));
+		movieService.addMovie(movie);
+	}
 	@RequestMapping(method=RequestMethod.PUT,value="/movie/{idMovie}/{idGenre}")
 	public void updateMovie(@RequestBody Movie movie,@PathVariable Integer idMovie,
-			@PathVariable Integer idGenre)
-	{
+			@PathVariable Integer idGenre) {
 		movie.setGenre(new Genre(idGenre, "", ""));
 		movieService.updateMovie(idMovie, movie);
 	}
 	@RequestMapping(method=RequestMethod.DELETE,value="/movie/{idMovie}")
-	public void deleteMovie(@PathVariable Integer idMovie)
-	{
+	public void deleteMovie(@PathVariable Integer idMovie) {
 		 movieService.deleteMovie(idMovie);
 	}
 	
