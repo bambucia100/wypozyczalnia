@@ -25,6 +25,9 @@ public class Cast{
 	@EmbeddedId
 	private CastId id;
 	
+	@Column(name = "actor_rating", nullable = false)
+	private Double actorRating;
+	
 	@ManyToOne
 	@JoinColumn(name = "id_movie", nullable = false, insertable = false, updatable = false)
 	private Movie movie;
@@ -37,10 +40,11 @@ public class Cast{
 	public Cast() {
 		
 	}
-	public Cast(Integer idMovie, Integer idActor) {
+	public Cast(Double actorRating, Integer idMovie, Integer idActor) {
 		super();
+		this.actorRating = actorRating;
 		this.movie = new Movie(idMovie, "", 0, "", 0, "", 0);
-		this.actor = new Actor(idActor, "", "", null, 0);
+		this.actor = new Actor(idActor, "", "", null);
 	}
 	public Movie getMovie() {
 		return movie;
@@ -59,6 +63,12 @@ public class Cast{
 	}
 	public void setId(CastId id) {
 		this.id = id;
+	}
+	public Double getActorRating() {
+		return actorRating;
+	}
+	public void setActorRating(Double actorRating) {
+		this.actorRating = actorRating;
 	}
 	
 	

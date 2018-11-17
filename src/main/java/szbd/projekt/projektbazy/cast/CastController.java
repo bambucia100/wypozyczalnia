@@ -32,7 +32,7 @@ public class CastController {
 			@PathVariable Integer idActor) {
 		
 		cast.setMovie(new Movie(idMovie, "", 0, "", 0, "", 0));
-		cast.setActor(new Actor(idActor, "", "", null, 0));
+		cast.setActor(new Actor(idActor, "", "", null));
 		castService.addCast(cast);
 	}
 	
@@ -42,7 +42,7 @@ public class CastController {
 		
 		CastId idCast = new CastId(idMovie, idActor);
 		cast.setMovie(new Movie(idMovie, "", 0, "", 0, "", 0));
-		cast.setActor(new Actor(idActor, "", "", null, 0));
+		cast.setActor(new Actor(idActor, "", "", null));
 		castService.updateCast(idCast, cast);
 	}
 	
