@@ -26,19 +26,16 @@ public class Actor {
 	private String actorLastName;
 	@Column(name = "date_of_birth", unique = false, nullable = false)
 	private Date dateOfBirth;
-	@Column(name = "rating", unique = true, scale = 2, nullable = true)
-	private double rating;
 	
 	public Actor() {
 		
 	}
-	public Actor(int idActor, String actorFirstName, String actorLastName, Date dateOfBirth, double rating) {
+	public Actor(int idActor, String actorFirstName, String actorLastName, Date dateOfBirth) {
 		super();
 		this.idActor = idActor;
 		this.actorFirstName = actorFirstName;
 		this.actorLastName = actorLastName;
 		this.dateOfBirth = dateOfBirth;
-		this.rating = rating;
 	}
 	
 	public int getIdActor() {
@@ -64,12 +61,6 @@ public class Actor {
 	}
 	public void setDateOfBirth(Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
-	}
-	public double getRating() {
-		return rating;
-	}
-	public void setRating(double rating) {
-		this.rating = rating;
 	}
 	
 	
