@@ -39,9 +39,7 @@ public class RentalsController {
 			@PathVariable Integer idMovie, @PathVariable Integer idRentalOffice) {
 		
 		rental.setMovie(new Movie(idMovie, "", 0, "", 0, "", 0));
-		rental.setClient(new Client(idClient, "", "", null, "",0 , 0));
-		System.out.println(new MoviesWarehouse(idRentalOffice, 0, 0, 0, idMovie).getQuantity());
-		new MoviesWarehouse(idRentalOffice, 0, 0, 0, idMovie).decrementQuantity();
+		rental.setClient(new Client(idClient, "", "", null, "", 0 , 0, 0));
 		
 		rentalService.addRental(rental);
 	}
@@ -52,7 +50,7 @@ public class RentalsController {
 			@PathVariable Integer idMovie, @PathVariable Integer idRental) {
 		
 		rental.setMovie(new Movie(idMovie, "", 0, "", 0, "", 0));
-		rental.setClient(new Client(idMovie, "", "", null, "",0 , 0));
+		rental.setClient(new Client(idMovie, "", "", null, "",0 , 0, 0));
 		rentalService.updateRental(idRental, rental);
 	}
 	

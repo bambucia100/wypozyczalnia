@@ -50,7 +50,7 @@ public class Rentals {
 		this.rentalDate = rentalDate;
 		this.returnDate = returnDate;
 		this.payment = payment;
-		this.client = new Client(idMovie, "", "", null, "",0 , 0);
+		this.client = new Client(idMovie, "", "", null, "",0 , 0, 0);
 		this.movie = new Movie(idMovie, "", 0, "", 0, "", 0);
 	}
 	
