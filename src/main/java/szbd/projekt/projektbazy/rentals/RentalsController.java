@@ -38,7 +38,7 @@ public class RentalsController {
 	public void addRentals(@RequestBody Rentals rental, @PathVariable Integer idClient, 
 			@PathVariable Integer idMovie, @PathVariable Integer idRentalOffice) {
 		
-		rental.setMovie(new Movie(idMovie, "", 0, "", 0, "", 0));
+		rental.setMovie(new Movie(idMovie, "", 0, "", 0, "", ""));
 		rental.setClient(new Client(idClient, "", "", null, "", 0 , 0, 0));
 		
 		rentalService.addRental(rental);
@@ -49,7 +49,7 @@ public class RentalsController {
 	public void updateRentals(@RequestBody Rentals rental, @PathVariable Integer idClient, 
 			@PathVariable Integer idMovie, @PathVariable Integer idRental) {
 		
-		rental.setMovie(new Movie(idMovie, "", 0, "", 0, "", 0));
+		rental.setMovie(new Movie(idMovie, "", 0, "", 0, "", ""));
 		rental.setClient(new Client(idMovie, "", "", null, "",0 , 0, 0));
 		rentalService.updateRental(idRental, rental);
 	}

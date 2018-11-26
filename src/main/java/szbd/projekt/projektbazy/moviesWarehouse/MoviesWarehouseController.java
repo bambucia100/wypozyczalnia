@@ -37,7 +37,7 @@ public class MoviesWarehouseController {
 	public void addMoviesWarehouse(@RequestBody MoviesWarehouse moviesWarehouse, @PathVariable Integer idRentalOffice,
 			@PathVariable Integer idMovie) {
 		
-		moviesWarehouse.setMovie(new Movie(idMovie,  "", 0, "", 0, "", 0));
+		moviesWarehouse.setMovie(new Movie(idMovie,  "", 0, "", 0, "", ""));
 		moviesWarehouse.setRentalOffice(new RentalOffice(idRentalOffice, "", 0));
 		moviesWarehouseService.addMoviesWarehouse(moviesWarehouse);;
 	}
@@ -47,7 +47,7 @@ public class MoviesWarehouseController {
 		
 
 		MoviesWarehouseId idMoviesWarehouse = new MoviesWarehouseId(idRentalOffice, idMovie);
-		moviesWarehouse.setMovie(new Movie(idMovie,  "", 0, "", 0, "", 0));
+		moviesWarehouse.setMovie(new Movie(idMovie,  "", 0, "", 0, "", ""));
 		moviesWarehouse.setRentalOffice(new RentalOffice(idRentalOffice, "", 0));
 		moviesWarehouseService.updateMoviesWarehouse(idMoviesWarehouse, moviesWarehouse);
 	}

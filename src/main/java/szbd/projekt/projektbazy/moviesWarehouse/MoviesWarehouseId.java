@@ -27,7 +27,7 @@ public class MoviesWarehouseId implements Serializable {
 	public MoviesWarehouseId(int idRentalOffice, int idMovie) {
 		super();
 		this.rentalOffice = new RentalOffice(idRentalOffice, "", 0);
-		this.movie = new Movie(idMovie, "", 0, "", 0, "", 0);
+		this.movie = new Movie(idMovie, "", 0, "", 0, "", "");
 	}
 
 	public RentalOffice getRentalOffice() {

@@ -50,7 +50,7 @@ public class MoviesWarehouse {
 		this.quantity = quantity;
 		this.charge = charge;
 		this.rentalOffice = new RentalOffice(idRentalOffice, "", 0);
-		this.movie = new Movie(idMovie, "", 0, "", 0, "", 0);
+		this.movie = new Movie(idMovie, "", 0, "", 0, "", "");
 	}
 	
 

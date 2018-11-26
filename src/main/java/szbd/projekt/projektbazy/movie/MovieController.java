@@ -30,20 +30,20 @@ public class MovieController {
 		return movieService.getMovie(idMovie);
 	}
 	
-	@RequestMapping(method=RequestMethod.POST,value="/movie/{idGenre}")
-	public void addMovie(@RequestBody Movie movie, @PathVariable Integer idGenre) {
-		movie.setGenre(new Genre(idGenre, "", ""));
+	@RequestMapping(method=RequestMethod.POST,value="/movie/{genreName}")
+	public void addMovie(@RequestBody Movie movie, @PathVariable String genreName) {
+		movie.setGenre(new Genre(genreName, ""));
 		movieService.addMovie(movie);
 	}
 	@RequestMapping(method=RequestMethod.POST,value="/movie")
 	public void addMovie(@RequestBody Movie movie) {
-		//movie.setGenre(new Genre(idGenre, "", ""));
+
 		movieService.addMovie(movie);
 	}
-	@RequestMapping(method=RequestMethod.PUT,value="/movie/{idMovie}/{idGenre}")
+	@RequestMapping(method=RequestMethod.PUT,value="/movie/{idMovie}/{genreName}")
 	public void updateMovie(@RequestBody Movie movie,@PathVariable Integer idMovie,
-			@PathVariable Integer idGenre) {
-		movie.setGenre(new Genre(idGenre, "", ""));
+			@PathVariable String genreName) {
+		movie.setGenre(new Genre(genreName, ""));
 		movieService.updateMovie(idMovie, movie);
 	}
 	@RequestMapping(method=RequestMethod.DELETE,value="/movie/{idMovie}")

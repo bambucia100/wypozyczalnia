@@ -30,14 +30,14 @@ public class Movie {
 	@Column(name = "description", nullable = true)
 	private String description;
 	@ManyToOne
-	@JoinColumn(name = "id_genre", nullable = false)
+	@JoinColumn(name = "genre_name", nullable = false)
 	private Genre genre;
 	
 	public Movie() {
 		
 	}
 	
-	public Movie(int idMovie, String title, int length, String director, double rating, String description, int idGenre) {
+	public Movie(int idMovie, String title, int length, String director, double rating, String description, String genreName) {
 		super();
 		this.idMovie = idMovie;
 		this.title = title;
@@ -45,7 +45,7 @@ public class Movie {
 		this.director = director;
 		this.rating = rating;
 		this.description = description;
-		this.genre = new Genre(idGenre, "", "");
+		this.genre = new Genre("genreName", "");
 		
 	}
 	

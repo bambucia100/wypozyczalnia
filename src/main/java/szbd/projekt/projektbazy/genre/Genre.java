@@ -7,18 +7,8 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 public class Genre {
 
-	@Id
-	@GeneratedValue(
-	    strategy= GenerationType.AUTO, 
-	    generator="native"
-	)
-	@GenericGenerator(
-	    name = "native", 
-	    strategy = "native"
-	)
-	@Column(name = "id_genre", unique = true)
-	private int idGenre;
-	@Column(name = "genre_name", unique = true)
+    @Id
+    @Column(name = "genre_name", unique = true)
 	private String genreName;
 	@Column(name = "genre_description", unique = true)
 	private String genreDescription;
@@ -26,17 +16,10 @@ public class Genre {
 	public Genre() {
 		
 	}
-	public Genre(int idGenre, String genreName, String genreDescription) {
+	public Genre(String genreName, String genreDescription) {
 		super();
-		this.idGenre = idGenre;
 		this.genreName = genreName;
 		this.genreDescription = genreDescription;
-	}
-	public int getIdGenre() {
-		return idGenre;
-	}
-	public void setIdGenre(int idGenre) {
-		this.idGenre = idGenre;
 	}
 	public String getGenreName() {
 		return genreName;

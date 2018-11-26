@@ -43,7 +43,7 @@ public class Cast{
 	public Cast(Double actorRating, Integer idMovie, Integer idActor) {
 		super();
 		this.actorRating = actorRating;
-		this.movie = new Movie(idMovie, "", 0, "", 0, "", 0);
+		this.movie = new Movie(idMovie, "", 0, "", 0, "", "");
 		this.actor = new Actor(idActor, "", "", null);
 	}
 	public Movie getMovie() {

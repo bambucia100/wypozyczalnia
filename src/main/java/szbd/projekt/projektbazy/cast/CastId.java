@@ -30,7 +30,7 @@ public class CastId  implements Serializable {
 	
 	public CastId(Integer idMovie, Integer idActor) {
 		super();
-		this.movie = new Movie(idMovie, "", 0, "", 0, "", 0);
+		this.movie = new Movie(idMovie, "", 0, "", 0, "", "");
 		this.actor = new Actor(idActor, "", "", null);
 	}
 	
