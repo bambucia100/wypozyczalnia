@@ -13,28 +13,28 @@ public class MoviesWarehouseService {
 
 	@Autowired
 	private MoviesWarehouseRepository moviesWarehouseRepository;
-	
+
 	public List<MoviesWarehouse> getAllMoviesWarehouse() {
 		List<MoviesWarehouse> moviesWarehouses = new ArrayList<>();
 		moviesWarehouseRepository.findAll()
-		.forEach(moviesWarehouses::add);
+				.forEach(moviesWarehouses::add);
 		return moviesWarehouses;
 	}
-	
-	
-	public Optional<MoviesWarehouse> getMoviesWarehouse(MoviesWarehouseId idMovieWarehouse) {
+
+
+	public Optional<MoviesWarehouse> getMoviesWarehouse(Integer idMovieWarehouse) {
 		return moviesWarehouseRepository.findById(idMovieWarehouse);
 	}
-	
+
 	public void addMoviesWarehouse(MoviesWarehouse moviesWarehouse) {
 		moviesWarehouseRepository.save(moviesWarehouse);
 	}
 
-	public void updateMoviesWarehouse(MoviesWarehouseId idMoviesWarehouse, MoviesWarehouse moviesWarehouse) {
+	public void updateMoviesWarehouse(Integer idMoviesWarehouse, MoviesWarehouse moviesWarehouse) {
 		moviesWarehouseRepository.save(moviesWarehouse);
 	}
-	
-	public void deleteMoviesWarehouse(MoviesWarehouseId idMoviesWarehouse) {
+
+	public void deleteMoviesWarehouse(Integer idMoviesWarehouse) {
 		moviesWarehouseRepository.deleteById(idMoviesWarehouse);
 	}
 }
