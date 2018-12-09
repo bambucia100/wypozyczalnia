@@ -1,4 +1,6 @@
-package szbd.projekt.projektbazy.rental_element;
+package szbd.projekt.projektbazy.rentalElement;
 
-public class RentalElementRepository {
+import org.springframework.data.repository.CrudRepository;
+
+public interface RentalElementRepository extends CrudRepository<RentalElement, RentalElementId> {
 }
