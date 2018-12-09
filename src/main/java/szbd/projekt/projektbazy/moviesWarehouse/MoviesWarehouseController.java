@@ -33,24 +33,24 @@ public class MoviesWarehouseController {
 
 	@RequestMapping(method=RequestMethod.POST,value="/rentalOffice/{idRentalOffice}/warehouse/{idMovie}")
 	public void addMoviesWarehouse(@RequestBody MoviesWarehouse moviesWarehouse, @PathVariable Integer idRentalOffice,
-								   @PathVariable Integer idMovie) {
+			@PathVariable Integer idMovie) {
 
-		moviesWarehouse.setMovie(new Movie(idMovie,  "", 0, "", 0, "", null));
 		moviesWarehouse.setRentalOffice(new RentalOffice(idRentalOffice, "", 0));
+		moviesWarehouse.setMovie(new Movie(idMovie,  "", 0, "", 0, "", ""));
 		moviesWarehouseService.addMoviesWarehouse(moviesWarehouse);;
 	}
 	@RequestMapping(method=RequestMethod.PUT,value="/rentalOffice/{idRentalOffice}/warehouse/{idMovie}/{idMoviesWarehouse}")
-	public void updateBeer(@RequestBody MoviesWarehouse moviesWarehouse,@PathVariable Integer idRentalOffice,
+	public void updateMoviesWarehouse(@RequestBody MoviesWarehouse moviesWarehouse,@PathVariable Integer idRentalOffice,
 						   @PathVariable Integer idMovie, @PathVariable Integer idMoviesWarehouse) {
 
-		moviesWarehouse.setMovie(new Movie(idMovie,  "", 0, "", 0, "", null));
+		moviesWarehouse.setMovie(new Movie(idMovie,  "", 0, "", 0, "", ""));
 		moviesWarehouse.setRentalOffice(new RentalOffice(idRentalOffice, "", 0));
 		moviesWarehouseService.updateMoviesWarehouse(idMoviesWarehouse, moviesWarehouse);
 	}
-	@RequestMapping(method=RequestMethod.DELETE,value="/rentalOffice/{idRentalOffice}/warehouse/{idMoviesWarehouse}")
-	public void deleteBeer(@PathVariable Integer idMoviesWarehouse) {
+	@RequestMapping(method=RequestMethod.DELETE,value="/rentalOffice/{idRentalOffice}/warehouse/{idWarehouse}")
+	public void deleteMoviesWarehouse(@PathVariable Integer idWarehouse) {
 
-		moviesWarehouseService.deleteMoviesWarehouse(idMoviesWarehouse);
+		moviesWarehouseService.deleteMoviesWarehouse(idWarehouse);
 	}
 
 }

@@ -34,7 +34,7 @@ public class MoviesWarehouseService {
 		moviesWarehouseRepository.save(moviesWarehouse);
 	}
 
-	public void deleteMoviesWarehouse(Integer idMoviesWarehouse) {
-		moviesWarehouseRepository.deleteById(idMoviesWarehouse);
+	public void deleteMoviesWarehouse(Integer idWarehouse) {
+		moviesWarehouseRepository.deleteById(idWarehouse);
 	}
 }
