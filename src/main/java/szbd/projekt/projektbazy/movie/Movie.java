@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import org.hibernate.annotations.NaturalId;
 import szbd.projekt.projektbazy.genre.Genre;
 @Entity
 public class Movie {
@@ -17,17 +18,19 @@ public class Movie {
 	    name = "native", 
 	    strategy = "native"
 	)
-	@Column(name = "id_movie", unique = true)
+	@Column(name = "id_movie")
 	private int idMovie;
-	@Column(name = "title")
+	@NaturalId
+	@Column(name = "title", nullable = false)
 	private String title;
-	@Column(name = "length")
+	@Column(name = "length", nullable = false)
 	private int length;
-	@Column(name = "director")
+	@NaturalId
+	@Column(name = "director", nullable = false)
 	private String director;
-	@Column(name = "rating", nullable = true)
+	@Column(name = "rating")
 	private double rating;
-	@Column(name = "description", nullable = true)
+	@Column(name = "description")
 	private String description;
 	@ManyToOne
 	@JoinColumn(name = "genre_name", nullable = false)
@@ -45,7 +48,7 @@ public class Movie {
 		this.director = director;
 		this.rating = rating;
 		this.description = description;
-		this.genre = new Genre("genreName", "");
+		this.genre = new Genre(genreName, "");
 		
 	}
 	

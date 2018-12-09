@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import szbd.projekt.projektbazy.adress.Adress;
 import szbd.projekt.projektbazy.client.Client;
+import szbd.projekt.projektbazy.employee.Employee;
 import szbd.projekt.projektbazy.movie.Movie;
 import szbd.projekt.projektbazy.moviesWarehouse.MoviesWarehouse;
 
@@ -34,23 +36,24 @@ public class RentalsController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST,value="/rentalOffice/{idRentalOffice}/"
-			+ "client/{idClient}/rental/{idMovie}")
+			+ "client/{idClient}/rental/{idMovie}/{idEmployee}")
 	public void addRentals(@RequestBody Rentals rental, @PathVariable Integer idClient, 
-			@PathVariable Integer idMovie, @PathVariable Integer idRentalOffice) {
+			@PathVariable Integer idMovie, @PathVariable Integer idRentalOffice, @PathVariable Integer idEmployee) {
 		
 		rental.setMovie(new Movie(idMovie, "", 0, "", 0, "", ""));
 		rental.setClient(new Client(idClient, "", "", null, "", 0 , 0, 0));
-		
+		rental.setEmployee(new Employee(idEmployee, "", "", "", "", "", 0, 0));
 		rentalService.addRental(rental);
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT,value="/rentalOffice/{idRentalOffice}/client/{idClient}/rental"
-			+ "/{idRental}/{idMovie}")
+			+ "/{idRental}/{idMovie}/{idEmployee}")
 	public void updateRentals(@RequestBody Rentals rental, @PathVariable Integer idClient, 
-			@PathVariable Integer idMovie, @PathVariable Integer idRental) {
+			@PathVariable Integer idMovie, @PathVariable Integer idRental, @PathVariable Integer idEmployee) {
 		
 		rental.setMovie(new Movie(idMovie, "", 0, "", 0, "", ""));
 		rental.setClient(new Client(idMovie, "", "", null, "",0 , 0, 0));
+		rental.setEmployee(new Employee(idEmployee, "", "", "", "", "", 0, 0));
 		rentalService.updateRental(idRental, rental);
 	}
 	

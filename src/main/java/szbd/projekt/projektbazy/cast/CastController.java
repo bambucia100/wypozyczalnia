@@ -2,6 +2,7 @@ package szbd.projekt.projektbazy.cast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,7 +25,13 @@ public class CastController {
 	@RequestMapping(method=RequestMethod.GET,value="/movie/cast")
 	public List<Cast> getAllCast() {
 		
-	  return castService.getAllCast();
+		  return castService.getAllCast();
+		}
+
+	@RequestMapping(method=RequestMethod.GET,value = "/movie/cast/{idMovie}/{idActor}")
+	public Optional<Cast> getCast(@PathVariable Integer idMovie, @PathVariable Integer idActor) {
+
+		return castService.getCast(new CastId(idMovie, idActor));
 	}
 	
 	@RequestMapping(method=RequestMethod.POST,value="/movie/cast/{idMovie}/{idActor}")
