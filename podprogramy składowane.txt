@@ -1,0 +1,37 @@
+<-- procedura -->
+
+DELIMITER $$
+
+CREATE PROCEDURE `change_quantity`(id_movie_val integer, id_rental_office_val integer)
+BEGIN
+   update movies_warehouse
+   set quantity = quantity - 1
+   where id_movie = id_movie_val and id_rental_office = id_rental_office_val;
+   END $$
+
+DELIMITER ;
+
+DELIMITER $$
+
+
+<-- funkcja -->
+
+DELIMITER $$
+
+CREATE FUNCTION avg_actor_rating(id_actor integer)
+RETURNS numeric(3,1)
+DETERMINISTIC 
+READS SQL DATA 
+BEGIN
+    DECLARE avg_rating numeric(3,1); 
+    
+    SELECT avg(cast.actor_rating) INTO avg_rating
+    FROM cast
+    WHERE cast.id_actor = id_actor; 
+    RETURN avg_actor; 
+END
+
+<-- indeksy -->
+
+create index idx_movie on movie(id_movie);
+create index idx_rental_office on rental_office(id_rental_office);
