@@ -7,13 +7,30 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.*;
+
 
 @Service
 public class RentalsService {
 
 	@Autowired
 	private RentalsRepository rentalsRepository;
-	
+
+	@PersistenceContext
+	private EntityManager entityManager ;
+
+	public void changeQuantity(Integer idMovie, Integer idRentalOffice) {
+
+		StoredProcedureQuery query = entityManager.createStoredProcedureQuery("change_quantity");
+		query.registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN);
+		query.registerStoredProcedureParameter(2, Integer.class, ParameterMode.IN);
+
+		query.setParameter(1, idMovie);
+		query.setParameter(2, idRentalOffice);
+
+		query.execute();
+	}
+
 
 	public List<Rentals> getAllRentals() {
 		

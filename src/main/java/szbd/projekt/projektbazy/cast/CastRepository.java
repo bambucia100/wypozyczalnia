@@ -11,4 +11,6 @@ public interface CastRepository extends CrudRepository<Cast, CastId> {
 			+ "where "
 			+ "c.id_actor = a.id_actor" , nativeQuery = true)
 	List<Object[]> getAllActorsByMovie();
+
+
 }	
