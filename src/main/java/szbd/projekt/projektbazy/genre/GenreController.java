@@ -21,9 +21,9 @@ public class GenreController {
 		return genreService.getAllGenres();
 	}
 	
-	@RequestMapping(method=RequestMethod.GET,value="/genre/{idGenre}")
-	public Optional<Genre> getGenre(@PathVariable Integer idGenre) {
-		return genreService.getGenre(idGenre);
+	@RequestMapping(method=RequestMethod.GET,value="/genre/{genreName}")
+	public Optional<Genre> getGenre(@PathVariable String genreName) {
+		return genreService.getGenre(genreName);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST,value="/genre")
@@ -33,17 +33,17 @@ public class GenreController {
 	}
 	
 	
-	@RequestMapping(method=RequestMethod.DELETE,value="/genre/{idGenre}")
-	public void deleteGenre(@PathVariable Integer idGenre)
-	{
+	@RequestMapping(method=RequestMethod.DELETE,value="/genre/{genreName}")
+	public void deleteGenre(@PathVariable String genreName)
+		{
 		
-		genreService.deleteGenre(idGenre);
+		genreService.deleteGenre(genreName);
 	}
 	
-	@RequestMapping(method=RequestMethod.PUT,value="/genre/{idGenre}")
-	public void updateBeer(@RequestBody Genre genre,@PathVariable Integer idGenre)
+	@RequestMapping(method=RequestMethod.PUT,value="/genre/{genreName}")
+	public void updateBeer(@RequestBody Genre genre,@PathVariable String genreName)
 	{
-		 genreService.updateGenre(idGenre, genre);
+		 genreService.updateGenre(genreName, genre);
 	}
 	
 }
