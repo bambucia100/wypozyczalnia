@@ -23,7 +23,7 @@ public class GenreService {
 	}
 	
 	
-	public Optional<Genre> getGenre(Integer IdGenre) {
+	public Optional<Genre> getGenre(String IdGenre) {
 		return genreRepository.findById(IdGenre);
 	}
 	
@@ -31,11 +31,11 @@ public class GenreService {
 		genreRepository.save(genre);
 	}
 
-	public void updateGenre(Integer idGenre, Genre genre) {
+	public void updateGenre(String idGenre, Genre genre) {
 		genreRepository.save(genre);
 	}
 	
-	public void deleteGenre(Integer idGenre) {
+	public void deleteGenre(String idGenre) {
 		genreRepository.deleteById(idGenre);
 	}
 	
