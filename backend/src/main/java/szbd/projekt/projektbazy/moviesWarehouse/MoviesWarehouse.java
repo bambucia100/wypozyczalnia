@@ -60,14 +60,6 @@ public class MoviesWarehouse {
 		this.idWarehouse = idMovieWarehouse;
 	}
 
-	public RentalOffice getIdRentalOffice() {
-		return rentalOffice;
-	}
-
-	public void setIdRentalOffice(RentalOffice idRentalOffice) {
-		this.rentalOffice = idRentalOffice;
-	}
-
 	public int getQuantity() {
 		return quantity;
 	}
