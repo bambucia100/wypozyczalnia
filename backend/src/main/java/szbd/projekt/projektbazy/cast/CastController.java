@@ -60,17 +60,16 @@ public class CastController {
 		castService.deleteCast(idCast);
 	}
 	
-	@RequestMapping(method=RequestMethod.GET, value="/movie/cast/full")
-	public List<String> getAllActors() {
+	@RequestMapping(method=RequestMethod.GET, value="/movie/{idMovie}/cast/full")
+	public List<String> getAllActors(@PathVariable Integer idMovie) {
 		
-		List<Object[]> lst = castRepository.getAllActorsByMovie();
-		List<String> actorsList = new ArrayList<String>();
+		List<Object[]> lst = castRepository.getAllActorsByMovie(idMovie);
+		List<String> actorsList = new ArrayList<>();
 		for (Object o[] : lst) {
-			Integer im = (Integer) o[0];
-			String fn = (String) o[1];
-			String ln = (String) o[2];
-			actorsList.add(im.toString() + " " + fn + " " + ln);
-			System.out.println(actorsList);
+			String fn = (String) o[0];
+			String ln = (String) o[1];
+			actorsList.add(fn + " " + ln);
+			//System.out.println(actorsList);
 		}
 		return actorsList;
 	}
