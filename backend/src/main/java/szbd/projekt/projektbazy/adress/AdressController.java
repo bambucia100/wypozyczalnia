@@ -40,4 +40,9 @@ public class AdressController {
 		
 		adressService.deleteAdress(idAdress);
 	}
+	@RequestMapping(method=RequestMethod.PUT, value="adress/{idAdress}")
+	public void updateAdress(@RequestBody Adress adress, @PathVariable Integer idAdress) {
+
+		adressService.updateAdress(idAdress, adress);
+	}
 }
