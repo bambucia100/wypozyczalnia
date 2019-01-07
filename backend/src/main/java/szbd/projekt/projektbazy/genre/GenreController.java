@@ -39,9 +39,9 @@ public class GenreController {
 		try {
 			genreService.deleteGenre(genreName);
 		} catch (EmptyResultDataAccessException ex) {
-			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Element does not exist", ex);
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Element does not exist.", ex);
 		} catch (Exception ex) {
-			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Element is a foreign key", ex);
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Element is connected with a foreign key.", ex);
 		}
 	}
 	

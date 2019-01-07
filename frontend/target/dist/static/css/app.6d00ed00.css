@@ -1,0 +1,15 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  /*! minireset.css v0.0.3 | MIT License | github.com/jgthms/minireset.css */blockquote,body,dd,dl,dt,fieldset,figure,h1,h2,h3,h4,h5,h6,hr,html,iframe,legend,li,ol,p,pre,textarea,ul{margin:0;padding:0}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:400}ul{list-style:none}button,input,select,textarea{margin:0}html{-webkit-box-sizing:border-box;box-sizing:border-box}*,:after,:before{-webkit-box-sizing:inherit;box-sizing:inherit}audio,embed,iframe,img,object,video{height:auto;max-width:100%}iframe{border:0}table{border-collapse:collapse;border-spacing:0}td,th{padding:0;text-align:left}a{text-decoration:none;color:inherit}:root{--nav-margin:9%}html{font-family:Verdana,Helvetica,Arial;background-color:#121d2d;color:#fff}main{margin-left:var(--nav-margin);padding:2% 25px 2% 25px}.grid-container{display:grid}h1{font-size:50px}h6{font-size:22px}.v-table{color:#000;background-color:#fff;margin-top:8px}.modal-box{width:90%;position:absolute;top:50%;left:50%;-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%);color:#000;font-size:14px}.modal-box input,.modal-box textarea{width:90%;margin:6px;padding:4px}.modal-box h6{border-bottom:1px solid #ccc;margin-bottom:10px}.modal-box button{padding:4px 20px}.alert-modal-box{text-align:center}.alert-modal-box button{display:block;margin:auto;margin-top:20px;padding:4px 40px}nav{width:var(--nav-margin);overflow:auto;position:fixed;background-color:#242931}nav,nav>a{height:100%}nav>a{overflow:hidden;display:grid;width:100%;border:1px solid #555;-webkit-transition:background-color .3s;transition:background-color .3s}nav>a:hover{background-color:#2b323c}.nav-content{margin:10%;overflow:hidden;color:#ccc;line-height:1.5;font-size:1.15vw;text-shadow:0 0 0 #fff;text-align:center;justify-self:center;-ms-flex-item-align:center;align-self:center;-webkit-transition:letter-spacing .3s,color .5s,text-shadow .4s;transition:letter-spacing .3s,color .5s,text-shadow .4s}nav>a:hover .nav-content{text-shadow:0 0 3px #eee;letter-spacing:.15vw;color:#fff}.active[data-v-61a6cae5]{color:#fff}.router-links[data-v-61a6cae5]{color:#aaa}.router-links[data-v-61a6cae5]:hover{color:#ddd}#home-title[data-v-23847458]{font-size:18vw;font-weight:900;color:hsla(0,0%,100%,.1);line-height:.8}

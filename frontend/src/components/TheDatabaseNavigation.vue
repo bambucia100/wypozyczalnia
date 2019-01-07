@@ -28,7 +28,7 @@ export default {
   props: {
     link: String
   },
-  data() {
+  data () {
     return {
       isActor: false,
       isAdress: false,
@@ -42,8 +42,8 @@ export default {
       isRental: false
     }
   },
-  created() {
-    switch(this.link) {
+  created () {
+    switch (this.link) {
       case 'Actor':
         this.isActor = true
         break

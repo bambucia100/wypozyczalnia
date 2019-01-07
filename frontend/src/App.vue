@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <nav class="grid-container">
-      <router-link to="/genre"><div class="nav-content">Database</div></router-link>
+      <router-link to="/actor"><div class="nav-content">Database</div></router-link>
       <router-link to="/"><div class="nav-content">Rent</div></router-link>
       <router-link to="/"><div class="nav-content">Add</div></router-link>
     </nav>
@@ -33,16 +33,17 @@
   h1 {
     font-size: 50px;
   }
-  h6 {
-    font-size: 22px;
-  }
+
   .v-table {
     color: #000;
     background-color: #FFF;
     margin-top: 8px;
   }
+  button {
+    margin: 0 2px;
+  }
   .modal-box {
-    width: 90%;
+    width: 80%;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -50,17 +51,19 @@
     color: #000;
     font-size: 14px;
   }
-  .modal-box input, .modal-box textarea {
-    width: 90%;
-    margin: 6px;
-    padding: 4px;
-  }
-  .modal-box h6 {
+  .modal-box .modal-box-title {
+    display: block;
+    font-size: 22px;
     border-bottom: 1px solid #CCC;
     margin-bottom: 10px;
   }
+  .modal-box input, .modal-box textarea {
+    width: 95%;
+    margin: 6px;
+    padding: 4px;
+  }
   .modal-box button {
-    padding: 4px 20px;
+    padding: 4px 40px;
   }
   .alert-modal-box {
     text-align: center;

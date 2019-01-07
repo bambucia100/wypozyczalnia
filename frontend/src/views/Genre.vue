@@ -7,27 +7,26 @@
       :config="tableConfig"
       :data="tableData"
       :minWidth="800"
-      :height="510"
+      :height=$tableHeight
       :itemHeight="34"
       :bordered="true"
-      :selectable="true"
     >
       <template slot-scope="scope" slot="actionCommon">
         <button @click="editRecord(scope.row)">Edit</button>
         <button @click="deleteRecord(scope.row)">Delete</button>
       </template>
     </vue-virtual-table>
-    <form-modal name="editModal">
+    <form-modal name="editModal" :width="600" :height="300">
       <div class="modal-box">
-        <h6>Edit record:</h6>
+        <span class="modal-box-title">Edit record:</span>
         Name:<br/>
-        <input type="text" v-model="newRecordData.genreName"><br/>
+        <input type="text" v-model="newRecordData.genreName" disabled><br/>
         Description:<br/>
         <textarea rows="6" v-model="newRecordData.genreDescription"></textarea><br/>
-        <button @click="editRecordSubmit">Submit</button><button @click="$modal.hide('editModal')" style="float:right">Cancel</button>
+        <button @click="editRecordSubmit" style="float:right;">Submit</button><button @click="$modal.hide('editModal')" >Cancel</button>
       </div>
     </form-modal>
-    <form-modal name="alertModal" @before-open="beforeOpenAlert" height="200">
+    <form-modal name="alertModal" @before-open="beforeOpenAlert" :height="$alertHeight" :width="$alertWidth">
       <div class="modal-box alert-modal-box">
         {{alertText}}
         <button @click="$modal.hide('alertModal')">Close</button>
@@ -47,7 +46,7 @@ export default {
     TheDatabaseNavigation,
     VueVirtualTable
   },
-  data: function () {
+  data () {
     return {
       tableConfig: [/* prop, name, width, sortable, searchable, filterable, numberFilter, summary, prefix, suffix */
         { prop: 'genreName', name: 'Name', width: 200, sortable: true, searchable: true },
@@ -73,32 +72,30 @@ export default {
       this.newRecordData = recordData
     },
     editRecordSubmit: function () {
-      let self = this
       axios.put('/genre/' + this.oldRecordData.genreName, this.newRecordData)
-        .then(function (response) {
-          self.$modal.show('alertModal', { text: 'Operation succeeded.' })
-          self.$modal.hide('editModal')
-          let editElemIndex = self.tableData.indexOf(self.tableData.find(tableDataElem => tableDataElem.genreName == self.oldRecordData.genreName))
-          self.$set(self.tableData, editElemIndex, self.newRecordData)
+        .then(response => {
+          this.$modal.show('alertModal', { text: 'Operation succeeded.' })
+          this.$modal.hide('editModal')
+          let editElemIndex = this.tableData.findIndex(tableElem => tableElem.genreName == this.oldRecordData.genreName)
+          this.$set(this.tableData, editElemIndex, this.newRecordData)
         })
         .catch(error => {
           if (error.response) {
-            self.$modal.show('alertModal',
+            this.$modal.show('alertModal',
               { text: 'Operation failed.  |  ' + error.response.status + '  |  ' + error.response.data.error + '  |  ' + error.response.data.message })
           }
         })
     },
     deleteRecord: function (recordData) {
-      let self = this
       axios.delete('/genre/' + recordData.genreName)
-        .then(function () {
-          self.$modal.show('alertModal', { text: 'Operation succeeded.' })
-          let deleteElemIndex = self.tableData.indexOf(self.tableData.find(tableDataElem => tableDataElem.genreName == recordData.genreName))
-          self.tableData.splice(deleteElemIndex, 1)
+        .then(() => {
+          this.$modal.show('alertModal', { text: 'Operation succeeded.' })
+          let deleteElemIndex = this.tableData.findIndex(tableDataElem => tableDataElem.genreName == recordData.genreName)
+          this.tableData.splice(deleteElemIndex, 1)
         })
         .catch(error => {
           if (error.response) {
-            self.$modal.show('alertModal',
+            this.$modal.show('alertModal',
               { text: 'Operation failed.  |  ' + error.response.status + '  |  ' + error.response.data.error + '  |  ' + error.response.data.message })
           }
         })
