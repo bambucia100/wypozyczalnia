@@ -33,7 +33,7 @@ public class MoviesWarehouseController {
 		return moviesWarehouseRepository.getAllMoviesWarehousesByRentalOffice(idRentalOffice);
 	}
 
-	@RequestMapping(method=RequestMethod.GET,value="/rentalOffice/{idRentalOffice}/warehouse/{idMoviesWarehouse}")
+	@RequestMapping(method=RequestMethod.GET,value="/rentalOffice/warehouse/{idMoviesWarehouse}")
 	public Optional<MoviesWarehouse> getMoviesWarehouse(@PathVariable Integer idMoviesWarehouse) {
 
 		return moviesWarehouseService.getMoviesWarehouse(idMoviesWarehouse);
@@ -55,7 +55,7 @@ public class MoviesWarehouseController {
 		moviesWarehouse.setRentalOffice(new RentalOffice(idRentalOffice, "", 0));
 		moviesWarehouseService.updateMoviesWarehouse(idMoviesWarehouse, moviesWarehouse);
 	}
-	@RequestMapping(method=RequestMethod.DELETE,value="/rentalOffice/{idRentalOffice}/warehouse/{idWarehouse}")
+	@RequestMapping(method=RequestMethod.DELETE,value="/rentalOffice/warehouse/{idWarehouse}")
 	public void deleteMoviesWarehouse(@PathVariable Integer idWarehouse) {
 
 		moviesWarehouseService.deleteMoviesWarehouse(idWarehouse);

@@ -34,7 +34,7 @@ public class ClientController {
 	}
 
 
-	@RequestMapping(method=RequestMethod.GET,value="rentalOffice/{idRentalOffice}/clients/{idClient}")
+	@RequestMapping(method=RequestMethod.GET,value="rentalOffice/clients/{idClient}")
 	public Optional<Client> getClient(@PathVariable Integer idClient) {
 		
 		return clientService.getClient(idClient);
@@ -58,7 +58,7 @@ public class ClientController {
 		clientService.updateClient(idClient, client);
 	}
 	
-	@RequestMapping(method=RequestMethod.DELETE,value="rentalOffice/{idRentalOffice}/clients/{idClient}")
+	@RequestMapping(method=RequestMethod.DELETE,value="rentalOffice/clients/{idClient}")
 	public void deleteClient(@PathVariable Integer idClient) {
 		
 		clientService.deleteClient(idClient);
