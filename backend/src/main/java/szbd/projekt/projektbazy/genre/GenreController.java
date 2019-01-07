@@ -1,14 +1,13 @@
 package szbd.projekt.projektbazy.genre;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.server.ResponseStatusException;
 
 @RestController
@@ -35,12 +34,14 @@ public class GenreController {
 	
 	
 	@RequestMapping(method=RequestMethod.DELETE,value="/genre/{genreName}")
-	public void deleteGenre(@PathVariable String genreName) {
+	public void deleteGenre(@PathVariable String genreName){
 
 		try {
 			genreService.deleteGenre(genreName);
+		} catch (EmptyResultDataAccessException ex) {
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Element does not exist", ex);
 		} catch (Exception ex) {
-			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Element is foreign key", ex);
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Element is a foreign key", ex);
 		}
 	}
 	
