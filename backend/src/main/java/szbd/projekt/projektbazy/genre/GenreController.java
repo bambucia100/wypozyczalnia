@@ -34,9 +34,8 @@ public class GenreController {
 	
 	
 	@RequestMapping(method=RequestMethod.DELETE,value="/genre/{genreName}")
-	public void deleteGenre(@PathVariable String genreName)
-		{
-		
+	public void deleteGenre(@PathVariable String genreName) {
+
 		genreService.deleteGenre(genreName);
 	}
 	
