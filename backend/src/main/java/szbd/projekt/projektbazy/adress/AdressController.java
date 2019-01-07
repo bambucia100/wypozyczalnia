@@ -26,7 +26,7 @@ public class AdressController {
 		return adressService.getAllAdress();
 	}
 	
-	@RequestMapping(method=RequestMethod.GET,value= {"rentalOffice/{idRentalOffice}/adress/{idAdress}"})
+	@RequestMapping(method=RequestMethod.GET,value= {"rentalOffice/adress/{idAdress}"})
 	public Optional<Adress> getAdress(@PathVariable Integer idAdress) {
 		
 		return adressService.getAdress(idAdress);

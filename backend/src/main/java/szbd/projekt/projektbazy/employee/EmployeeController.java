@@ -20,14 +20,22 @@ public class EmployeeController {
 
 	@Autowired
 	private EmployeeService employeeService;
+	@Autowired
+	private EmployeeRepository employeeRepository;
 	
-	@RequestMapping(method=RequestMethod.GET,value="/rentalOffice/{idRentalOffice}/employees")
-	public List<Employee> getAllEmployees(@PathVariable Integer idRentalOffice)
+	@RequestMapping(method=RequestMethod.GET,value="/rentalOffice/employees")
+	public List<Employee> getAllEmployees()
 	{
 	  return employeeService.getAllEmployees();
 	}
+
+	@RequestMapping(method=RequestMethod.GET,value="/rentalOffice/{idRentalOffice}/employees")
+	public List<Employee> getAllEmployees(@PathVariable Integer idRentalOffice)
+	{
+		return employeeRepository.getAllEmployeesByOffice(idRentalOffice);
+	}
 	
-	@RequestMapping(method=RequestMethod.GET,value="/rentalOffice/{idRentalOffice}/employees/{idEmployee}")
+	@RequestMapping(method=RequestMethod.GET,value="/rentalOffice/employees/{idEmployee}")
 	public Optional<Employee> getEmployee(@PathVariable Integer idEmployee) {
 		return employeeService.getEmployee(idEmployee);
 	}
@@ -54,7 +62,7 @@ public class EmployeeController {
 		employee.setRentalOffice(new RentalOffice(idRentalOffice,"", 0));
 		employeeService.updateEmployee(idEmployee, employee);
 	}
-	@RequestMapping(method=RequestMethod.DELETE,value="/rentalOffice/{idRentalOffice}/employees/{idEmployee}")
+	@RequestMapping(method=RequestMethod.DELETE,value="/rentalOffice/employees/{idEmployee}")
 	public void deleteEmployee(@PathVariable Integer idEmployee)
 	{
 		 employeeService.deleteEmployee(idEmployee);

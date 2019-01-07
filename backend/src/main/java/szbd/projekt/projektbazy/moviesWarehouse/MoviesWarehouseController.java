@@ -18,14 +18,22 @@ public class MoviesWarehouseController {
 
 	@Autowired
 	private MoviesWarehouseService  moviesWarehouseService;
+	@Autowired
+	private MoviesWarehouseRepository moviesWarehouseRepository;
 
-	@RequestMapping(method=RequestMethod.GET, value="/rentalOffice/{idRentalOffice}/warehouse/all")
-	public List<MoviesWarehouse> getAllMoviesWarehouse(@PathVariable Integer idRentalOffice) {
+	@RequestMapping(method=RequestMethod.GET, value="/rentalOffice/warehouse/all")
+	public List<MoviesWarehouse> getAllMoviesWarehouse() {
 
 		return moviesWarehouseService.getAllMoviesWarehouse();
 	}
 
-	@RequestMapping(method=RequestMethod.GET,value="/rentalOffice/{idRentalOffice}/warehouse/{idMoviesWarehouse}")
+	@RequestMapping(method=RequestMethod.GET, value="/rentalOffice/{idRentalOffice}/warehouse/all")
+	public List<MoviesWarehouse> getAllMoviesWarehouseByIdOffice(@PathVariable Integer idRentalOffice) {
+
+		return moviesWarehouseRepository.getAllMoviesWarehousesByRentalOffice(idRentalOffice);
+	}
+
+	@RequestMapping(method=RequestMethod.GET,value="/rentalOffice/warehouse/{idMoviesWarehouse}")
 	public Optional<MoviesWarehouse> getMoviesWarehouse(@PathVariable Integer idMoviesWarehouse) {
 
 		return moviesWarehouseService.getMoviesWarehouse(idMoviesWarehouse);
@@ -47,7 +55,7 @@ public class MoviesWarehouseController {
 		moviesWarehouse.setRentalOffice(new RentalOffice(idRentalOffice, "", 0));
 		moviesWarehouseService.updateMoviesWarehouse(idMoviesWarehouse, moviesWarehouse);
 	}
-	@RequestMapping(method=RequestMethod.DELETE,value="/rentalOffice/{idRentalOffice}/warehouse/{idWarehouse}")
+	@RequestMapping(method=RequestMethod.DELETE,value="/rentalOffice/warehouse/{idWarehouse}")
 	public void deleteMoviesWarehouse(@PathVariable Integer idWarehouse) {
 
 		moviesWarehouseService.deleteMoviesWarehouse(idWarehouse);
