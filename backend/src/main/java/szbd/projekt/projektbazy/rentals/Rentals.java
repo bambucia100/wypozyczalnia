@@ -23,7 +23,7 @@ public class Rentals {
 	    name = "native", 
 	    strategy = "native"
 	)
-	@Column(name = "id_rental", unique = true, nullable = false)
+	@Column(name = "id_rental")
 	private int idRental;
 	@Column(name= "rental_date", unique = false, nullable = false)
 	private Date rentalDate;

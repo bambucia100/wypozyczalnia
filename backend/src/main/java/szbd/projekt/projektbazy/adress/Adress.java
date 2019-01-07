@@ -28,9 +28,7 @@ public class Adress {
 	@Column(name = "house_number", nullable = false)
 	private String houseNumber;
 	
-	public Adress() {
-		
-	}
+	public Adress() { }
 	
 	public Adress(Integer idAdress, String country, String province, String city, String street, String houseNumber) {
 		super();
