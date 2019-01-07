@@ -30,7 +30,7 @@ public class ClientController {
 	@RequestMapping(method=RequestMethod.GET,value="rentalOffice/{idRentalOffice}/clients")
 	public List<Client> getAllClientsByWarehouse(@PathVariable Integer idRentalOffice) {
 
-		return clientRepository.getAllClientsByWarehouse(idRentalOffice);
+		return clientRepository.getAllClientsByOffice(idRentalOffice);
 	}
 
 

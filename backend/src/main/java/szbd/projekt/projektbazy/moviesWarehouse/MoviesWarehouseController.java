@@ -18,11 +18,19 @@ public class MoviesWarehouseController {
 
 	@Autowired
 	private MoviesWarehouseService  moviesWarehouseService;
+	@Autowired
+	private MoviesWarehouseRepository moviesWarehouseRepository;
 
-	@RequestMapping(method=RequestMethod.GET, value="/rentalOffice/{idRentalOffice}/warehouse/all")
-	public List<MoviesWarehouse> getAllMoviesWarehouse(@PathVariable Integer idRentalOffice) {
+	@RequestMapping(method=RequestMethod.GET, value="/rentalOffice/warehouse/all")
+	public List<MoviesWarehouse> getAllMoviesWarehouse() {
 
 		return moviesWarehouseService.getAllMoviesWarehouse();
+	}
+
+	@RequestMapping(method=RequestMethod.GET, value="/rentalOffice/{idRentalOffice}/warehouse/all")
+	public List<MoviesWarehouse> getAllMoviesWarehouseByIdOffice(@PathVariable Integer idRentalOffice) {
+
+		return moviesWarehouseRepository.getAllMoviesWarehousesByRentalOffice(idRentalOffice);
 	}
 
 	@RequestMapping(method=RequestMethod.GET,value="/rentalOffice/{idRentalOffice}/warehouse/{idMoviesWarehouse}")
