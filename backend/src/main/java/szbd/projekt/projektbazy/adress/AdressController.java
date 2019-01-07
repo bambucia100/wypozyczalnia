@@ -4,11 +4,14 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 
 @RestController
@@ -37,8 +40,15 @@ public class AdressController {
 	
 	@RequestMapping(method=RequestMethod.DELETE,value="adress/{idAdress}")
 	public void deleteAdress(@PathVariable Integer idAdress) {
-		
-		adressService.deleteAdress(idAdress);
+
+		try {
+			adressService.deleteAdress(idAdress);
+		} catch (EmptyResultDataAccessException ex) {
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Element does not exist", ex);
+		} catch (Exception ex) {
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Element is a foreign key", ex);
+		}
+
 	}
 	@RequestMapping(method=RequestMethod.PUT, value="adress/{idAdress}")
 	public void updateAdress(@RequestBody Adress adress, @PathVariable Integer idAdress) {

@@ -4,11 +4,14 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 
 @RestController
@@ -36,10 +39,15 @@ public class ActorController {
 	
 	
 	@RequestMapping(method=RequestMethod.DELETE,value="/actor/{idActor}")
-	public void deleteActor(@PathVariable Integer idActor)
-	{
-		
-		actorService.deleteActor(idActor);
+	public void deleteActor(@PathVariable Integer idActor) {
+
+		try {
+			actorService.deleteActor(idActor);
+		} catch (EmptyResultDataAccessException ex) {
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Element does not exist", ex);
+		} catch (Exception ex) {
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Element is a foreign key", ex);
+		}
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT,value="/actor/{idActor}")
