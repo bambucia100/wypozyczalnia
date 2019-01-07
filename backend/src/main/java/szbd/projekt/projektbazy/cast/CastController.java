@@ -48,6 +48,7 @@ public class CastController {
 			@PathVariable Integer idActor) {
 		
 		CastId idCast = new CastId(idMovie, idActor);
+		cast.setId(idCast);
 		cast.setMovie(new Movie(idMovie, "", 0, "", 0, "", ""));
 		cast.setActor(new Actor(idActor, "", "", null));
 		castService.updateCast(idCast, cast);
