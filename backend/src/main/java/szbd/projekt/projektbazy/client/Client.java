@@ -42,7 +42,7 @@ public class Client {
 	@ManyToOne
 	@JoinColumn(name = "id_rental_office", nullable = false)
 	private RentalOffice rentalOffice;
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "id_adress", nullable = false)
 	private Adress adress;
 	

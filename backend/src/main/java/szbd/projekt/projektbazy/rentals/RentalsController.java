@@ -55,13 +55,13 @@ public class RentalsController {
 		rentalService.addRental(rental);
 	}
 	
-	@RequestMapping(method=RequestMethod.PUT,value="/rentalOffice/{idRentalOffice}/client/{idClient}/rental"
+	@RequestMapping(method=RequestMethod.PUT,value="/rentalOffice/client/{idClient}/rental"
 			+ "/{idRental}/{idMovie}/{idEmployee}")
 	public void updateRentals(@RequestBody Rentals rental, @PathVariable Integer idClient, 
 			@PathVariable Integer idMovie, @PathVariable Integer idRental, @PathVariable Integer idEmployee) {
 		
 		rental.setMovie(new Movie(idMovie, "", 0, "", 0, "", ""));
-		rental.setClient(new Client(idMovie, "", "", null, "",0 , 0, 0));
+		rental.setClient(new Client(idClient, "", "", null, "",0 , 0, 0));
 		rental.setEmployee(new Employee(idEmployee, "", "", "", "", "", 0, 0));
 		rentalService.updateRental(idRental, rental);
 	}

@@ -18,13 +18,22 @@ public class ClientController {
 	
 	@Autowired
 	private ClientService clientService;
+	@Autowired
+	private ClientRepository clientRepository;
 	
-	@RequestMapping(method=RequestMethod.GET,value="rentalOffice/{idRentalOffice}/clients")
-	public List<Client> getAllClients(@PathVariable Integer idRentalOffice) {
+	@RequestMapping(method=RequestMethod.GET,value="rentalOffice/clients")
+	public List<Client> getAllClients() {
 		
 		return clientService.getAllClients();
 	}
-	
+
+	@RequestMapping(method=RequestMethod.GET,value="rentalOffice/{idRentalOffice}/clients")
+	public List<Client> getAllClientsByWarehouse(@PathVariable Integer idRentalOffice) {
+
+		return clientRepository.getAllClientsByWarehouse(idRentalOffice);
+	}
+
+
 	@RequestMapping(method=RequestMethod.GET,value="rentalOffice/{idRentalOffice}/clients/{idClient}")
 	public Optional<Client> getClient(@PathVariable Integer idClient) {
 		
@@ -40,10 +49,10 @@ public class ClientController {
 		clientService.addClient(client);
 	}
 	
-	@RequestMapping(method=RequestMethod.PUT,value="/rentalOffice/{idRentalOffice}/clients/{idClient}")
+	@RequestMapping(method=RequestMethod.PUT,value="/rentalOffice/{idRentalOffice}/clients/{idClient}/{idAdress}")
 	public void updateClient(@RequestBody Client client, @PathVariable Integer idClient,
 			@PathVariable Integer idRentalOffice, @PathVariable Integer idAdress) {
-		
+
 		client.setAdress(new Adress(idAdress, "", "", "", "", ""));
 		client.setRentalOffice(new RentalOffice(idRentalOffice, "", 0));
 		clientService.updateClient(idClient, client);
