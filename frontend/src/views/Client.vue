@@ -71,7 +71,7 @@
           { prop: 'registrationDate', name: 'Reg. date', width: 90, searchable: true, sortable: true },
           { prop: 'email', name: 'E-mail', width: 230, searchable: true },
           { prop: 'number', name: 'Phone', width: 84, searchable: true },
-          { prop: 'idRentalOffice', name: 'ID', width: 26, sortable: true, numberFilter: true },
+          { prop: 'idRentalOffice', name: 'ID', width: 28, sortable: true, numberFilter: true },
           { prop: 'rentalOfficeName', name: 'Office name', width: 125, filterable: true, sortable: true },
           { prop: 'idAdress', name: 'ID', width: 36, sortable: true, numberFilter: true },
           { prop: 'adressComplete', name: 'Address', searchable: true, sortable: true },

@@ -1,7 +1,7 @@
 <template>
   <div class="db-data">
     <TheDatabaseNavigation link="RentalOffice"></TheDatabaseNavigation>
-    <h1>Rental office</h1>
+    <h1>Rental offices</h1>
     <vue-virtual-table
       class="v-table"
       :config="tableConfig"
