@@ -6,6 +6,7 @@ import Adress from './views/Adress.vue'
 import Genre from './views/Genre.vue'
 import Cast from './views/Cast.vue'
 import Client from './views/Client.vue'
+import Employee from './views/Employee.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -39,6 +40,11 @@ export default new Router({
       path: '/rentalOffice/clients',
       name: 'Client',
       component: Client
+    },
+    {
+      path: '/rentalOffice/employees',
+      name: 'Employee',
+      component: Employee
     },
   ]
 })
