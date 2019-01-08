@@ -41,26 +41,20 @@ public class RentalsController {
 	}
 
 
-	//TODO
-	//sprawdzic zeby bylo > 0 //chyba ze na froncie
-	@RequestMapping(method=RequestMethod.POST,value="/rentalOffice/{idRentalOffice}/"
-			+ "client/{idClient}/rental/{idMovie}/{idEmployee}")
-	public void addRentals(@RequestBody Rentals rental, @PathVariable Integer idClient, 
-			@PathVariable Integer idMovie, @PathVariable Integer idRentalOffice, @PathVariable Integer idEmployee) {
+	@RequestMapping(method=RequestMethod.POST,value="/rental/client/{idClient}/employee/{idEmployee}")
+	public Integer addRentals(@RequestBody Rentals rental, @PathVariable Integer idClient,
+							  @PathVariable Integer idEmployee) {
 
-		rentalService.changeQuantity(idMovie, idRentalOffice);
-		rental.setMovie(new Movie(idMovie, "", 0, "", 0, "", ""));
 		rental.setClient(new Client(idClient, "", "", null, "", 0 , 0, 0));
 		rental.setEmployee(new Employee(idEmployee, "", "", "", "", "", 0, 0));
 		rentalService.addRental(rental);
+		return rental.getIdRental();
 	}
 	
-	@RequestMapping(method=RequestMethod.PUT,value="/rentalOffice/client/{idClient}/rental"
-			+ "/{idRental}/{idMovie}/{idEmployee}")
-	public void updateRentals(@RequestBody Rentals rental, @PathVariable Integer idClient, 
-			@PathVariable Integer idMovie, @PathVariable Integer idRental, @PathVariable Integer idEmployee) {
-		
-		rental.setMovie(new Movie(idMovie, "", 0, "", 0, "", ""));
+	@RequestMapping(method=RequestMethod.PUT,value="/rental/{idRental}/client/{idClient}/employee/{idEmployee}")
+	public void updateRentals(@RequestBody Rentals rental, @PathVariable Integer idClient,
+							  @PathVariable Integer idRental, @PathVariable Integer idEmployee) {
+
 		rental.setClient(new Client(idClient, "", "", null, "",0 , 0, 0));
 		rental.setEmployee(new Employee(idEmployee, "", "", "", "", "", 0, 0));
 		rentalService.updateRental(idRental, rental);

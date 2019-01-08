@@ -26,7 +26,7 @@ public class CastController {
 	public List<Cast> getAllCast() {
 		
 		  return castService.getAllCast();
-		}
+	}
 
 	@RequestMapping(method=RequestMethod.GET,value = "/movie/cast/{idMovie}/{idActor}")
 	public Optional<Cast> getCast(@PathVariable Integer idMovie, @PathVariable Integer idActor) {

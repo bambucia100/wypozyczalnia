@@ -30,19 +30,21 @@ public class EmployeeController {
 	}
 
 	@RequestMapping(method=RequestMethod.GET,value="/rentalOffice/{idRentalOffice}/employees")
-	public List<Employee> getAllEmployees(@PathVariable Integer idRentalOffice)
-	{
+	public List<Employee> getAllEmployees(@PathVariable Integer idRentalOffice)	{
+
 		return employeeRepository.getAllEmployeesByOffice(idRentalOffice);
 	}
 	
 	@RequestMapping(method=RequestMethod.GET,value="/rentalOffice/employees/{idEmployee}")
 	public Optional<Employee> getEmployee(@PathVariable Integer idEmployee) {
+
 		return employeeService.getEmployee(idEmployee);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST,value="/rentalOffice/{idRentalOffice}/employees/{idAdress}")
 	public void addEmployee(@RequestBody Employee employee, @PathVariable Integer idRentalOffice, 
 			@PathVariable Integer idAdress) {
+
 		employee.setAdress(new Adress(idAdress, "", "", "", "", ""));
 		employee.setRentalOffice(new RentalOffice(idRentalOffice, "", 0));
 		employeeService.addEmployee(employee);
@@ -50,8 +52,8 @@ public class EmployeeController {
 
 	@RequestMapping(method=RequestMethod.PUT,value="/rentalOffice/{idRentalOffice}/employees/{idEmployee}/{idAdress}")
 	public void updateEmployee(@RequestBody Employee employee,@PathVariable Integer idEmployee,
-			@PathVariable Integer idRentalOffice, @PathVariable Integer idAdress)
-	{
+			@PathVariable Integer idRentalOffice, @PathVariable Integer idAdress)	{
+
 		employee.setAdress(new Adress(idAdress, "", "", "", "", ""));
 		employee.setRentalOffice(new RentalOffice(idRentalOffice,"", 0));
 		employeeService.updateEmployee(idEmployee, employee);
