@@ -39,7 +39,7 @@ public class RentalElement {
     public RentalElement(int amountOfRentals, Integer idRental, Integer idMoviesWarehouse) {
         super();
         this.amountOfRentals = amountOfRentals;
-        this.rental = new Rentals(idRental, null, null, 0, 0, false);
+        this.rental = new Rentals(idRental, null, null, 0, 0);
         this.moviesWarehouse = new MoviesWarehouse(idMoviesWarehouse, 0, 0, 0, 0);
     }
 

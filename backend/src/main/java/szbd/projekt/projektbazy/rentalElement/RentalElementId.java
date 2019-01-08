@@ -24,7 +24,7 @@ public class RentalElementId implements Serializable {
 
     public  RentalElementId(int idRental, int idMoviesWarehouse) {
         super();
-        this.rental = new Rentals(idRental, null, null, 0, 0, false);
+        this.rental = new Rentals(idRental, null, null, 0, 0);
         this.moviesWarehouse = new MoviesWarehouse(idMoviesWarehouse, 0, 0, 0, 0);
     }
 
