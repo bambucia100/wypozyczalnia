@@ -43,7 +43,7 @@ public class RentalElementController {
                                  @PathVariable Integer idRental, @PathVariable Integer amount) {
 
         rentalElement.setMoviesWarehouse(new MoviesWarehouse(idMoviesWarehouse, 0, 0, 0, 0));
-        rentalElement.setRental(new Rentals(idRental, null, null, 0, 0, false));
+        rentalElement.setRental(new Rentals(idRental, null, null, 0, 0));
         rentalElementService.addRentalElement(rentalElement);
         rentalElementService.changeQuantity(idMoviesWarehouse, amount);
     }
@@ -54,7 +54,7 @@ public class RentalElementController {
 
         rentalElementService.deleteRentalElement(new RentalElementId(idRental, idMoviesWarehouse));
         rentalElement.setMoviesWarehouse(new MoviesWarehouse(idMoviesWarehouse, 0, 0, 0, 0));
-        rentalElement.setRental(new Rentals(idRental, null, null, 0, 0, false));
+        rentalElement.setRental(new Rentals(idRental, null, null, 0, 0));
         rentalElementService.updateRentalElement(new RentalElementId(idRental, idMoviesWarehouse), rentalElement);
     }
 
