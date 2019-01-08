@@ -33,6 +33,8 @@ public class RentalsController {
 	RentalsService rentalService;
 	@Autowired
 	RentalsRepository rentalsRepository;
+	@PersistenceContext
+	private EntityManager entityManager ;
 
 	@RequestMapping(method=RequestMethod.GET,value="/rentals/all")
 	public List<Rentals> getAllRentals() {
@@ -95,5 +97,27 @@ public class RentalsController {
 		}
 		return charge;
 	}
-	
+
+	@RequestMapping(method=RequestMethod.GET, value="rental/{idRental}/increase")
+	public void increaseAmount(@PathVariable Integer idRental) {
+
+		List<Object[]> lst = rentalsRepository.getWarehouseAndAmount(idRental);
+
+		for (Object o[] : lst) {
+			Integer idWarehouse = (Integer) o[0];
+			Integer amount = (Integer) o[1];
+
+			StoredProcedureQuery query = entityManager.createStoredProcedureQuery("increment_quantity");
+			query.registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter(2, Integer.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter(3, Integer.class, ParameterMode.IN);
+
+			query.setParameter(1, idWarehouse);
+			query.setParameter(2, amount);
+			query.setParameter(3, idRental);
+
+			query.execute();
+		}
+	}
+
 }
