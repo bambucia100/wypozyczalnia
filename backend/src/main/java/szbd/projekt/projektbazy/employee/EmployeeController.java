@@ -47,13 +47,7 @@ public class EmployeeController {
 		employee.setRentalOffice(new RentalOffice(idRentalOffice, "", 0));
 		employeeService.addEmployee(employee);
 	}
-	@RequestMapping(method=RequestMethod.PUT,value="/rentalOffice/{idRentalOffice}/employees/{idEmployee}")
-	public void updateEmployee(@RequestBody Employee employee,@PathVariable Integer idEmployee,
-			@PathVariable Integer idRentalOffice)
-	{
-		employee.setRentalOffice(new RentalOffice(idRentalOffice,"", 0));
-		employeeService.updateEmployee(idEmployee, employee);
-	}
+
 	@RequestMapping(method=RequestMethod.PUT,value="/rentalOffice/{idRentalOffice}/employees/{idEmployee}/{idAdress}")
 	public void updateEmployee(@RequestBody Employee employee,@PathVariable Integer idEmployee,
 			@PathVariable Integer idRentalOffice, @PathVariable Integer idAdress)
@@ -62,6 +56,7 @@ public class EmployeeController {
 		employee.setRentalOffice(new RentalOffice(idRentalOffice,"", 0));
 		employeeService.updateEmployee(idEmployee, employee);
 	}
+
 	@RequestMapping(method=RequestMethod.DELETE,value="/rentalOffice/employees/{idEmployee}")
 	public void deleteEmployee(@PathVariable Integer idEmployee)
 	{
