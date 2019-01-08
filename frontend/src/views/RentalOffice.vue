@@ -40,88 +40,87 @@
 </template>
 
 <script>
-  import axios from 'axios'
-  import TheDatabaseNavigation from '../components/TheDatabaseNavigation.vue'
-  import VueVirtualTable from 'vue-virtual-table'
+import axios from 'axios'
+import TheDatabaseNavigation from '../components/TheDatabaseNavigation.vue'
+import VueVirtualTable from 'vue-virtual-table'
 
-  export default {
-    name: 'RentalOffice',
-    components: {
-      TheDatabaseNavigation,
-      VueVirtualTable
+export default {
+  name: 'RentalOffice',
+  components: {
+    TheDatabaseNavigation,
+    VueVirtualTable
+  },
+  data () {
+    return {
+      tableConfig: [/* prop, name, width, sortable, searchable, filterable, numberFilter, summary, prefix, suffix */
+        { prop: 'idRentalOffice', name: 'ID', width: 36, sortable: true, numberFilter: true },
+        { prop: 'rentalOfficeName', name: 'Office name', width: 300, searchable: true, sortable: true },
+        { prop: 'idAdress', name: 'ID', width: 36, sortable: true, numberFilter: true },
+        { prop: 'adressComplete', name: 'Address', searchable: true, sortable: true },
+        { prop: '_action', name: 'Action', actionName: 'actionCommon', width: 130 }
+      ],
+      tableData: [],
+      oldRecordData: {},
+      newRecordData: {},
+      alertText: ''
+    }
+  },
+  created () {
+    axios.get('/rentalOffice/all')
+      .then(response => {
+        function responseConstructor (idRentalOffice, rentalOfficeName, idAdress, city, street, houseNumber) {
+          this.idRentalOffice = idRentalOffice
+          this.rentalOfficeName = rentalOfficeName
+          this.idAdress = idAdress
+          this.adressComplete = city + ', ' + street + ' ' + houseNumber
+        }
+        let i
+        for (i = 0; i < response.data.length; i++) {
+          this.tableData.push(new responseConstructor(response.data[i].idRentalOffice, response.data[i].rentalOfficeName,
+            response.data[i].adress.idAdress, response.data[i].adress.city, response.data[i].adress.street, response.data[i].adress.houseNumber))
+        }
+      })
+  },
+  methods: {
+    editRecord: function (recordData) {
+      this.$modal.show('editModal')
+      this.oldRecordData = recordData
+      this.newRecordData = recordData
     },
-    data () {
-      return {
-        tableConfig: [/* prop, name, width, sortable, searchable, filterable, numberFilter, summary, prefix, suffix */
-          { prop: 'idRentalOffice', name: 'ID', width: 36, sortable: true, numberFilter: true },
-          { prop: 'rentalOfficeName', name: 'Office name', width: 300, searchable: true, sortable: true },
-          { prop: 'idAdress', name: 'ID', width: 36, sortable: true, numberFilter: true },
-          { prop: 'adressComplete', name: 'Address', searchable: true, sortable: true },
-          { prop: '_action', name: 'Action', actionName: 'actionCommon', width: 130 }
-        ],
-        tableData: [],
-        oldRecordData: {},
-        newRecordData: {},
-        alertText: ''
-      }
-    },
-    created () {
-      axios.get('/rentalOffice/all')
+    editRecordSubmit: function () {
+      axios.put('/rentalOffice/' + this.oldRecordData.idRentalOffice + '/' + this.oldRecordData.idAdress, this.newRecordData)
         .then(response => {
-          function responseConstructor(idRentalOffice, rentalOfficeName, idAdress, city, street, houseNumber){
-
-            this.idRentalOffice = idRentalOffice
-            this.rentalOfficeName = rentalOfficeName
-            this.idAdress = idAdress
-            this.adressComplete = city + ', ' + street + ' ' + houseNumber
-          }
-          let i
-          for(i=0; i<response.data.length; i++) {
-            this.tableData.push(new responseConstructor(response.data[i].idRentalOffice, response.data[i].rentalOfficeName,
-              response.data[i].adress.idAdress, response.data[i].adress.city, response.data[i].adress.street, response.data[i].adress.houseNumber))
+          this.$modal.show('alertModal', { text: 'Operation succeeded.' })
+          this.$modal.hide('editModal')
+          let editElemIndex = this.tableData.findIndex(tableElem => tableElem.idRentalOffice == this.oldRecordData.idRentalOffice)
+          this.$set(this.tableData, editElemIndex, this.newRecordData)
+        })
+        .catch(error => {
+          if (error.response) {
+            this.$modal.show('alertModal',
+              { text: 'Operation failed.  |  ' + error.response.status + '  |  ' + error.response.data.error + '  |  ' + error.response.data.message })
           }
         })
     },
-    methods: {
-      editRecord: function (recordData) {
-        this.$modal.show('editModal')
-        this.oldRecordData = recordData
-        this.newRecordData = recordData
-      },
-      editRecordSubmit: function () {
-        axios.put('/rentalOffice/' + this.oldRecordData.idRentalOffice + '/' + this.oldRecordData.idAdress, this.newRecordData)
-          .then(response => {
-            this.$modal.show('alertModal', { text: 'Operation succeeded.' })
-            this.$modal.hide('editModal')
-            let editElemIndex = this.tableData.findIndex(tableElem => tableElem.idRentalOffice == this.oldRecordData.idRentalOffice)
-            this.$set(this.tableData, editElemIndex, this.newRecordData)
-          })
-          .catch(error => {
-            if (error.response) {
-              this.$modal.show('alertModal',
-                { text: 'Operation failed.  |  ' + error.response.status + '  |  ' + error.response.data.error + '  |  ' + error.response.data.message })
-            }
-          })
-      },
-      deleteRecord: function (recordData) {
-        axios.delete('/rentalOffice/' + recordData.idRentalOffice)
-          .then(() => {
-            this.$modal.show('alertModal', { text: 'Operation succeeded.' })
-            let deleteElemIndex = this.tableData.findIndex(tableDataElem => tableDataElem.idRentalOffice == recordData.idRentalOffice)
-            this.tableData.splice(deleteElemIndex, 1)
-          })
-          .catch(error => {
-            if (error.response) {
-              this.$modal.show('alertModal',
-                { text: 'Operation failed.  |  ' + error.response.status + '  |  ' + error.response.data.error + '  |  ' + error.response.data.message })
-            }
-          })
-      },
-      beforeOpenAlert (event) {
-        this.alertText = event.params.text
-      }
+    deleteRecord: function (recordData) {
+      axios.delete('/rentalOffice/' + recordData.idRentalOffice)
+        .then(() => {
+          this.$modal.show('alertModal', { text: 'Operation succeeded.' })
+          let deleteElemIndex = this.tableData.findIndex(tableDataElem => tableDataElem.idRentalOffice == recordData.idRentalOffice)
+          this.tableData.splice(deleteElemIndex, 1)
+        })
+        .catch(error => {
+          if (error.response) {
+            this.$modal.show('alertModal',
+              { text: 'Operation failed.  |  ' + error.response.status + '  |  ' + error.response.data.error + '  |  ' + error.response.data.message })
+          }
+        })
+    },
+    beforeOpenAlert (event) {
+      this.alertText = event.params.text
     }
   }
+}
 </script>
 <style scoped>
 
