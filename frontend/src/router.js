@@ -8,6 +8,7 @@ import Cast from './views/Cast.vue'
 import Client from './views/Client.vue'
 import Employee from './views/Employee.vue'
 import Movie from './views/Movie.vue'
+import MoviesWarehouse from './views/MoviesWarehouse.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -51,6 +52,11 @@ export default new Router({
       path: '/movie',
       name: 'Movie',
       component: Movie
+    },
+    {
+      path: '/rentalOffice/warehouse',
+      name: 'MoviesWarehouse',
+      component: MoviesWarehouse
     },
   ]
 })
