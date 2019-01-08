@@ -13,12 +13,20 @@ public class RentalElementController {
 
     @Autowired
     RentalElementService rentalElementService;
+    @Autowired
+    RentalElementRepository rentalElementRepository;
 
     @RequestMapping(method = RequestMethod.GET, value = "rentalElement/all")
     public List<RentalElement> getAllRentalElements() {
 
         return rentalElementService.getAllRentalElements();
     }
+    @RequestMapping(method = RequestMethod.GET, value = "client/{idClient}/rentalElement")
+    public List<RentalElement> getAllRentalElementsByClient(@PathVariable Integer idClient) {
+
+        return rentalElementRepository.getAllRentalElementsByClient(idClient);
+    }
+
 
     @RequestMapping(method= RequestMethod.GET, value = "/rentalElement/{idMoviesWarehouse}/{idRental}")
     public Optional<RentalElement> getRentalElement(@PathVariable Integer idMoviesWarehouse,
