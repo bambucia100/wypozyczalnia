@@ -27,13 +27,17 @@ public class RentalElementController {
         return rentalElementService.getRentalElement(new RentalElementId(idRental, idMoviesWarehouse));
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "rentalElement/{idMoviesWarehouse}/{idRental}")
+    //WYPOZYCZENIE
+    //TODO
+    //sprawdzic zeby bylo > 0 //chyba ze na froncie
+    @RequestMapping(method = RequestMethod.POST, value = "rentalElement/{idMoviesWarehouse}/{idRental}/{amount}")
     public void addRentalElement(@RequestBody RentalElement rentalElement, @PathVariable Integer idMoviesWarehouse,
-                                 @PathVariable Integer idRental) {
+                                 @PathVariable Integer idRental, @PathVariable Integer amount) {
 
         rentalElement.setMoviesWarehouse(new MoviesWarehouse(idMoviesWarehouse, 0, 0, 0, 0));
-        rentalElement.setRental(new Rentals(idRental, null, null, 0, 0, 0));
+        rentalElement.setRental(new Rentals(idRental, null, null, 0, 0, false));
         rentalElementService.addRentalElement(rentalElement);
+        rentalElementService.changeQuantity(idMoviesWarehouse, amount);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "rentalElement/{idMoviesWarehouse}/{idRental}")
@@ -42,7 +46,7 @@ public class RentalElementController {
 
         rentalElementService.deleteRentalElement(new RentalElementId(idRental, idMoviesWarehouse));
         rentalElement.setMoviesWarehouse(new MoviesWarehouse(idMoviesWarehouse, 0, 0, 0, 0));
-        rentalElement.setRental(new Rentals(idRental, null, null, 0, 0, 0));
+        rentalElement.setRental(new Rentals(idRental, null, null, 0, 0, false));
         rentalElementService.updateRentalElement(new RentalElementId(idRental, idMoviesWarehouse), rentalElement);
     }
 

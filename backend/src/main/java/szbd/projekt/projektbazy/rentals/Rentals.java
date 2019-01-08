@@ -29,28 +29,27 @@ public class Rentals {
 	private Date rentalDate;
 	@Column(name = "return_date", unique = false, nullable = true)
 	private Date returnDate;
+	private Boolean returned;
 	@ManyToOne
 	@JoinColumn(name = "id_client", nullable = false)
 	private Client client;
-	@ManyToOne
-	@JoinColumn(name = "id_movie", nullable = false)
-	private Movie movie;
 	@OneToOne
 	@JoinColumn(name = "id_employee", nullable = false)
 	private Employee employee;
+
 
 	public Rentals() {
 		
 	}
 	
-	public Rentals(int idRental, Date rentalDate, Date returnDate, Integer idClient, Integer idMovie,
-			Integer idEmployee) {
+	public Rentals(int idRental, Date rentalDate, Date returnDate, Integer idClient, Integer idEmployee,
+				   boolean returned) {
 
 		this.idRental = idRental;
 		this.rentalDate = rentalDate;
 		this.returnDate = returnDate;
+		this.returned = returned;
 		this.client = new Client(idClient, "", "", null, "",0 , 0, 0);
-		this.movie = new Movie(idMovie, "", 0, "", 0, "", "");
 		this.employee = new Employee(idEmployee, "", "", "", "", "", 0, 0);
 	}
 
@@ -73,23 +72,22 @@ public class Rentals {
 	public void setReturnDate(Date returnDate) {
 		this.returnDate = returnDate;
 	}
+	public Boolean getReturned() {
+		return returned;
+	}
+	public void setReturned(Boolean returned) {
+		this.returned = returned;
+	}
+
 	public Client getClient() {
 		return client;
 	}
 	public void setClient(Client client) {
 		this.client = client;
 	}
-	public Movie getMovie() {
-		return movie;
-	}
-	public void setMovie(Movie movie) {
-		this.movie = movie;
-	}
-
 	public Employee getEmployee() {
 		return employee;
 	}
-
 	public void setEmployee(Employee employee) {
 		this.employee = employee;
 	}
