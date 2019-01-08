@@ -19,7 +19,7 @@
     <form-modal name="editModal" :width="600" :height="650">
       <div class="modal-box">
         <span class="modal-box-title">Edit record:</span>
-        ID Client:<br/>
+        ID Employee:<br/>
         <input type="text" v-model="newRecordData.idEmployee" disabled><br/>
         First name:<br/>
         <input type="text" v-model="newRecordData.firstName"><br/>

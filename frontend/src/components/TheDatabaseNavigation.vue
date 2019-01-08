@@ -12,6 +12,8 @@
     |
     <router-link to="/genre" :class="[ isGenre ? 'active' : 'router-links' ]">Movie genres</router-link>
     |
+    <router-link to="/movie" :class="[ isMovie ? 'active' : 'router-links' ]">Movies</router-link>
+    |
     <router-link to="/rentalOffice/warehouse" :class="[ isWarehouse ? 'active' : 'router-links' ]">Rental office warehouse</router-link>
     |
     <router-link to="/rentalElement" :class="[ isRentalElement ? 'active' : 'router-links' ]">Rental elements</router-link>
@@ -36,6 +38,7 @@ export default {
       isClient: false,
       isEmployee: false,
       isGenre: false,
+      isMovie: false,
       isWarehouse: false,
       isRentalElement: false,
       isRentalOffice: false,
@@ -61,6 +64,9 @@ export default {
         break
       case 'Genre':
         this.isGenre = true
+        break
+      case 'Movie':
+        this.isMovie = true
         break
       case 'Warehouse':
         this.isWarehouse = true
