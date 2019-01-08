@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <nav class="grid-container">
-      <router-link to="/actor"><div class="nav-content">Database</div></router-link>
+      <router-link to="/rentalOffice/warehouse"><div class="nav-content">Database</div></router-link>
       <router-link to="/"><div class="nav-content">Rent</div></router-link>
       <router-link to="/"><div class="nav-content">Add</div></router-link>
     </nav>
@@ -16,7 +16,7 @@
 
   /*MAIN STYLE*/
   :root {
-    --nav-margin: 9%;
+    --nav-margin: 7%;
   }
   html {
     font-family: Verdana, Helvetica, Arial;

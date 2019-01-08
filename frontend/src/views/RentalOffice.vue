@@ -1,14 +1,14 @@
 <template>
   <div class="db-data">
-    <TheDatabaseNavigation link="Warehouse"></TheDatabaseNavigation>
-    <h1>Rental office warehouse</h1>
+    <TheDatabaseNavigation link="RentalOffice"></TheDatabaseNavigation>
+    <h1>Rental office</h1>
     <vue-virtual-table
       class="v-table"
       :config="tableConfig"
       :data="tableData"
       :minWidth="800"
       :height=$tableHeight
-      :itemHeight="45"
+      :itemHeight="34"
       :bordered="true"
     >
       <template slot-scope="scope" slot="actionCommon">
@@ -16,23 +16,17 @@
         <button @click="deleteRecord(scope.row)">Delete</button>
       </template>
     </vue-virtual-table>
-    <form-modal name="editModal" :width="600" :height="500">
+    <form-modal name="editModal" :width="600" :height="350">
       <div class="modal-box">
         <span class="modal-box-title">Edit record:</span>
-        ID Movie in warehouse:<br/>
-        <input type="text" v-model="newRecordData.idMovieWarehouse" disabled><br/>
-        ID Movie:<br/>
-        <input type="text" v-model="newRecordData.idMovie" disabled><br/>
-        Movie title:<br/>
-        <input type="text" v-model="newRecordData.title" disabled><br/>
-        Quantity in warehouse:<br/>
-        <input type="text" v-model="newRecordData.quantity"><br/>
-        Daily charge:<br/>
-        <input type="text" v-model="newRecordData.charge"><br/>
         ID Rental office:<br/>
         <input type="text" v-model="newRecordData.idRentalOffice" disabled><br/>
         Rental office name:<br/>
-        <input type="text" v-model="newRecordData.rentalOfficeName" disabled><br/>
+        <input type="text" v-model="newRecordData.rentalOfficeName"><br/>
+        ID Address:<br/>
+        <input type="text" v-model="newRecordData.idAdress" disabled><br/>
+        Address:<br/>
+        <input type="text" v-model="newRecordData.adressComplete" disabled><br/>
         <button @click="editRecordSubmit" style="float:right;">Submit</button><button @click="$modal.hide('editModal')" >Cancel</button>
       </div>
     </form-modal>
@@ -51,7 +45,7 @@
   import VueVirtualTable from 'vue-virtual-table'
 
   export default {
-    name: 'MoviesWarehouse',
+    name: 'RentalOffice',
     components: {
       TheDatabaseNavigation,
       VueVirtualTable
@@ -59,13 +53,10 @@
     data () {
       return {
         tableConfig: [/* prop, name, width, sortable, searchable, filterable, numberFilter, summary, prefix, suffix */
-          { prop: 'idMovieWarehouse', name: 'ID', width: 36, sortable: true, numberFilter: true },
-          { prop: 'idMovie', name: 'ID Movie', width: 90, numberFilter: true, sortable: true },
-          { prop: 'title', name: 'Title', searchable: true, sortable: true },
-          { prop: 'quantity', name: 'Quantity', width: 90, numberFilter: true, sortable: true },
-          { prop: 'charge', name: 'Charge', width: 90, numberFilter: true, sortable: true },
           { prop: 'idRentalOffice', name: 'ID', width: 36, sortable: true, numberFilter: true },
-          { prop: 'rentalOfficeName', name: 'Office name', width: 150, filterable: true, sortable: true },
+          { prop: 'rentalOfficeName', name: 'Office name', width: 300, searchable: true, sortable: true },
+          { prop: 'idAdress', name: 'ID', width: 36, sortable: true, numberFilter: true },
+          { prop: 'adressComplete', name: 'Address', searchable: true, sortable: true },
           { prop: '_action', name: 'Action', actionName: 'actionCommon', width: 130 }
         ],
         tableData: [],
@@ -75,22 +66,19 @@
       }
     },
     created () {
-      axios.get('/rentalOffice/warehouse/all')
+      axios.get('/rentalOffice/all')
         .then(response => {
-          function responseConstructor(idMovieWarehouse, idMovie, title, quantity, charge, idRentalOffice, rentalOfficeName){
-            this.idMovieWarehouse = idMovieWarehouse
-            this.idMovie = idMovie
-            this.title = title
-            this.quantity = quantity
-            this.charge = charge
+          function responseConstructor(idRentalOffice, rentalOfficeName, idAdress, city, street, houseNumber){
+
             this.idRentalOffice = idRentalOffice
             this.rentalOfficeName = rentalOfficeName
+            this.idAdress = idAdress
+            this.adressComplete = city + ', ' + street + ' ' + houseNumber
           }
           let i
           for(i=0; i<response.data.length; i++) {
-            this.tableData.push(new responseConstructor(response.data[i].idMovieWarehouse, response.data[i].movie.idMovie,
-              response.data[i].movie.title, response.data[i].quantity, response.data[i].charge,
-              response.data[i].rentalOffice.idRentalOffice, response.data[i].rentalOffice.rentalOfficeName,))
+            this.tableData.push(new responseConstructor(response.data[i].idRentalOffice, response.data[i].rentalOfficeName,
+              response.data[i].adress.idAdress, response.data[i].adress.city, response.data[i].adress.street, response.data[i].adress.houseNumber))
           }
         })
     },
@@ -101,12 +89,11 @@
         this.newRecordData = recordData
       },
       editRecordSubmit: function () {
-        axios.put('/rentalOffice/' + this.oldRecordData.idRentalOffice + '/warehouse/' + this.oldRecordData.idMovie +
-          '/' + this.oldRecordData.idMovieWarehouse, this.newRecordData)
+        axios.put('/rentalOffice/' + this.oldRecordData.idRentalOffice + '/' + this.oldRecordData.idAdress, this.newRecordData)
           .then(response => {
             this.$modal.show('alertModal', { text: 'Operation succeeded.' })
             this.$modal.hide('editModal')
-            let editElemIndex = this.tableData.findIndex(tableElem => tableElem.idMovieWarehouse == this.oldRecordData.idMovieWarehouse)
+            let editElemIndex = this.tableData.findIndex(tableElem => tableElem.idRentalOffice == this.oldRecordData.idRentalOffice)
             this.$set(this.tableData, editElemIndex, this.newRecordData)
           })
           .catch(error => {
@@ -117,10 +104,10 @@
           })
       },
       deleteRecord: function (recordData) {
-        axios.delete('/rentalOffice/warehouse/' + recordData.idMovieWarehouse)
+        axios.delete('/rentalOffice/' + recordData.idRentalOffice)
           .then(() => {
             this.$modal.show('alertModal', { text: 'Operation succeeded.' })
-            let deleteElemIndex = this.tableData.findIndex(tableDataElem => tableDataElem.idMovieWarehouse == recordData.idMovieWarehouse)
+            let deleteElemIndex = this.tableData.findIndex(tableDataElem => tableDataElem.idRentalOffice == recordData.idRentalOffice)
             this.tableData.splice(deleteElemIndex, 1)
           })
           .catch(error => {
