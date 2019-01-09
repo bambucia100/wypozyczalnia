@@ -88,6 +88,12 @@
     margin: 6px;
     padding: 4px;
   }
+  .cool-select-input {
+    width: 98.5%;
+    margin: 6px 6px -12px 6px;
+    color: #000;
+
+  }
 /*NAVIGATION*/
   nav {
     height: 100%;

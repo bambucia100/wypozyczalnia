@@ -2,6 +2,8 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import VModal from 'vue-js-modal'
+import VueSelect from 'vue-cool-select'
+Vue.use(VueSelect, { theme: 'bootstrap' })
 
 Vue.config.productionTip = false
 

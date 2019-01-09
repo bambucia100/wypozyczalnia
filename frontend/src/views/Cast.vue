@@ -44,94 +44,94 @@
 </template>
 
 <script>
-  import axios from 'axios'
-  import TheDatabaseNavigation from '../components/TheDatabaseNavigation.vue'
-  import VueVirtualTable from 'vue-virtual-table'
-  import _ from 'lodash'
+import axios from 'axios'
+import TheDatabaseNavigation from '../components/TheDatabaseNavigation.vue'
+import VueVirtualTable from 'vue-virtual-table'
+import _ from 'lodash'
 
-  export default {
-    name: 'Cast',
-    components: {
-      TheDatabaseNavigation,
-      VueVirtualTable
+export default {
+  name: 'Cast',
+  components: {
+    TheDatabaseNavigation,
+    VueVirtualTable
+  },
+  data () {
+    return {
+      tableConfig: [/* prop, name, width, sortable, searchable, filterable, numberFilter, summary, prefix, suffix */
+        { prop: 'idMovie', name: 'ID', width: 36, sortable: true, numberFilter: true },
+        { prop: 'title', name: 'Movie title', filterable: true, sortable: true },
+        { prop: 'idActor', name: 'ID', width: 36, numberFilter: true, sortable: true },
+        { prop: 'name', name: "Actor's name", filterable: true, sortable: true },
+        { prop: 'characters', name: 'Roles', searchable: true },
+        { prop: 'actorRating', name: 'Rating', width: 60, numberFilter: true, sortable: true },
+        { prop: '_action', name: 'Action', actionName: 'actionCommon', width: 130 }
+      ],
+      tableData: [],
+      oldRecordData: {},
+      newRecordData: {},
+      alertText: ''
+    }
+  },
+  created () {
+    axios.get('/movie/cast')
+      .then(response => {
+        function responseConstructor (idMovie, title, idActor, actorFirstName, actorLastName, characters, actorRating) {
+          this.idMovie = idMovie
+          this.title = title
+          this.idActor = idActor
+          this.name = actorFirstName + ' ' + actorLastName
+          this.characters = characters
+          this.actorRating = actorRating
+        }
+        let i
+        for (i = 0; i < response.data.length; i++) {
+          this.tableData.push(new responseConstructor(response.data[i].movie.idMovie, response.data[i].movie.title, response.data[i].actor.idActor,
+            response.data[i].actor.actorFirstName, response.data[i].actor.actorLastName, response.data[i].characters, response.data[i].actorRating))
+        }
+      })
+  },
+  methods: {
+    editRecord: function (recordData) {
+      this.$modal.show('editModal')
+      this.oldRecordData = recordData
+      this.newRecordData = recordData
     },
-    data () {
-      return {
-        tableConfig: [/* prop, name, width, sortable, searchable, filterable, numberFilter, summary, prefix, suffix */
-          { prop: 'idMovie', name: 'ID', width: 36, sortable: true, numberFilter: true },
-          { prop: 'title', name: 'Movie title', filterable: true, sortable: true },
-          { prop: 'idActor', name: 'ID', width: 36, numberFilter: true, sortable: true },
-          { prop: 'name', name: "Actor's name", filterable: true, sortable: true },
-          { prop: 'characters', name: 'Roles', searchable: true },
-          { prop: 'actorRating', name: 'Rating', width: 60, numberFilter: true, sortable: true },
-          { prop: '_action', name: 'Action', actionName: 'actionCommon', width: 130 }
-        ],
-        tableData: [],
-        oldRecordData: {},
-        newRecordData: {},
-        alertText: ''
-      }
-    },
-    created () {
-      axios.get('/movie/cast')
+    editRecordSubmit: function () {
+      axios.put('/movie/cast/' + this.oldRecordData.idMovie + '/' + this.oldRecordData.idActor, this.newRecordData)
         .then(response => {
-          function responseConstructor(idMovie, title, idActor, actorFirstName, actorLastName, characters, actorRating){
-            this.idMovie = idMovie
-            this.title = title
-            this.idActor = idActor
-            this.name = actorFirstName + ' ' + actorLastName
-            this.characters = characters
-            this.actorRating = actorRating
-          }
-          let i
-          for(i=0; i<response.data.length; i++) {
-            this.tableData.push(new responseConstructor(response.data[i].movie.idMovie, response.data[i].movie.title, response.data[i].actor.idActor,
-              response.data[i].actor.actorFirstName, response.data[i].actor.actorLastName, response.data[i].characters, response.data[i].actorRating))
+          this.$modal.show('alertModal', { text: 'Operation succeeded.' })
+          this.$modal.hide('editModal')
+          let editElemIndex = this.tableData.findIndex(tableElem =>
+            (tableElem.idMovie == this.oldRecordData.idMovie && tableElem.idActor == this.oldRecordData.idActor))
+          this.$set(this.tableData, editElemIndex, this.newRecordData)
+        })
+        .catch(error => {
+          if (error.response) {
+            this.$modal.show('alertModal',
+              { text: 'Operation failed.  |  ' + error.response.status + '  |  ' + error.response.data.error + '  |  ' + error.response.data.message })
           }
         })
     },
-    methods: {
-      editRecord: function (recordData) {
-        this.$modal.show('editModal')
-        this.oldRecordData = recordData
-        this.newRecordData = recordData
-      },
-      editRecordSubmit: function () {
-        axios.put('/movie/cast/' + this.oldRecordData.idMovie + '/' + this.oldRecordData.idActor, this.newRecordData)
-          .then(response => {
-            this.$modal.show('alertModal', { text: 'Operation succeeded.' })
-            this.$modal.hide('editModal')
-            let editElemIndex = this.tableData.findIndex(tableElem =>
-              (tableElem.idMovie == this.oldRecordData.idMovie && tableElem.idActor == this.oldRecordData.idActor))
-            this.$set(this.tableData, editElemIndex, this.newRecordData)
-          })
-          .catch(error => {
-            if (error.response) {
-              this.$modal.show('alertModal',
-                { text: 'Operation failed.  |  ' + error.response.status + '  |  ' + error.response.data.error + '  |  ' + error.response.data.message })
-            }
-          })
-      },
-      deleteRecord: function (recordData) {
-        axios.delete('/movie/cast/' + recordData.idMovie + '/' + recordData.idActor)
-          .then(() => {
-            this.$modal.show('alertModal', { text: 'Operation succeeded.' })
-            let deleteElemIndex = this.tableData.findIndex(tableElem =>
-              (tableElem.idMovie == recordData.idMovie && tableElem.idActor == recordData.idActor))
-            this.tableData.splice(deleteElemIndex, 1)
-          })
-          .catch(error => {
-            if (error.response) {
-              this.$modal.show('alertModal',
-                { text: 'Operation failed.  |  ' + error.response.status + '  |  ' + error.response.data.error + '  |  ' + error.response.data.message })
-            }
-          })
-      },
-      beforeOpenAlert (event) {
-        this.alertText = event.params.text
-      }
+    deleteRecord: function (recordData) {
+      axios.delete('/movie/cast/' + recordData.idMovie + '/' + recordData.idActor)
+        .then(() => {
+          this.$modal.show('alertModal', { text: 'Operation succeeded.' })
+          let deleteElemIndex = this.tableData.findIndex(tableElem =>
+            (tableElem.idMovie == recordData.idMovie && tableElem.idActor == recordData.idActor))
+          this.tableData.splice(deleteElemIndex, 1)
+        })
+        .catch(error => {
+          if (error.response) {
+            this.$modal.show('alertModal',
+              { text: 'Operation failed.  |  ' + error.response.status + '  |  ' + error.response.data.error + '  |  ' + error.response.data.message })
+          }
+        })
+    },
+    beforeOpenAlert (event) {
+      this.alertText = event.params.text
     }
   }
+}
 </script>
 <style scoped>
 

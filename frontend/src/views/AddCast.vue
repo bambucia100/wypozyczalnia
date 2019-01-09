@@ -1,17 +1,23 @@
 <template>
   <div class="add-data">
-    <TheDatabaseNavigation link="Cast" isForm="true"></TheDatabaseNavigation>
+    <TheDatabaseNavigation link="Cast" :isForm="isForm"></TheDatabaseNavigation>
     <h1>Add cast:</h1>
     <div class="form-wrapper">
       <div class="form-area">
-        ID Movie:<br/>
-        <input type="text" v-model="postObject.idMovie" disabled><br/>
         Movie title:<br/>
-        <input type="text" v-model="postObject.title" disabled><br/>
-        ID Actor:<br/>
-        <input type="text" v-model="postObject.idActor" disabled><br/>
+        <cool-select
+          class="cool-select-input"
+          v-model="postObject.idMovie"
+          :items="selectSuggestionsData.movies"
+          item-text="title"
+          item-value="idMovie"/><br/>
         Actor's name:<br/>
-        <input type="text" v-model="postObject.name" disabled><br/>
+        <cool-select
+          class="cool-select-input"
+          v-model="postObject.idActor"
+          :items="selectSuggestionsData.actors"
+          item-text="actorName"
+          item-value="idActor"/><br/>
         Roles:<br/>
         <input type="text" v-model="postObject.characters"><br/>
         Role play rating:<br/>
@@ -30,50 +36,78 @@
 </template>
 
 <script>
-  import axios from 'axios'
-  import TheDatabaseNavigation from '../components/TheDatabaseNavigation.vue'
-  export default {
-    name: 'AddCast',
-    components: { TheDatabaseNavigation },
-    data () {
-      return {
-        postObject: {
-          idMovie: '',
-          title: '',
-          idActor: '',
-          name: '',
-          characters: '',
-          actorRating: ''
-        },
-        cleanObject: {},
-        alertText: ''
-      }
-    },
-    created () {
-      cleanObject = _.cloneDeep(postObject)
-    },
-    methods: {
-      postObjectToDatabase () {
-        axios.post('/actor/', this.postObject)
-          .then(response => {
-            this.$modal.show('alertModal', { text: 'Record added to database.' })
-            this.postObject = _.cloneDeep(this.cleanObject)
-          })
-          .catch(error => {
-            if (error.response) {
-              this.$modal.show('alertModal',
-                { text: 'Operation failed.  |  ' + error.response.status + '  |  ' + error.response.data.error + '  |  ' + error.response.data.message })
-            }
-          })
+import axios from 'axios'
+import { CoolSelect } from 'vue-cool-select'
+import TheDatabaseNavigation from '../components/TheDatabaseNavigation.vue'
+export default {
+  name: 'AddCast',
+  components: { TheDatabaseNavigation, CoolSelect },
+  data () {
+    return {
+      postObject: {
+        idMovie: '',
+        title: '',
+        idActor: '',
+        name: '',
+        characters: '',
+        actorRating: ''
       },
-      clearInputData () {
-        this.postObject = _.cloneDeep(this.cleanObject)
+      selectSuggestionsData: {
+        movies: [],
+        actors: []
       },
-      beforeOpenAlert (event) {
-        this.alertText = event.params.text
-      }
+      cleanObject: {},
+      alertText: '',
+      isForm: true
+    }
+  },
+  created () {
+    this.cleanObject = _.cloneDeep(this.postObject)
+    axios.get('/movie/all')
+      .then(response => {
+        function responseConstructor (idMovie, title) {
+          this.idMovie = idMovie
+          this.title = title + ' ID: ' + idMovie
+        }
+        let i
+        for (i = 0; i < response.data.length; i++) {
+          this.selectSuggestionsData.movies.push(new responseConstructor(response.data[i].idMovie, response.data[i].title))
+        }
+      })
+    axios.get('/actor/all')
+      .then(response => {
+        function responseConstructor (idActor, actorFirstName, actorLastName) {
+          this.idActor = idActor
+          this.actorName = actorFirstName + ' ' + actorLastName + ' ID: ' + idActor
+        }
+        let i
+        for (i = 0; i < response.data.length; i++) {
+          this.selectSuggestionsData.actors.push(new responseConstructor(response.data[i].idActor, response.data[i].actorFirstName, response.data[i].actorLastName))
+        }
+      })
+  },
+  methods: {
+    postObjectToDatabase () {
+      axios.post('/movie/cast/' + this.postObject.idMovie + '/' + this.postObject.idActor, this.postObject)
+        .then(response => {
+          this.$modal.show('alertModal', { text: 'Record added to database.' })
+          this.postObject = _.cloneDeep(this.cleanObject)
+        })
+        .catch(error => {
+          if (error.response) {
+            this.$modal.show('alertModal',
+              { text: 'Operation failed.  |  ' + error.response.status + '  |  ' + error.response.data.error + '  |  ' + error.response.data.message })
+          }
+        })
+    },
+    clearInputData () {
+      this.postObject = _.cloneDeep(this.cleanObject)
+    },
+    beforeOpenAlert (event) {
+      this.alertText = event.params.text
     }
   }
+}
 </script>
 
 <style scoped>
