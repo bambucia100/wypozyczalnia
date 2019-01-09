@@ -2,8 +2,8 @@
   <div id="db-nav">
     <router-link :to="isForm ? '/add/actor' : '/actor'" :class="[ isActor ? 'active' : 'router-links' ]">Actors</router-link>
     |
-    <router-link :to="isForm ? '/add/adress' : '/adress'" :class="[ isAdress ? 'active' : 'router-links' ]">Addresses</router-link>
-    |
+    <router-link :to="isForm ? '/add/adress' : '/adress'" :class="[ isAdress ? 'active' : 'router-links', isForm ? 'text-invisible' : '']">Addresses</router-link>
+    <span :class="[isForm ? 'text-invisible' : '']"> | </span>
     <router-link :to="isForm ? '/add/movie/cast' : '/movie/cast'" :class="[ isCast ? 'active' : 'router-links' ]">Casts</router-link>
     |
     <router-link :to="isForm ? '/add/rentalOffice/clients' : '/rentalOffice/clients'" :class="[ isClient ? 'active' : 'router-links' ]">Clients</router-link>
@@ -16,10 +16,10 @@
     |
     <router-link :to="isForm ? '/add/rentalOffice/warehouse' : '/rentalOffice/warehouse'" to="/rentalOffice/warehouse" :class="[ isWarehouse ? 'active' : 'router-links' ]">Rental office warehouse</router-link>
     |
-    <router-link :to="isForm ? '/add/rentalElement' : '/rentalElement'" :class="[ isRentalElement ? 'active' : 'router-links' ]">Rental elements</router-link>
-    |
-    <router-link :to="isForm ? '/add/rentals' : '/rentals'" :class="[ isRental ? 'active' : 'router-links' ]">Rentals</router-link>
-    |
+    <router-link :to="isForm ? '/add/rentalElement' : '/rentalElement'" :class="[ isRentalElement ? 'active' : 'router-links', isForm ? 'text-invisible' : '' ]">Rental elements</router-link>
+    <span :class="[isForm ? 'text-invisible' : '']"> | </span>
+    <router-link :to="isForm ? '/add/rentals' : '/rentals'" :class="[ isRental ? 'active' : 'router-links', isForm ? 'text-invisible' : '' ]">Rentals</router-link>
+    <span :class="[isForm ? 'text-invisible' : '']"> | </span>
     <router-link :to="isForm ? '/add/rentalOffice' : '/rentalOffice'" :class="[ isRentalOffice ? 'active' : 'router-links' ]">Rental offices</router-link>
   </div>
 </template>
@@ -97,5 +97,8 @@ export default {
   }
   .router-links:hover {
     color: #DDD;
+  }
+  .text-invisible {
+    display: none;
   }
 </style>

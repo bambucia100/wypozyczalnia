@@ -13,7 +13,7 @@ import RentalOffice from './views/RentalOffice.vue'
 import Rentals from './views/Rentals.vue'
 import RentalElement from './views/RentalElement.vue'
 import AddActor from './views/AddActor.vue'
-import AddAdress from './views/AddAdress.vue'
+import AddCast from './views/AddCast.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -84,9 +84,9 @@ export default new Router({
       component: AddActor
     },
     {
-      path: '/add/adress',
-      name: 'AddAdress',
-      component: AddAdress
+      path: '/add/movie/cast',
+      name: 'AddCast',
+      component: AddCast
     },
   ]
 })
