@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.sql.Timestamp;
 import java.util.List;
 
 public interface RentalsRepository extends CrudRepository<Rentals, Integer>{
@@ -26,6 +27,12 @@ public interface RentalsRepository extends CrudRepository<Rentals, Integer>{
             "where r.id_rental = re.id_rental and r.id_rental = :idRental", nativeQuery = true)
     List<Object[]> getWarehouseAndAmount(@Param("idRental") Integer idRental);
 
+    @Query(value = "SELECT rental_date FROM rentals where id_rental = :idRental", nativeQuery = true)
+    Timestamp getRentalDateByIdRental(@Param("idRental") Integer idRental);
 
+    @Query(value = "SELECT id_client FROM rentals where id_rental = :idRental", nativeQuery = true)
+    Integer getIdClientByIdRental(@Param("idRental") Integer idRental);
 
+    @Query(value = "SELECT id_employee FROM rentals where id_rental = :idRental", nativeQuery = true)
+    Integer getIdEmployeeByIdRental(@Param("idRental") Integer idRental);
 }
