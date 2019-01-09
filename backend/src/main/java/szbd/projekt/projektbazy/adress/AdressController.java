@@ -41,15 +41,9 @@ public class AdressController {
 	@RequestMapping(method=RequestMethod.DELETE,value="adress/{idAdress}")
 	public void deleteAdress(@PathVariable Integer idAdress) {
 
-		try {
 			adressService.deleteAdress(idAdress);
-		} catch (EmptyResultDataAccessException ex) {
-			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Element does not exist", ex);
-		} catch (Exception ex) {
-			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Element is connected with a foreign key.", ex);
-		}
-
 	}
+
 	@RequestMapping(method=RequestMethod.PUT, value="adress/{idAdress}")
 	public void updateAdress(@RequestBody Adress adress, @PathVariable Integer idAdress) {
 

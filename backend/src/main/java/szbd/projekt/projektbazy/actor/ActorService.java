@@ -5,7 +5,10 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class ActorService {
@@ -34,7 +37,14 @@ public class ActorService {
 	}
 
 	public void deleteActor(Integer idActor) {
-		actorRepository.deleteById(idActor);
+		try {
+			actorRepository.deleteById(idActor);
+		} catch (EmptyResultDataAccessException ex) {
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Element does not exist", ex);
+		} catch (Exception ex) {
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Element is a foreign key in CASTS table. " +
+					"Delete records in CASTS first", ex);
+		}
 	}
 	
 }
