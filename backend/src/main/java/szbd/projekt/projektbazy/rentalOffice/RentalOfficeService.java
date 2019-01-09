@@ -38,7 +38,7 @@ public class RentalOfficeService {
 	}
 	
 	public void deleteRentalOffice(Integer idRentalOffice) {
-		
+
 		try {
 			rentalOfficeRepository.deleteById(idRentalOffice);
 		} catch (EmptyResultDataAccessException ex) {

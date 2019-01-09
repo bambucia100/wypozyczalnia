@@ -33,9 +33,11 @@ public class AdressController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST,value="/adress")
-	public void addAdress(@RequestBody Adress adress) {
+	public Integer addAdress(@RequestBody Adress adress) {
 		
 		adressService.addAdress(adress);
+
+		return adress.getIdAdress();
 	}
 	
 	@RequestMapping(method=RequestMethod.DELETE,value="adress/{idAdress}")
