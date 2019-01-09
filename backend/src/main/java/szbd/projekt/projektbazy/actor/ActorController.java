@@ -41,13 +41,7 @@ public class ActorController {
 	@RequestMapping(method=RequestMethod.DELETE,value="/actor/{idActor}")
 	public void deleteActor(@PathVariable Integer idActor) {
 
-		try {
 			actorService.deleteActor(idActor);
-		} catch (EmptyResultDataAccessException ex) {
-			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Element does not exist", ex);
-		} catch (Exception ex) {
-			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Element is connected with a foreign key.", ex);
-		}
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT,value="/actor/{idActor}")

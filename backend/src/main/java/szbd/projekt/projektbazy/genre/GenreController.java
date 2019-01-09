@@ -36,13 +36,7 @@ public class GenreController {
 	@RequestMapping(method=RequestMethod.DELETE,value="/genre/{genreName}")
 	public void deleteGenre(@PathVariable String genreName){
 
-		try {
 			genreService.deleteGenre(genreName);
-		} catch (EmptyResultDataAccessException ex) {
-			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Element does not exist.", ex);
-		} catch (Exception ex) {
-			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Element is connected with a foreign key.", ex);
-		}
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT,value="/genre/{genreName}")
