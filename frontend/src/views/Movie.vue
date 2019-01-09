@@ -32,7 +32,7 @@
         Description:<br/>
         <textarea rows="6" v-model="newRecordData.description"></textarea><br/>
         Genre:<br/>
-        <input type="text" v-model="newRecordData.genreName" disabled><br/>
+        <input type="text" v-model="newRecordData.genreName"><br/> <!--TODO-->
         <button @click="editRecordSubmit" style="float:right;">Submit</button><button @click="$modal.hide('editModal')" >Cancel</button>
       </div>
     </form-modal>

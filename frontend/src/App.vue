@@ -3,7 +3,7 @@
     <nav class="grid-container">
       <router-link to="/rentalOffice/warehouse"><div class="nav-content">Database</div></router-link>
       <router-link to="/"><div class="nav-content">Rent</div></router-link>
-      <router-link to="/"><div class="nav-content">Add</div></router-link>
+      <router-link to="/add/actor"><div class="nav-content">Add</div></router-link>
     </nav>
     <main>
       <router-view/>
@@ -62,7 +62,7 @@
     margin: 6px;
     padding: 4px;
   }
-  .modal-box button {
+  .modal-box button, .form-wrapper button {
     padding: 4px 40px;
   }
   .alert-modal-box {
@@ -71,8 +71,22 @@
   .alert-modal-box button{
     display: block;
     margin: auto;
-    margin-top: 20px;
+    margin-top: 15px;
     padding: 4px 40px;
+  }
+  .form-wrapper {
+    border: 1px solid #AAA;
+    background-color: #242931;
+    width: 100%;
+    padding: 10px 20px;
+  }
+  .form-area {
+    width: 50%;
+  }
+  .form-area input, .form-area textarea {
+    width: 98.5%;
+    margin: 6px;
+    padding: 4px;
   }
 /*NAVIGATION*/
   nav {

@@ -25,8 +25,8 @@
         <input type="text" v-model="newRecordData.actorFirstName"><br/>
         Last name:<br/>
         <input type="text" v-model="newRecordData.actorLastName"><br/>
-        Date of birth<br/>
-        <input type="text" v-model="newRecordData.dateOfBirth"><br/>
+        Date of birth:<br/>
+        <input type="date" v-model="newRecordData.dateOfBirth"><br/>
         <button @click="editRecordSubmit" style="float:right;">Submit</button><button @click="$modal.hide('editModal')" >Cancel</button>
       </div>
     </form-modal>

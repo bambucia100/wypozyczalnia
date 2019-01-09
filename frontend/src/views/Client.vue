@@ -26,7 +26,7 @@
         Last name:<br/>
         <input type="text" v-model="newRecordData.clientLastName"><br/>
         Registration date:<br/>
-        <input type="text" v-model="newRecordData.registrationDate"><br/>
+        <input type="date" v-model="newRecordData.registrationDate"><br/>
         E-mail:<br/>
         <input type="text" v-model="newRecordData.email"><br/>
         Phone number:<br/>

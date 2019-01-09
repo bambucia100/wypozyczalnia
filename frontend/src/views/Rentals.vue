@@ -30,9 +30,9 @@
         Employee name:<br/>
         <input type="text" v-model="newRecordData.employeeName" disabled><br/>
         Rental date:<br/>
-        <input type="text" v-model="newRecordData.rentalDate"><br/>
+        <input type="date" v-model="newRecordData.rentalDate"><br/>
         Return date:<br/>
-        <input type="text" v-model="newRecordData.returnDate" :disabled="isReturnDateNull"><br/>
+        <input type="date" v-model="newRecordData.returnDate" :disabled="isReturnDateNull"><br/>
         <button @click="editRecordSubmit" style="float:right;">Submit</button><button @click="$modal.hide('editModal')" >Cancel</button>
       </div>
     </form-modal>

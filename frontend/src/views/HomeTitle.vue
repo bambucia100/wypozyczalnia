@@ -10,6 +10,10 @@ export default {
 
 <style scoped>
   #home-title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     font-size: 18vw;
     font-weight: 900;
     color: rgba(255,255,255,0.1);
