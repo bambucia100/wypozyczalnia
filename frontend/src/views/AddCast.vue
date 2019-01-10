@@ -1,7 +1,7 @@
 <template>
   <div class="add-data">
     <TheDatabaseNavigation link="Cast" :isForm="isForm"></TheDatabaseNavigation>
-    <h1>Add cast:</h1>
+    <h1>Add cast entry</h1>
     <div class="form-wrapper">
       <div class="form-area">
         Movie title:<br/>
@@ -9,14 +9,14 @@
           class="cool-select-input"
           v-model="postObject.idMovie"
           :items="selectSuggestionsData.movies"
-          item-text="title"
+          item-text="titleID"
           item-value="idMovie"/><br/>
         Actor's name:<br/>
         <cool-select
           class="cool-select-input"
           v-model="postObject.idActor"
           :items="selectSuggestionsData.actors"
-          item-text="actorName"
+          item-text="actorNameID"
           item-value="idActor"/><br/>
         Roles:<br/>
         <input type="text" v-model="postObject.characters"><br/>
@@ -67,7 +67,7 @@ export default {
       .then(response => {
         function responseConstructor (idMovie, title) {
           this.idMovie = idMovie
-          this.title = title + ' ID: ' + idMovie
+          this.titleID = title + ' ID: ' + idMovie
         }
         let i
         for (i = 0; i < response.data.length; i++) {
@@ -78,7 +78,7 @@ export default {
       .then(response => {
         function responseConstructor (idActor, actorFirstName, actorLastName) {
           this.idActor = idActor
-          this.actorName = actorFirstName + ' ' + actorLastName + ' ID: ' + idActor
+          this.actorNameID = actorFirstName + ' ' + actorLastName + ' ID: ' + idActor
         }
         let i
         for (i = 0; i < response.data.length; i++) {

@@ -14,6 +14,12 @@ import Rentals from './views/Rentals.vue'
 import RentalElement from './views/RentalElement.vue'
 import AddActor from './views/AddActor.vue'
 import AddCast from './views/AddCast.vue'
+import AddClient from './views/AddClient.vue'
+import AddEmployee from './views/AddEmployee.vue'
+import AddGenre from './views/AddGenre.vue'
+import AddMovie from './views/AddMovie.vue'
+import AddMoviesWarehouse from './views/AddMoviesWarehouse.vue'
+import AddRentalOffice from './views/AddRentalOffice.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -44,12 +50,12 @@ export default new Router({
       component: Genre
     },
     {
-      path: '/rentalOffice/clients',
+      path: '/rentalOffice/client',
       name: 'Client',
       component: Client
     },
     {
-      path: '/rentalOffice/employees',
+      path: '/rentalOffice/employee',
       name: 'Employee',
       component: Employee
     },
@@ -87,6 +93,36 @@ export default new Router({
       path: '/add/movie/cast',
       name: 'AddCast',
       component: AddCast
+    },
+    {
+      path: '/add/rentalOffice/client',
+      name: 'AddClient',
+      component: AddClient
+    },
+    {
+      path: '/add/rentalOffice/employee',
+      name: 'AddEmployee',
+      component: AddEmployee
+    },
+    {
+      path: '/add/genre',
+      name: 'AddGenre',
+      component: AddGenre
+    },
+    {
+      path: '/add/movie',
+      name: 'AddMovie',
+      component: AddMovie
+    },
+    {
+      path: '/add/rentalOffice/warehouse',
+      name: 'AddMoviesWarehouse',
+      component: AddMoviesWarehouse
+    },
+    {
+      path: '/add/rentalOffice',
+      name: 'AddRentalOffice',
+      component: AddRentalOffice
     },
   ]
 })

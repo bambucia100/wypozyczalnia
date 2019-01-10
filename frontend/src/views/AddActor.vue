@@ -1,7 +1,7 @@
 <template>
   <div class="add-data">
     <TheDatabaseNavigation link="Actor" :isForm="isForm"></TheDatabaseNavigation>
-    <h1>Add actor:</h1>
+    <h1>Add actor</h1>
     <div class="form-wrapper">
       <div class="form-area">
         First name:<br/>

@@ -61,11 +61,11 @@
         tableConfig: [/* prop, name, width, sortable, searchable, filterable, numberFilter, summary, prefix, suffix */
           { prop: 'idMovie', name: 'ID', width: 36, sortable: true, numberFilter: true },
           { prop: 'title', name: 'Title', width: 200, searchable: true, sortable: true },
-          { prop: 'length', name: 'Length', width: 70, numberFilter: true, sortable: true, suffix: 'min.'},
           { prop: 'director', name: 'Director', width: 170, filterable: true, sortable: true },
+          { prop: 'genreName', name: 'Genre', width: 130, sortable: true, filterable: true },
+          { prop: 'length', name: 'Length', width: 70, numberFilter: true, sortable: true, suffix: 'min.'},
           { prop: 'rating', name: 'Rating', width: 60, numberFilter: true , sortable: true},
           { prop: 'description', name: 'Description', searchable: true },
-          { prop: 'genreName', name: 'Genre', width: 130, sortable: true, filterable: true },
           { prop: '_action', name: 'Action', actionName: 'actionCommon', width: 130 }
         ],
         tableData: [],

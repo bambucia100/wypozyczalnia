@@ -64,14 +64,14 @@
       return {
         tableConfig: [/* prop, name, width, sortable, searchable, filterable, numberFilter, summary, prefix, suffix */
           { prop: 'idRental', name: 'ID Rental', width: 80, sortable: true, searchable: true },
-          { prop: 'idMovieWarehouse', name: 'ID Warehouse', width: 120, searchable: true, sortable: true },
           { prop: 'idClient', name: 'ID', width: 36, searchable: true, sortable: true },
           { prop: 'clientName', name: 'Client', width: 200, searchable: true, sortable: true },
+          { prop: 'idMovieWarehouse', name: 'ID Warehouse', width: 120, searchable: true, sortable: true },
           { prop: 'idRentalOffice', name: 'ID', width: 36, sortable: true, searchable: true },
           { prop: 'rentalOfficeName', name: 'Office', width: 130, filterable: true, sortable: true },
+          { prop: 'amountOfRentals', name: 'Amount', width: 80, numberFilter: true, sortable: true },
           { prop: 'idMovie', name: 'ID', width: 36, sortable: true, searchable: true },
           { prop: 'title', name: 'Movie', searchable: true, sortable: true },
-          { prop: 'amountOfRentals', name: 'Amount', width: 80, numberFilter: true, sortable: true },
           { prop: '_action', name: 'Action', actionName: 'actionCommon', width: 130 }
         ],
         tableData: [],

@@ -50,7 +50,7 @@ export default {
     return {
       tableConfig: [/* prop, name, width, sortable, searchable, filterable, numberFilter, summary, prefix, suffix */
         { prop: 'genreName', name: 'Name', width: 220, sortable: true, searchable: true },
-        { prop: 'genreDescription', name: 'Description', searchable: true },
+          { prop: 'genreDescription', name: 'Description', searchable: true },
         { prop: '_action', name: 'Action', actionName: 'actionCommon', width: 130 }
       ],
       tableData: [],

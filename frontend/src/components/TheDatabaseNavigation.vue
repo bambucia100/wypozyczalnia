@@ -6,15 +6,15 @@
     <span :class="[isForm ? 'text-invisible' : '']"> | </span>
     <router-link :to="isForm ? '/add/movie/cast' : '/movie/cast'" :class="[ isCast ? 'active' : 'router-links' ]">Casts</router-link>
     |
-    <router-link :to="isForm ? '/add/rentalOffice/clients' : '/rentalOffice/clients'" :class="[ isClient ? 'active' : 'router-links' ]">Clients</router-link>
+    <router-link :to="isForm ? '/add/rentalOffice/client' : '/rentalOffice/client'" :class="[ isClient ? 'active' : 'router-links' ]">Clients</router-link>
     |
-    <router-link :to="isForm ? '/add/rentalOffice/employees' : '/rentalOffice/employees'" :class="[ isEmployee ? 'active' : 'router-links' ]">Employees</router-link>
+    <router-link :to="isForm ? '/add/rentalOffice/employee' : '/rentalOffice/employee'" :class="[ isEmployee ? 'active' : 'router-links' ]">Employees</router-link>
     |
     <router-link :to="isForm ? '/add/genre' : '/genre'" :class="[ isGenre ? 'active' : 'router-links' ]">Movie genres</router-link>
     |
     <router-link :to="isForm ? '/add/movie' : '/movie'" :class="[ isMovie ? 'active' : 'router-links' ]">Movies</router-link>
     |
-    <router-link :to="isForm ? '/add/rentalOffice/warehouse' : '/rentalOffice/warehouse'" to="/rentalOffice/warehouse" :class="[ isWarehouse ? 'active' : 'router-links' ]">Rental office warehouse</router-link>
+    <router-link :to="isForm ? '/add/rentalOffice/warehouse' : '/rentalOffice/warehouse'" :class="[ isWarehouse ? 'active' : 'router-links' ]">Rental office warehouse</router-link>
     |
     <router-link :to="isForm ? '/add/rentalElement' : '/rentalElement'" :class="[ isRentalElement ? 'active' : 'router-links', isForm ? 'text-invisible' : '' ]">Rental elements</router-link>
     <span :class="[isForm ? 'text-invisible' : '']"> | </span>
