@@ -23,7 +23,6 @@ public class CastService {
 		return cast;
 	}
 	
-	
 	public Optional<Cast> getCast(CastId idCast) {
 		return castRepository.findById(idCast);
 	}

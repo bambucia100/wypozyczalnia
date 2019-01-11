@@ -126,7 +126,5 @@ public class Client {
 	public void setAdress(Adress adress) {
 		this.adress = adress;
 	}
-	
-	
-	
+
 }

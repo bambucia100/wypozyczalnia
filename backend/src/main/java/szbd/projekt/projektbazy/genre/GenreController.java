@@ -44,6 +44,5 @@ public class GenreController {
 	{
 		 genreService.updateGenre(genreName, genre);
 	}
-
 	
 }

@@ -95,6 +95,4 @@ public class Movie {
 		this.length = length;
 	}
 	
-	
-	
 }

@@ -82,4 +82,5 @@ public class Rentals {
 	public void setEmployee(Employee employee) {
 		this.employee = employee;
 	}
+
 }

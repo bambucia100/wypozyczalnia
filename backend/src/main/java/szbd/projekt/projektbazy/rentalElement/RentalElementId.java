@@ -43,4 +43,5 @@ public class RentalElementId implements Serializable {
     public void setMoviesWarehouse(MoviesWarehouse moviesWarehouse) {
         this.moviesWarehouse = moviesWarehouse;
     }
+
 }

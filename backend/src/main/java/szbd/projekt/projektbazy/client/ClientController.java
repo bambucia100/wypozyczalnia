@@ -33,7 +33,6 @@ public class ClientController {
 		return clientRepository.getAllClientsByOffice(idRentalOffice);
 	}
 
-
 	@RequestMapping(method=RequestMethod.GET,value="rentalOffice/clients/{idClient}")
 	public Optional<Client> getClient(@PathVariable Integer idClient) {
 		
@@ -63,5 +62,5 @@ public class ClientController {
 		
 		clientService.deleteClient(idClient);
 	}
-	
+
 }

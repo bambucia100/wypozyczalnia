@@ -12,4 +12,5 @@ public interface ClientRepository extends CrudRepository<Client, Integer>{
             "where " +
             "c.id_rental_office = :idRentalOffice" , nativeQuery = true)
     List<Client> getAllClientsByOffice(@Param("idRentalOffice") Integer idRentalOffice);
+
 }

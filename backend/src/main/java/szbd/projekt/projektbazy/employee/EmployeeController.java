@@ -64,9 +64,5 @@ public class EmployeeController {
 	{
 		 employeeService.deleteEmployee(idEmployee);
 	}
-	
-	
-	
-	
-	
+
 }

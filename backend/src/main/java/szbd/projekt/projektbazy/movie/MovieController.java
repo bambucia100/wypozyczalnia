@@ -51,6 +51,4 @@ public class MovieController {
 		 movieService.deleteMovie(idMovie);
 	}
 	
-	
-	
 }

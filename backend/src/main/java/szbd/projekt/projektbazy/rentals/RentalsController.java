@@ -99,5 +99,4 @@ public class RentalsController {
 		return rentalService.getCharge(idRental);
 	}
 
-
 }

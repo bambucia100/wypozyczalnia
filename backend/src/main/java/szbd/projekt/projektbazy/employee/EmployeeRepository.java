@@ -13,4 +13,5 @@ public interface EmployeeRepository extends CrudRepository<Employee, Integer>{
             "where " +
             "e.id_rental_office = :idRentalOffice" , nativeQuery = true)
     List<Employee> getAllEmployeesByOffice(@Param("idRentalOffice") Integer idRentalOffice);
+
 }
