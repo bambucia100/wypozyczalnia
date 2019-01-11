@@ -31,6 +31,7 @@
     display: grid;
   }
   h1 {
+    display: inline;
     font-size: 50px;
   }
 
@@ -75,6 +76,7 @@
     padding: 4px 40px;
   }
   .form-wrapper {
+    margin: 4px 0;
     border: 1px solid #AAA;
     background-color: #242931;
     width: 100%;
