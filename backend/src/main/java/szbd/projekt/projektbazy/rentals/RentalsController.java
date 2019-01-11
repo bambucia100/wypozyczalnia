@@ -87,12 +87,12 @@ public class RentalsController {
 	@RequestMapping(method=RequestMethod.PUT, value="/rental/{idRental}/return")
 	public double returnRental(@RequestBody Rentals rental, @PathVariable Integer idRental) {
 
+
 		rental.setRentalDate(new Date(rentalsRepository.getRentalDateByIdRental(idRental).getTime()));
 		rental.setClient(new Client(rentalsRepository.getIdClientByIdRental(idRental), "", "",
 				null, "",0 , 0, 0));
 		rental.setEmployee(new Employee(rentalsRepository.getIdEmployeeByIdRental(idRental), "", "",
 				"", "", "", 0, 0));
-
 		rentalService.updateRental(idRental, rental);
 		rentalService.increaseAmount(idRental);
 

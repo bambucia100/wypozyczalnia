@@ -104,5 +104,6 @@ public class RentalsService {
 			query.execute();
 		}
 	}
+
 	
 }

@@ -72,6 +72,9 @@ public class RentalElementController {
                                     @PathVariable Integer idRental) {
 
         int newQuantity = rentalElement.getAmountOfRentals();
+        System.out.println(rentalElementRepository.getAmountOfRentals(idMoviesWarehouse, idRental));
+        System.out.println(rentalElementRepository.getQuantityByIdWarehouse(idMoviesWarehouse));
+
         Integer dbQuantity = rentalElementRepository.getAmountOfRentals(idMoviesWarehouse, idRental);
         Integer stockQuantity = rentalElementRepository.getQuantityByIdWarehouse(idMoviesWarehouse);
         int quantity = newQuantity - dbQuantity;

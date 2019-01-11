@@ -49,4 +49,10 @@ public class ActorController {
 	{
 		 actorService.updateActor(idActor, actor);
 	}
+
+	@RequestMapping(method=RequestMethod.GET, value="/actor/{idActor}/avgrating")
+	public double getAvgRating(@PathVariable Integer idActor) {
+
+		return actorService.avgRating(idActor);
+	}
 }
