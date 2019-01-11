@@ -62,6 +62,5 @@ public class Actor {
 	public void setDateOfBirth(Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
-	
-	
+
 }

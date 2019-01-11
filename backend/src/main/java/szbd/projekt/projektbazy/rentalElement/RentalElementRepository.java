@@ -24,5 +24,4 @@ public interface RentalElementRepository extends CrudRepository<RentalElement, R
             "where id_warehouse = :idWarehouse and id_rental = :idRental", nativeQuery = true)
     Integer getAmountOfRentals(@Param ("idWarehouse") Integer idWarehouse, @Param ("idRental") Integer idRental);
 
-
 }

@@ -20,17 +20,14 @@ public class Cast{
 	           setId(pk);
 	       }
 	   }
-	
-	
+
 	@EmbeddedId
 	private CastId id;
 	
 	@Column(name = "actor_rating", nullable = false)
 	private Double actorRating;
-
 	@Column(name = "characters", nullable = false)
 	private String characters;
-
 	@ManyToOne
 	@JoinColumn(name = "id_movie", nullable = false, insertable = false, updatable = false)
 	private Movie movie;

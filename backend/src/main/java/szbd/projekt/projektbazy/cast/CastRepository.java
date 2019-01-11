@@ -15,5 +15,4 @@ public interface CastRepository extends CrudRepository<Cast, CastId> {
 			"c.id_movie = :idMovie" , nativeQuery = true)
 	List<Object[]> getAllActorsByMovie(@Param("idMovie") Integer idMovie);
 
-
 }	

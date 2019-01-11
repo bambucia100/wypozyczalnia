@@ -35,4 +35,5 @@ public interface RentalsRepository extends CrudRepository<Rentals, Integer>{
 
     @Query(value = "SELECT id_employee FROM rentals where id_rental = :idRental", nativeQuery = true)
     Integer getIdEmployeeByIdRental(@Param("idRental") Integer idRental);
+
 }

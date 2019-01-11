@@ -24,8 +24,7 @@ public class GenreService {
 		.forEach(genres::add);
 		return genres;
 	}
-	
-	
+
 	public Optional<Genre> getGenre(String IdGenre) {
 		return genreRepository.findById(IdGenre);
 	}

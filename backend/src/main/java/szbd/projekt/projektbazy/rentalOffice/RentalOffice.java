@@ -62,6 +62,4 @@ public class RentalOffice {
 		this.adress = adress;
 	}
 	
-	
-	
 }

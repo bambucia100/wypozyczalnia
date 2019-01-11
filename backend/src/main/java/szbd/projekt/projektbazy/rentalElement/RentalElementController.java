@@ -113,7 +113,4 @@ public class RentalElementController {
         rentalElementService.deleteRentalElement(new RentalElementId(idRental, idMoviesWarehouse));
     }
 
-
-
-
 }

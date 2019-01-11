@@ -62,4 +62,5 @@ public class ActorService {
 
 		return actorRepository.getAvgActorRating(idActor);
 	}
+
 }

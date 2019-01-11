@@ -45,5 +45,6 @@ public class ClientService {
 					"table. Delete records in RENTALS first.", ex);
 		}
 	}
-	
+
+
 }

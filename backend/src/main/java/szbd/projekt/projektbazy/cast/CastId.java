@@ -14,7 +14,6 @@ public class CastId  implements Serializable {
 
 	private static final long   serialVersionUID    = 1L;
 	
-	
 	@ManyToOne
 	@JoinColumn(name = "id_movie", nullable = false, insertable = false, updatable = false)
 	private Movie movie;
@@ -38,16 +37,13 @@ public class CastId  implements Serializable {
 		return movie;
 	}
 
-
 	public void setMovie(Movie movie) {
 		this.movie = movie;
 	}
 
-
 	public Actor getActor() {
 		return actor;
 	}
-
 
 	public void setActor(Actor actor) {
 		this.actor = actor;

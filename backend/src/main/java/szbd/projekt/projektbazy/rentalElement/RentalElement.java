@@ -74,4 +74,5 @@ public class RentalElement {
     public void setMoviesWarehouse(MoviesWarehouse moviesWarehouse) {
         this.moviesWarehouse = moviesWarehouse;
     }
+
 }

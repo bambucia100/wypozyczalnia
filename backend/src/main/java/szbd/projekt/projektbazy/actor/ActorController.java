@@ -55,4 +55,5 @@ public class ActorController {
 
 		return actorService.avgRating(idActor);
 	}
+
 }

@@ -10,3 +10,4 @@ public interface ActorRepository  extends CrudRepository<Actor, Integer>{
     double getAvgActorRating(@Param("idActor") Integer idActor);
 
 }
+

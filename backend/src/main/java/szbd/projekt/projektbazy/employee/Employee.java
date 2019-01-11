@@ -39,6 +39,7 @@ public class Employee {
 	public Employee() {
 		
 	}
+
 	public Employee(int idEmployee, String firstName, String lastName,
 			String position, String email, String phone, int idRentalOffice, int idAdress) {
 		super();

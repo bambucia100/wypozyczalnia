@@ -21,6 +21,7 @@ public class Adress {
 		)
 	@Column(name = "id_adress", nullable = false)
 	private int idAdress;
+
 	private String country;
 	private String province;
 	private String city;
@@ -87,5 +88,5 @@ public class Adress {
 	public void setHouseNumber(String houseNumber) {
 		this.houseNumber = houseNumber;
 	}
-	
+
 }

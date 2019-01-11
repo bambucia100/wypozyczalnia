@@ -13,4 +13,5 @@ public interface MoviesWarehouseRepository extends CrudRepository<MoviesWarehous
             "where " +
             "m.id_rental_office = :idRentalOffice" , nativeQuery = true)
     List<MoviesWarehouse> getAllMoviesWarehousesByRentalOffice(@Param("idRentalOffice") Integer idRentalOffice);
+
 }

@@ -92,8 +92,4 @@ public class MoviesWarehouse {
 		this.movie = movie;
 	}
 
-
-
-
-
 }
