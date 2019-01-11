@@ -2,14 +2,17 @@
   <div id="app">
     <nav class="grid-container">
       <router-link to="/rentalOffice/warehouse"><div class="nav-content">Database</div></router-link>
-      <router-link to="/"><div class="nav-content">Rent</div></router-link>
       <router-link to="/add/actor"><div class="nav-content">Add</div></router-link>
+      <router-link to="/rent"><div class="nav-content">Rent</div></router-link>
+      <router-link to="/return"><div class="nav-content">Return</div></router-link>
     </nav>
     <main>
       <router-view/>
     </main>
   </div>
 </template>
+
+
 
 <style>
   /*! minireset.css v0.0.3 | MIT License | github.com/jgthms/minireset.css */html,body,p,ol,ul,li,dl,dt,dd,blockquote,figure,fieldset,legend,textarea,pre,iframe,hr,h1,h2,h3,h4,h5,h6{margin:0;padding:0}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal}ul{list-style:none}button,input,select,textarea{margin:0}html{box-sizing:border-box}*,*:before,*:after{box-sizing:inherit}img,embed,iframe,object,audio,video{height:auto;max-width:100%}iframe{border:0}table{border-collapse:collapse;border-spacing:0}td,th{padding:0;text-align:left}a{text-decoration:none;color:inherit;}
@@ -25,7 +28,7 @@
   }
   main {
     margin-left: var(--nav-margin);
-    padding: 2% 25px 2% 25px;
+    padding: 15px 25px 15px 25px;
   }
   .grid-container {
     display: grid;
@@ -51,6 +54,10 @@
     transform: translate(-50%, -50%);
     color: #000;
     font-size: 14px;
+  }
+  .select-essentials-modal {
+    top: 20%;
+    transform: translate(-50%, -20%);
   }
   .modal-box .modal-box-title {
     display: block;
@@ -94,9 +101,24 @@
     width: 98.5%;
     margin: 6px 6px -12px 6px;
     color: #000;
+  }
+  #rent-package-buttons {
+    height: 50px;
+    display: inline-block;
+    float: right;
+  }
+  #rent-package-submit-button {
+    height: 100%;
+    font-size: 24px;
+  }
+  #rent-package-add-button {
+    height: 100%;
+    font-size: 24px;
+    padding: 0 13px 0 12px;
+    margin: 0 0 0 8px;
 
   }
-/*NAVIGATION*/
+  /*NAVIGATION*/
   nav {
     height: 100%;
     width: var(--nav-margin);

@@ -38,7 +38,7 @@
 <script>
 import axios from 'axios'
 import { CoolSelect } from 'vue-cool-select'
-import TheDatabaseNavigation from '../components/TheDatabaseNavigation.vue'
+import TheDatabaseNavigation from '../../components/TheDatabaseNavigation.vue'
 export default {
   name: 'AddCast',
   components: { TheDatabaseNavigation, CoolSelect },

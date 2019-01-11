@@ -47,7 +47,7 @@
 <script>
   import axios from 'axios'
   import { CoolSelect } from 'vue-cool-select'
-  import TheDatabaseNavigation from '../components/TheDatabaseNavigation.vue'
+  import TheDatabaseNavigation from '../../components/TheDatabaseNavigation.vue'
   export default {
     name: 'AddEmployee',
     components: { TheDatabaseNavigation, CoolSelect },
@@ -81,8 +81,6 @@
     },
     created () {
       this.cleanObject = _.cloneDeep(this.postObject)
-      console.log(this.$currentIdRentalOffice)
-      this.postObject.employee.idRentalOffice = this.currentRentalOfficeId
       axios.get('/rentalOffice/all')
         .then(response => {
           function responseConstructor (idRentalOffice, rentalOfficeName) {

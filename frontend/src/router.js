@@ -1,25 +1,26 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import HomeTitle from './views/HomeTitle.vue'
-import Actor from './views/Actor.vue'
-import Adress from './views/Adress.vue'
-import Genre from './views/Genre.vue'
-import Cast from './views/Cast.vue'
-import Client from './views/Client.vue'
-import Employee from './views/Employee.vue'
-import Movie from './views/Movie.vue'
-import MoviesWarehouse from './views/MoviesWarehouse.vue'
-import RentalOffice from './views/RentalOffice.vue'
-import Rentals from './views/Rentals.vue'
-import RentalElement from './views/RentalElement.vue'
-import AddActor from './views/AddActor.vue'
-import AddCast from './views/AddCast.vue'
-import AddClient from './views/AddClient.vue'
-import AddEmployee from './views/AddEmployee.vue'
-import AddGenre from './views/AddGenre.vue'
-import AddMovie from './views/AddMovie.vue'
-import AddMoviesWarehouse from './views/AddMoviesWarehouse.vue'
-import AddRentalOffice from './views/AddRentalOffice.vue'
+import Actor from './views/database/Actor.vue'
+import Adress from './views/database/Adress.vue'
+import Genre from './views/database/Genre.vue'
+import Cast from './views/database/Cast.vue'
+import Client from './views/database/Client.vue'
+import Employee from './views/database/Employee.vue'
+import Movie from './views/database/Movie.vue'
+import MoviesWarehouse from './views/database/MoviesWarehouse.vue'
+import RentalOffice from './views/database/RentalOffice.vue'
+import Rentals from './views/database/Rentals.vue'
+import RentalElement from './views/database/RentalElement.vue'
+import AddActor from './views/add/AddActor.vue'
+import AddCast from './views/add/AddCast.vue'
+import AddClient from './views/add/AddClient.vue'
+import AddEmployee from './views/add/AddEmployee.vue'
+import AddGenre from './views/add/AddGenre.vue'
+import AddMovie from './views/add/AddMovie.vue'
+import AddMoviesWarehouse from './views/add/AddMoviesWarehouse.vue'
+import AddRentalOffice from './views/add/AddRentalOffice.vue'
+import RentPackage from './views/rent/RentPackage.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -123,6 +124,11 @@ export default new Router({
       path: '/add/rentalOffice',
       name: 'AddRentalOffice',
       component: AddRentalOffice
+    },
+    {
+      path: '/rent',
+      name: 'RentPackage',
+      component: RentPackage
     },
   ]
 })

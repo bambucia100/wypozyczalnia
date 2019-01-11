@@ -1,7 +1,7 @@
 <template>
   <div class="db-data">
-    <TheDatabaseNavigation link="Genre"></TheDatabaseNavigation>
-    <h1>Movie genres</h1>
+    <TheDatabaseNavigation link="RentalOffice"></TheDatabaseNavigation>
+    <h1>Rental offices</h1>
     <vue-virtual-table
       class="v-table"
       :config="tableConfig"
@@ -16,13 +16,17 @@
         <button @click="deleteRecord(scope.row)">Delete</button>
       </template>
     </vue-virtual-table>
-    <form-modal name="editModal" :width="600" :height="300">
+    <form-modal name="editModal" :width="600" :height="350">
       <div class="modal-box">
         <span class="modal-box-title">Edit record:</span>
-        Name:<br/>
-        <input type="text" v-model="newRecordData.genreName" disabled><br/>
-        Description:<br/>
-        <textarea rows="6" v-model="newRecordData.genreDescription"></textarea><br/>
+        ID Rental office:<br/>
+        <input type="text" v-model="newRecordData.idRentalOffice" disabled><br/>
+        Rental office name:<br/>
+        <input type="text" v-model="newRecordData.rentalOfficeName"><br/>
+        ID Address:<br/>
+        <input type="text" v-model="newRecordData.idAdress" disabled><br/>
+        Address:<br/>
+        <input type="text" v-model="newRecordData.adressComplete" disabled><br/>
         <button @click="editRecordSubmit" style="float:right;">Submit</button><button @click="$modal.hide('editModal')" >Cancel</button>
       </div>
     </form-modal>
@@ -37,11 +41,11 @@
 
 <script>
 import axios from 'axios'
-import TheDatabaseNavigation from '../components/TheDatabaseNavigation.vue'
+import TheDatabaseNavigation from '../../components/TheDatabaseNavigation.vue'
 import VueVirtualTable from 'vue-virtual-table'
 
 export default {
-  name: 'Genre',
+  name: 'RentalOffice',
   components: {
     TheDatabaseNavigation,
     VueVirtualTable
@@ -49,8 +53,10 @@ export default {
   data () {
     return {
       tableConfig: [/* prop, name, width, sortable, searchable, filterable, numberFilter, summary, prefix, suffix */
-        { prop: 'genreName', name: 'Name', width: 220, sortable: true, searchable: true },
-          { prop: 'genreDescription', name: 'Description', searchable: true },
+        { prop: 'idRentalOffice', name: 'ID', width: 36, sortable: true, numberFilter: true },
+        { prop: 'rentalOfficeName', name: 'Office name', width: 300, searchable: true, sortable: true },
+        { prop: 'idAdress', name: 'ID', width: 36, sortable: true, numberFilter: true },
+        { prop: 'adressComplete', name: 'Address', searchable: true, sortable: true },
         { prop: '_action', name: 'Action', actionName: 'actionCommon', width: 130 }
       ],
       tableData: [],
@@ -60,9 +66,19 @@ export default {
     }
   },
   created () {
-    axios.get('/genre/all')
+    axios.get('/rentalOffice/all')
       .then(response => {
-        this.tableData = response.data
+        function responseConstructor (idRentalOffice, rentalOfficeName, idAdress, city, street, houseNumber) {
+          this.idRentalOffice = idRentalOffice
+          this.rentalOfficeName = rentalOfficeName
+          this.idAdress = idAdress
+          this.adressComplete = city + ', ' + street + ' ' + houseNumber
+        }
+        let i
+        for (i = 0; i < response.data.length; i++) {
+          this.tableData.push(new responseConstructor(response.data[i].idRentalOffice, response.data[i].rentalOfficeName,
+            response.data[i].adress.idAdress, response.data[i].adress.city, response.data[i].adress.street, response.data[i].adress.houseNumber))
+        }
       })
   },
   methods: {
@@ -72,11 +88,11 @@ export default {
       this.newRecordData = recordData
     },
     editRecordSubmit: function () {
-      axios.put('/genre/' + this.oldRecordData.genreName, this.newRecordData)
+      axios.put('/rentalOffice/' + this.oldRecordData.idRentalOffice + '/' + this.oldRecordData.idAdress, this.newRecordData)
         .then(response => {
           this.$modal.show('alertModal', { text: 'Operation succeeded.' })
           this.$modal.hide('editModal')
-          let editElemIndex = this.tableData.findIndex(tableElem => tableElem.genreName == this.oldRecordData.genreName)
+          let editElemIndex = this.tableData.findIndex(tableElem => tableElem.idRentalOffice == this.oldRecordData.idRentalOffice)
           this.$set(this.tableData, editElemIndex, this.newRecordData)
         })
         .catch(error => {
@@ -87,10 +103,10 @@ export default {
         })
     },
     deleteRecord: function (recordData) {
-      axios.delete('/genre/' + recordData.genreName)
+      axios.delete('/rentalOffice/' + recordData.idRentalOffice)
         .then(() => {
           this.$modal.show('alertModal', { text: 'Operation succeeded.' })
-          let deleteElemIndex = this.tableData.findIndex(tableDataElem => tableDataElem.genreName == recordData.genreName)
+          let deleteElemIndex = this.tableData.findIndex(tableDataElem => tableDataElem.idRentalOffice == recordData.idRentalOffice)
           this.tableData.splice(deleteElemIndex, 1)
         })
         .catch(error => {

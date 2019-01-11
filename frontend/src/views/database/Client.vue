@@ -1,7 +1,7 @@
 <template>
   <div class="db-data">
-    <TheDatabaseNavigation link="Employee"></TheDatabaseNavigation>
-    <h1>Employees</h1>
+    <TheDatabaseNavigation link="Client"></TheDatabaseNavigation>
+    <h1>Clients</h1>
     <vue-virtual-table
       class="v-table"
       :config="tableConfig"
@@ -19,18 +19,18 @@
     <form-modal name="editModal" :width="600" :height="650">
       <div class="modal-box">
         <span class="modal-box-title">Edit record:</span>
-        ID Employee:<br/>
-        <input type="text" v-model="newRecordData.idEmployee" disabled><br/>
+        ID Client:<br/>
+        <input type="text" v-model="newRecordData.idClient" disabled><br/>
         First name:<br/>
-        <input type="text" v-model="newRecordData.firstName"><br/>
+        <input type="text" v-model="newRecordData.clientFirstName"><br/>
         Last name:<br/>
-        <input type="text" v-model="newRecordData.lastName"><br/>
-        Position:<br/>
-        <input type="text" v-model="newRecordData.position"><br/>
+        <input type="text" v-model="newRecordData.clientLastName"><br/>
+        Registration date:<br/>
+        <input type="date" v-model="newRecordData.registrationDate"><br/>
         E-mail:<br/>
         <input type="text" v-model="newRecordData.email"><br/>
         Phone number:<br/>
-        <input type="text" v-model="newRecordData.phone"><br/>
+        <input type="text" v-model="newRecordData.number"><br/>
         ID Rental office:<br/>
         <input type="text" v-model="newRecordData.idRentalOffice" disabled><br/>
         Rental office name:<br/>
@@ -53,11 +53,11 @@
 
 <script>
   import axios from 'axios'
-  import TheDatabaseNavigation from '../components/TheDatabaseNavigation.vue'
+  import TheDatabaseNavigation from '../../components/TheDatabaseNavigation.vue'
   import VueVirtualTable from 'vue-virtual-table'
 
   export default {
-    name: 'Employee',
+    name: 'Client',
     components: {
       TheDatabaseNavigation,
       VueVirtualTable
@@ -65,16 +65,16 @@
     data () {
       return {
         tableConfig: [/* prop, name, width, sortable, searchable, filterable, numberFilter, summary, prefix, suffix */
-          { prop: 'idEmployee', name: 'ID', width: 28, sortable: true, numberFilter: true },
-          { prop: 'firstName', name: 'First name', width: 90, searchable: true, sortable: true },
-          { prop: 'lastName', name: 'Last name', width: 90, searchable: true, sortable: true },
-          { prop: 'position', name: 'Position', width: 100, filterable: true, sortable: true },
-          { prop: 'idRentalOffice', name: 'ID', width: 26, sortable: true, numberFilter: true },
-          { prop: 'rentalOfficeName', name: 'Office name', width: 126, filterable: true, sortable: true },
-          { prop: 'idAdress', name: 'ID', width: 28, sortable: true, numberFilter: true },
+          { prop: 'idClient', name: 'ID', width: 36, sortable: true, numberFilter: true },
+          { prop: 'clientFirstName', name: 'First name', width: 90, searchable: true, sortable: true },
+          { prop: 'clientLastName', name: 'Last name', width: 90, searchable: true, sortable: true },
+          { prop: 'idRentalOffice', name: 'ID', width: 28, sortable: true, numberFilter: true },
+          { prop: 'rentalOfficeName', name: 'Office name', width: 125, filterable: true, sortable: true },
+          { prop: 'registrationDate', name: 'Reg. date', width: 90, searchable: true, sortable: true },
+          { prop: 'idAdress', name: 'ID', width: 36, sortable: true, numberFilter: true },
           { prop: 'adressComplete', name: 'Address', searchable: true, sortable: true },
           { prop: 'email', name: 'E-mail', width: 230, searchable: true },
-          { prop: 'phone', name: 'Phone', width: 84, searchable: true },
+          { prop: 'number', name: 'Phone', width: 84, searchable: true },
           { prop: '_action', name: 'Action', actionName: 'actionCommon', width: 130 }
         ],
         tableData: [],
@@ -84,16 +84,16 @@
       }
     },
     created () {
-      axios.get('/rentalOffice/employees')
+      axios.get('/rentalOffice/clients')
         .then(response => {
-          function responseConstructor(idEmployee, firstName, lastName, position, email,
-                                       phone, idRentalOffice, rentalOfficeName, idAdress, city, street, houseNumber){
-            this.idEmployee = idEmployee
-            this.firstName = firstName
-            this.lastName = lastName
-            this.position = position
+          function responseConstructor(idClient, clientFirstName, clientLastName, registrationDate, email,
+                                       number, idRentalOffice, rentalOfficeName, idAdress, city, street, houseNumber){
+            this.idClient = idClient
+            this.clientFirstName = clientFirstName
+            this.clientLastName = clientLastName
+            this.registrationDate = registrationDate
             this.email = email
-            this.phone = phone
+            this.number = number
             this.idRentalOffice = idRentalOffice
             this.rentalOfficeName = rentalOfficeName
             this.idAdress = idAdress
@@ -101,8 +101,8 @@
           }
           let i
           for(i=0; i<response.data.length; i++) {
-            this.tableData.push(new responseConstructor(response.data[i].idEmployee, response.data[i].firstName, response.data[i].lastName,
-              response.data[i].position, response.data[i].email,  response.data[i].phone, response.data[i].rentalOffice.idRentalOffice,
+            this.tableData.push(new responseConstructor(response.data[i].idClient, response.data[i].clientFirstName, response.data[i].clientLastName,
+              response.data[i].registrationDate, response.data[i].email,  response.data[i].number, response.data[i].rentalOffice.idRentalOffice,
               response.data[i].rentalOffice.rentalOfficeName, response.data[i].adress.idAdress, response.data[i].adress.city,
               response.data[i].adress.street, response.data[i].adress.houseNumber))
           }
@@ -115,12 +115,11 @@
         this.newRecordData = recordData
       },
       editRecordSubmit: function () {
-        axios.put('/rentalOffice/' + this.oldRecordData.idRentalOffice + '/employees/' + this.oldRecordData.idEmployee +
-                  '/' + this.oldRecordData.idAdress, this.newRecordData)
+        axios.put('/rentalOffice/' + this.oldRecordData.idRentalOffice + '/clients/' + this.oldRecordData.idClient + '/' + this.oldRecordData.idAdress, this.newRecordData)
           .then(response => {
             this.$modal.show('alertModal', { text: 'Operation succeeded.' })
             this.$modal.hide('editModal')
-            let editElemIndex = this.tableData.findIndex(tableElem => tableElem.idEmployee == this.oldRecordData.idEmployee)
+            let editElemIndex = this.tableData.findIndex(tableElem => tableElem.idClient == this.oldRecordData.idClient)
             this.$set(this.tableData, editElemIndex, this.newRecordData)
           })
           .catch(error => {
@@ -131,10 +130,10 @@
           })
       },
       deleteRecord: function (recordData) {
-        axios.delete('/rentalOffice/employees/' + recordData.idEmployee)
+        axios.delete('/rentalOffice/clients/' + recordData.idClient)
           .then(() => {
             this.$modal.show('alertModal', { text: 'Operation succeeded.' })
-            let deleteElemIndex = this.tableData.findIndex(tableDataElem => tableDataElem.idEmployee == recordData.idEmployee)
+            let deleteElemIndex = this.tableData.findIndex(tableDataElem => tableDataElem.idClient == recordData.idClient)
             this.tableData.splice(deleteElemIndex, 1)
           })
           .catch(error => {

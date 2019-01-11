@@ -1,7 +1,7 @@
 <template>
   <div class="db-data">
-    <TheDatabaseNavigation link="Actor"></TheDatabaseNavigation>
-    <h1>Actors</h1>
+    <TheDatabaseNavigation link="Genre"></TheDatabaseNavigation>
+    <h1>Movie genres</h1>
     <vue-virtual-table
       class="v-table"
       :config="tableConfig"
@@ -16,17 +16,13 @@
         <button @click="deleteRecord(scope.row)">Delete</button>
       </template>
     </vue-virtual-table>
-    <form-modal name="editModal" :width="600" :height="330">
+    <form-modal name="editModal" :width="600" :height="300">
       <div class="modal-box">
         <span class="modal-box-title">Edit record:</span>
-        ID:<br/>
-        <input type="text" v-model="newRecordData.idActor" disabled><br/>
-        First name:<br/>
-        <input type="text" v-model="newRecordData.actorFirstName"><br/>
-        Last name:<br/>
-        <input type="text" v-model="newRecordData.actorLastName"><br/>
-        Date of birth:<br/>
-        <input type="date" v-model="newRecordData.dateOfBirth"><br/>
+        Name:<br/>
+        <input type="text" v-model="newRecordData.genreName" disabled><br/>
+        Description:<br/>
+        <textarea rows="6" v-model="newRecordData.genreDescription"></textarea><br/>
         <button @click="editRecordSubmit" style="float:right;">Submit</button><button @click="$modal.hide('editModal')" >Cancel</button>
       </div>
     </form-modal>
@@ -41,11 +37,11 @@
 
 <script>
 import axios from 'axios'
-import TheDatabaseNavigation from '../components/TheDatabaseNavigation.vue'
+import TheDatabaseNavigation from '../../components/TheDatabaseNavigation.vue'
 import VueVirtualTable from 'vue-virtual-table'
 
 export default {
-  name: 'Actor',
+  name: 'Genre',
   components: {
     TheDatabaseNavigation,
     VueVirtualTable
@@ -53,10 +49,8 @@ export default {
   data () {
     return {
       tableConfig: [/* prop, name, width, sortable, searchable, filterable, numberFilter, summary, prefix, suffix */
-        { prop: 'idActor', name: 'ID', width: 36, sortable: true, numberFilter: true },
-        { prop: 'actorFirstName', name: 'First name', searchable: true, sortable: true },
-        { prop: 'actorLastName', name: 'Last name', searchable: true, sortable: true },
-        { prop: 'dateOfBirth', name: 'Date of birth', searchable: true, sortable: true, width: 150 },
+        { prop: 'genreName', name: 'Name', width: 220, sortable: true, searchable: true },
+          { prop: 'genreDescription', name: 'Description', searchable: true },
         { prop: '_action', name: 'Action', actionName: 'actionCommon', width: 130 }
       ],
       tableData: [],
@@ -66,7 +60,7 @@ export default {
     }
   },
   created () {
-    axios.get('/actor/all')
+    axios.get('/genre/all')
       .then(response => {
         this.tableData = response.data
       })
@@ -78,11 +72,11 @@ export default {
       this.newRecordData = recordData
     },
     editRecordSubmit: function () {
-      axios.put('/actor/' + this.oldRecordData.idActor, this.newRecordData)
+      axios.put('/genre/' + this.oldRecordData.genreName, this.newRecordData)
         .then(response => {
           this.$modal.show('alertModal', { text: 'Operation succeeded.' })
           this.$modal.hide('editModal')
-          let editElemIndex = this.tableData.findIndex(tableElem => tableElem.idActor == this.oldRecordData.idActor)
+          let editElemIndex = this.tableData.findIndex(tableElem => tableElem.genreName == this.oldRecordData.genreName)
           this.$set(this.tableData, editElemIndex, this.newRecordData)
         })
         .catch(error => {
@@ -93,10 +87,10 @@ export default {
         })
     },
     deleteRecord: function (recordData) {
-      axios.delete('/actor/' + recordData.idActor)
+      axios.delete('/genre/' + recordData.genreName)
         .then(() => {
           this.$modal.show('alertModal', { text: 'Operation succeeded.' })
-          let deleteElemIndex = this.tableData.findIndex(tableDataElem => tableDataElem.idActor == recordData.idActor)
+          let deleteElemIndex = this.tableData.findIndex(tableDataElem => tableDataElem.genreName == recordData.genreName)
           this.tableData.splice(deleteElemIndex, 1)
         })
         .catch(error => {

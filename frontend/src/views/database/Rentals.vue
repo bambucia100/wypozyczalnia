@@ -47,7 +47,7 @@
 
 <script>
   import axios from 'axios'
-  import TheDatabaseNavigation from '../components/TheDatabaseNavigation.vue'
+  import TheDatabaseNavigation from '../../components/TheDatabaseNavigation.vue'
   import VueVirtualTable from 'vue-virtual-table'
 
   export default {
@@ -60,7 +60,7 @@
       return {
         tableConfig: [/* prop, name, width, sortable, searchable, filterable, numberFilter, summary, prefix, suffix */
           { prop: 'idRental', name: 'ID', width: 46, sortable: true, numberFilter: true },
-          { prop: 'idClient', name: 'ID Client', width: 80, searchable: true, sortable: true },
+          { prop: 'idClient', name: 'ID Client', width: 80, numberFilter: true, sortable: true },
           { prop: 'clientName', name: 'Client', searchable: true, sortable: true },
           { prop: 'idEmployee', name: 'ID', width: 36, sortable: true, numberFilter: true },
           { prop: 'employeeName', name: 'Employee', searchable: true, sortable: true },

@@ -1,7 +1,7 @@
 <template>
   <div class="db-data">
-    <TheDatabaseNavigation link="Movie"></TheDatabaseNavigation>
-    <h1>Movies</h1>
+    <TheDatabaseNavigation link="Warehouse"></TheDatabaseNavigation>
+    <h1>Rental office warehouses</h1>
     <vue-virtual-table
       class="v-table"
       :config="tableConfig"
@@ -16,23 +16,23 @@
         <button @click="deleteRecord(scope.row)">Delete</button>
       </template>
     </vue-virtual-table>
-    <form-modal name="editModal" :width="600" :height="600">
+    <form-modal name="editModal" :width="600" :height="500">
       <div class="modal-box">
         <span class="modal-box-title">Edit record:</span>
-        ID Client:<br/>
+        ID Movie in warehouse:<br/>
+        <input type="text" v-model="newRecordData.idMovieWarehouse" disabled><br/>
+        ID Movie:<br/>
         <input type="text" v-model="newRecordData.idMovie" disabled><br/>
         Movie title:<br/>
-        <input type="text" v-model="newRecordData.title"><br/>
-        Length of movie:<br/>
-        <input type="text" v-model="newRecordData.length"><br/>
-        Director:<br/>
-        <input type="text" v-model="newRecordData.director"><br/>
-        Rating:<br/>
-        <input type="text" v-model="newRecordData.rating"><br/>
-        Description:<br/>
-        <textarea rows="6" v-model="newRecordData.description"></textarea><br/>
-        Genre:<br/>
-        <input type="text" v-model="newRecordData.genreName"><br/> <!--TODO-->
+        <input type="text" v-model="newRecordData.title" disabled><br/>
+        Quantity in warehouse:<br/>
+        <input type="text" v-model="newRecordData.quantity"><br/>
+        Daily charge:<br/>
+        <input type="text" v-model="newRecordData.charge"><br/>
+        ID Rental office:<br/>
+        <input type="text" v-model="newRecordData.idRentalOffice" disabled><br/>
+        Rental office name:<br/>
+        <input type="text" v-model="newRecordData.rentalOfficeName" disabled><br/>
         <button @click="editRecordSubmit" style="float:right;">Submit</button><button @click="$modal.hide('editModal')" >Cancel</button>
       </div>
     </form-modal>
@@ -47,11 +47,11 @@
 
 <script>
   import axios from 'axios'
-  import TheDatabaseNavigation from '../components/TheDatabaseNavigation.vue'
+  import TheDatabaseNavigation from '../../components/TheDatabaseNavigation.vue'
   import VueVirtualTable from 'vue-virtual-table'
 
   export default {
-    name: 'Movie',
+    name: 'MoviesWarehouse',
     components: {
       TheDatabaseNavigation,
       VueVirtualTable
@@ -59,13 +59,13 @@
     data () {
       return {
         tableConfig: [/* prop, name, width, sortable, searchable, filterable, numberFilter, summary, prefix, suffix */
-          { prop: 'idMovie', name: 'ID', width: 36, sortable: true, numberFilter: true },
-          { prop: 'title', name: 'Title', width: 200, searchable: true, sortable: true },
-          { prop: 'director', name: 'Director', width: 170, filterable: true, sortable: true },
-          { prop: 'genreName', name: 'Genre', width: 130, sortable: true, filterable: true },
-          { prop: 'length', name: 'Length', width: 70, numberFilter: true, sortable: true, suffix: 'min.'},
-          { prop: 'rating', name: 'Rating', width: 60, numberFilter: true , sortable: true},
-          { prop: 'description', name: 'Description', searchable: true },
+          { prop: 'idMovieWarehouse', name: 'ID', width: 36, sortable: true, numberFilter: true },
+          { prop: 'idMovie', name: 'ID Movie', width: 90, numberFilter: true, sortable: true },
+          { prop: 'title', name: 'Title', searchable: true, sortable: true },
+          { prop: 'quantity', name: 'Quantity', width: 90, numberFilter: true, sortable: true },
+          { prop: 'charge', name: 'Charge', width: 90, numberFilter: true, sortable: true },
+          { prop: 'idRentalOffice', name: 'ID', width: 36, sortable: true, numberFilter: true },
+          { prop: 'rentalOfficeName', name: 'Office name', width: 150, filterable: true, sortable: true },
           { prop: '_action', name: 'Action', actionName: 'actionCommon', width: 130 }
         ],
         tableData: [],
@@ -75,21 +75,22 @@
       }
     },
     created () {
-      axios.get('/movie/all')
+      axios.get('/rentalOffice/warehouse/all')
         .then(response => {
-          function responseConstructor(idMovie, title, length, director, rating, description, genreName){
+          function responseConstructor(idMovieWarehouse, idMovie, title, quantity, charge, idRentalOffice, rentalOfficeName){
+            this.idMovieWarehouse = idMovieWarehouse
             this.idMovie = idMovie
             this.title = title
-            this.length = length
-            this.director = director
-            this.rating = rating
-            this.description = description
-            this.genreName = genreName
+            this.quantity = quantity
+            this.charge = charge
+            this.idRentalOffice = idRentalOffice
+            this.rentalOfficeName = rentalOfficeName
           }
           let i
           for(i=0; i<response.data.length; i++) {
-            this.tableData.push(new responseConstructor(response.data[i].idMovie, response.data[i].title, response.data[i].length,
-              response.data[i].director, response.data[i].rating,  response.data[i].description, response.data[i].genre.genreName))
+            this.tableData.push(new responseConstructor(response.data[i].idMovieWarehouse, response.data[i].movie.idMovie,
+              response.data[i].movie.title, response.data[i].quantity, response.data[i].charge,
+              response.data[i].rentalOffice.idRentalOffice, response.data[i].rentalOffice.rentalOfficeName,))
           }
         })
     },
@@ -99,12 +100,13 @@
         this.oldRecordData = recordData
         this.newRecordData = recordData
       },
-      editRecordSubmit: function () { // /movie/{idMovie}/{genreName}
-        axios.put('/movie/' + this.oldRecordData.idMovie + '/' + this.oldRecordData.genreName, this.newRecordData)
+      editRecordSubmit: function () {
+        axios.put('/rentalOffice/' + this.oldRecordData.idRentalOffice + '/warehouse/' + this.oldRecordData.idMovie +
+          '/' + this.oldRecordData.idMovieWarehouse, this.newRecordData)
           .then(response => {
             this.$modal.show('alertModal', { text: 'Operation succeeded.' })
             this.$modal.hide('editModal')
-            let editElemIndex = this.tableData.findIndex(tableElem => tableElem.idMovie == this.oldRecordData.idMovie)
+            let editElemIndex = this.tableData.findIndex(tableElem => tableElem.idMovieWarehouse == this.oldRecordData.idMovieWarehouse)
             this.$set(this.tableData, editElemIndex, this.newRecordData)
           })
           .catch(error => {
@@ -115,10 +117,10 @@
           })
       },
       deleteRecord: function (recordData) {
-        axios.delete('/movie/' + recordData.idMovie)
+        axios.delete('/rentalOffice/warehouse/' + recordData.idMovieWarehouse)
           .then(() => {
             this.$modal.show('alertModal', { text: 'Operation succeeded.' })
-            let deleteElemIndex = this.tableData.findIndex(tableDataElem => tableDataElem.idMovie == recordData.idMovie)
+            let deleteElemIndex = this.tableData.findIndex(tableDataElem => tableDataElem.idMovieWarehouse == recordData.idMovieWarehouse)
             this.tableData.splice(deleteElemIndex, 1)
           })
           .catch(error => {
