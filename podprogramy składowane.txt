@@ -1,35 +1,55 @@
 <-- procedura -->
 
-DELIMITER $$
+USE `szbd_projekt`;
+DROP procedure IF EXISTS `increment_quantity`;
 
-CREATE PROCEDURE `change_quantity`(id_movie_val integer, id_rental_office_val integer)
-BEGIN
-   update movies_warehouse
-   set quantity = quantity - 1
-   where id_movie = id_movie_val and id_rental_office = id_rental_office_val;
-   END $$
+DELIMITER $$
+USE `szbd_projekt`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `increment_quantity`(id_warehouse_val integer, amount_of_rentals_val integer, id_rental_val integer)
+BEGIN    
+
+	update movies_warehouse m, rentals r    
+	set m.quantity = m.quantity + amount_of_rentals_val
+	where m.id_warehouse = id_warehouse_val and r.id_rental = id_rental_val;
+END$$
 
 DELIMITER ;
 
-DELIMITER $$
+USE `szbd_projekt`;
+DROP procedure IF EXISTS `change_quantity`;
 
+DELIMITER $$
+USE `szbd_projekt`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `change_quantity`(id_warehouse_val integer, amount integer)
+BEGIN
+   update movies_warehouse
+   set quantity = quantity - amount
+   where id_warehouse = id_warehouse_val;
+   END$$
+
+DELIMITER ;
 
 <-- funkcja -->
 
-DELIMITER $$
+USE `szbd_projekt`;
+DROP function IF EXISTS `avg_actor_rating`;
 
-CREATE FUNCTION avg_actor_rating(id_actor integer)
-RETURNS numeric(3,1)
-DETERMINISTIC 
-READS SQL DATA 
+DELIMITER $$
+USE `szbd_projekt`$$
+CREATE DEFINER=`root`@`localhost` FUNCTION `avg_actor_rating`(p_id_actor INT) RETURNS decimal(3,1)
+    READS SQL DATA
+    DETERMINISTIC
 BEGIN
-    DECLARE avg_rating numeric(3,1); 
+    DECLARE v_avg_rating decimal(3,1); 
     
-    SELECT avg(cast.actor_rating) INTO avg_rating
+	SELECT avg(cast.actor_rating) INTO v_avg_rating
     FROM cast
-    WHERE cast.id_actor = id_actor; 
-    RETURN avg_actor; 
-END
+    WHERE cast.id_actor = p_id_actor; 
+    RETURN v_avg_rating; 
+    
+END$$
+
+DELIMITER ;
 
 <-- indeksy -->
 
