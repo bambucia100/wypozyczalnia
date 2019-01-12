@@ -2,6 +2,7 @@ package szbd.projekt.projektbazy.movie;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.GenericGenerator;
 
 import org.hibernate.annotations.NaturalId;
@@ -33,7 +34,8 @@ public class Movie {
 	@Column(name = "description")
 	private String description;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "genre_name", nullable = false)
 	private Genre genre;
 	
