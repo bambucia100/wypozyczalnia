@@ -43,10 +43,10 @@ public class MovieService {
 		} catch (EmptyResultDataAccessException ex) {
 			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Element does not exist.", ex);
 		} catch (Exception ex) {
-			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Element is a foreign key in CAST and/or MOVIES WAREHOUSE " +
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Element is a foreign key in CAST and/or MOVIES WAREHOUSE" +
 					"table. Delete records in CAST and MOVIES WAREHOUSE first.", ex);
 		}
 	}
-	
+
 }
 

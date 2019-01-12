@@ -32,7 +32,8 @@ public class Movie {
 	private double rating;
 	@Column(name = "description")
 	private String description;
-	@ManyToOne
+
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "genre_name", nullable = false)
 	private Genre genre;
 	
