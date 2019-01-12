@@ -15,37 +15,11 @@
       :bordered="true"
     >
       <template slot-scope="scope" slot="actionCommon">
-        <button @click="editRecord(scope.row)">Edit</button>
         <button @click="deleteRecord(scope.row)">Delete</button>
       </template>
     </vue-virtual-table>
 
-    <form-modal name="editModal" :width="600" :height="610">
-      <div class="modal-box">
-        <span class="modal-box-title">Edit record:</span>
-        ID Rental:<br/>
-        <input type="text" v-model="newRecordData.idRental" disabled><br/>
-        ID Movie in warehouse:<br/>
-        <input type="text" v-model="newRecordData.idMovieWarehouse" disabled><br/>
-        ID Client:<br/>
-        <input type="text" v-model="newRecordData.idClient" disabled><br/>
-        Client name:<br/>
-        <input type="text" v-model="newRecordData.clientName" disabled><br/>
-        ID Rental office:<br/>
-        <input type="text" v-model="newRecordData.idRentalOffice" disabled><br/>
-        Rental office name:<br/>
-        <input type="text" v-model="newRecordData.rentalOfficeName" disabled><br/>
-        ID Movie:<br/>
-        <input type="text" v-model="newRecordData.idMovie" disabled><br/>
-        Movie title:<br/>
-        <input type="text" v-model="newRecordData.title" disabled><br/>
-        Amount taken:<br/>
-        <input type="text" v-model="newRecordData.amountOfRentals"><br/>
-        <button @click="editRecordSubmit" style="float:right;">Submit</button><button @click="$modal.hide('editModal')" >Cancel</button>
-      </div>
-    </form-modal>
-
-    <form-modal name="selectOfficeModal" :width="600" :height="550">
+    <form-modal name="selectOfficeModal" :width="600" :height="500">
       <div class="modal-box select-essentials-modal">
         <span class="modal-box-title">Specify rental office:</span>
         Name:<br/>
@@ -60,7 +34,7 @@
       </div>
     </form-modal>
 
-    <form-modal name="selectEmployeeClientModal" :width="600" :height="610">
+    <form-modal name="selectEmployeeClientModal" :width="600" :height="570">
       <div class="modal-box select-essentials-modal">
         <span class="modal-box-title">Specify employee and client:</span>
         Employee:<br/>
@@ -82,7 +56,7 @@
       </div>
     </form-modal>
 
-    <form-modal name="selectRentalElementModal" :width="600" :height="610">
+    <form-modal name="selectRentalElementModal" :width="650" :height="500">
       <div class="modal-box select-essentials-modal">
         <span class="modal-box-title">Specify rental element:</span>
         Movie:<br/>
@@ -125,7 +99,7 @@ export default {
     return {
       tableConfig: [/* prop, name, width, sortable, searchable, filterable, numberFilter, summary, prefix, suffix */
         { prop: 'title', name: 'Movie', searchable: true, sortable: true },
-        { prop: 'director', name: 'Director', width: 170, filterable: true, sortable: true },
+        { prop: 'director', name: 'Director', width: 170, searchable: true, sortable: true },
         { prop: 'amountOfRentals', name: 'Amount', width: 80, numberFilter: true, sortable: true },
         { prop: 'clientName', name: 'Client', width: 200 },
         { prop: 'employeeName', name: 'Employee', width: 200 },
@@ -192,6 +166,7 @@ export default {
       } else if (!this.isEmployeeClientSpecified) {
         this.$modal.show('selectEmployeeClientModal')
       } else {
+        this.refreshMovieWarehouse()
         this.$modal.show('selectRentalElementModal')
       }
     },
@@ -239,21 +214,7 @@ export default {
 
     goToAddRecordModal () {
       if (this.RentalEssentials.idClient != null && this.RentalEssentials.idEmployee != null) {
-        axios.get('/rentalOffice/' + this.RentalEssentials.idRentalOffice + '/warehouse/all')
-          .then(response => {
-            function warehouseSuggestionConstructor (idMovieWarehouse, title, director, quantity) {
-              this.idMovieWarehouse = idMovieWarehouse
-              this.titleDirectorQuantity = title + ', by ' + director + ', Q: ' + quantity
-              this.title = title
-              this.director = director
-              this.quantity = quantity
-            }
-            let i
-            for (i = 0; i < response.data.length; i++) {
-              this.selectSuggestionsData.warehouseMovies.push(new warehouseSuggestionConstructor(response.data[i].idMovieWarehouse, response.data[i].movie.title,
-                response.data[i].movie.director, response.data[i].quantity))
-            }
-          })
+        this.refreshMovieWarehouse()
         this.isEmployeeClientSpecified = true
         this.$modal.show('selectRentalElementModal')
         this.$modal.hide('selectEmployeeClientModal')
@@ -281,15 +242,43 @@ export default {
       if (this.RentalElementObject.amountOfRentals > 0 && this.RentalElementObject.idMovieWarehouse != null) {
         let addedMovieIndex = this.selectSuggestionsData.warehouseMovies.findIndex(obj =>
           obj.idMovieWarehouse == this.RentalElementObject.idMovieWarehouse)
-        let specifiedMovieTitle = this.selectSuggestionsData.warehouseMovies[addedMovieIndex].title
-        let specifiedMovieDirector = this.selectSuggestionsData.warehouseMovies[addedMovieIndex].director
-        this.tableData.push(new tableDataConstructor(this.RentalElementObject.idMovieWarehouse, specifiedMovieTitle, specifiedMovieDirector,
-          this.RentalElementObject.amountOfRentals, this.RentalEssentials.clientName, this.RentalEssentials.employeeName,
-          this.RentalEssentials.rentalOfficeName))
-        this.RentalElementObject = _.cloneDeep(this.cleanRentalElementObject)
+        let specifiedMovieQuantity = this.selectSuggestionsData.warehouseMovies[addedMovieIndex].quantity
+        if (specifiedMovieQuantity >= this.RentalElementObject.amountOfRentals) {
+          let specifiedMovieTitle = this.selectSuggestionsData.warehouseMovies[addedMovieIndex].title
+          let specifiedMovieDirector = this.selectSuggestionsData.warehouseMovies[addedMovieIndex].director
+          this.tableData.push(new tableDataConstructor(this.RentalElementObject.idMovieWarehouse, specifiedMovieTitle, specifiedMovieDirector,
+            this.RentalElementObject.amountOfRentals, this.RentalEssentials.clientName, this.RentalEssentials.employeeName,
+            this.RentalEssentials.rentalOfficeName))
+          this.RentalElementObject = _.cloneDeep(this.cleanRentalElementObject)
+          this.refreshMovieWarehouse()
+        } else {
+          this.$modal.show('alertModal', { text: 'Specified amount to rent is greater than quantity in warehouse.' })
+        }
       } else {
         this.$modal.show('alertModal', { text: 'Please specify movie to rent and correct amount.' })
       }
+    },
+
+    refreshMovieWarehouse () {
+      this.selectSuggestionsData.warehouseMovies = []
+      axios.get('/rentalOffice/' + this.RentalEssentials.idRentalOffice + '/warehouse/all')
+        .then(response => {
+          function warehouseSuggestionConstructor (idMovieWarehouse, title, director, quantity) {
+            this.idMovieWarehouse = idMovieWarehouse
+            this.titleDirectorQuantity = title + ', by ' + director + ', Quantity: ' + quantity
+            this.title = title
+            this.director = director
+            this.quantity = quantity
+          }
+          let i
+          for (i = 0; i < response.data.length; i++) {
+            if (response.data[i].quantity > 0 &&
+                  this.tableData.findIndex(tableElem => (tableElem.idMovieWarehouse.toString() == response.data[i].idMovieWarehouse)) == -1) {
+              this.selectSuggestionsData.warehouseMovies.push(new warehouseSuggestionConstructor(response.data[i].idMovieWarehouse, response.data[i].movie.title,
+                response.data[i].movie.director, response.data[i].quantity))
+            }
+          }
+        })
     },
 
     finishAddingRentalElementToTable () {
@@ -341,43 +330,9 @@ export default {
         })
     },
 
-    editRecord: function (recordData) {
-      this.$modal.show('editModal')
-      this.oldRecordData = recordData
-      this.newRecordData = recordData
-    },
-
-    editRecordSubmit: function () {
-      axios.put('/rentalElement/' + this.oldRecordData.idMovieWarehouse + '/' + this.oldRecordData.idRental, this.newRecordData)
-        .then(response => {
-          this.$modal.show('alertModal', { text: 'Operation succeeded.' })
-          this.$modal.hide('editModal')
-          let editElemIndex = this.tableData.findIndex(tableElem =>
-            (tableElem.idRental == this.oldRecordData.idRental && tableElem.idMovieWarehouse == this.oldRecordData.idMovieWarehouse))
-          this.$set(this.tableData, editElemIndex, this.newRecordData)
-        })
-        .catch(error => {
-          if (error.response) {
-            this.$modal.show('alertModal',
-              { text: 'Operation failed.  |  ' + error.response.status + '  |  ' + error.response.data.error + '  |  ' + error.response.data.message })
-          }
-        })
-    },
-
     deleteRecord: function (recordData) {
-      axios.delete('/rentalElement/' + recordData.idMovieWarehouse + '/' + recordData.idRental)
-        .then(() => {
-          this.$modal.show('alertModal', { text: 'Operation succeeded.' })
-          let deleteElemIndex = this.tableData.findIndex(tableElem =>
-            (tableElem.idMovieWarehouse == recordData.idMovieWarehouse && tableElem.idRental == recordData.idRental))
-          this.tableData.splice(deleteElemIndex, 1)
-        })
-        .catch(error => {
-          if (error.response) {
-            this.$modal.show('alertModal',
-              { text: 'Operation failed.  |  ' + error.response.status + '  |  ' + error.response.data.error + '  |  ' + error.response.data.message })
-          }
-        })
+      let deleteElemIndex = this.tableData.findIndex(tableElem => (tableElem.idMovieWarehouse == recordData.idMovieWarehouse))
+      this.tableData.splice(deleteElemIndex, 1)
     },
 
     beforeOpenAlert (event) {
