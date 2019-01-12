@@ -71,6 +71,7 @@
     padding: 4px;
   }
   .modal-box button, .form-wrapper button {
+    margin-top: 4px;
     padding: 4px 40px;
   }
   .alert-modal-box {

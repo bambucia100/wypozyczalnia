@@ -21,6 +21,7 @@ import AddMovie from './views/add/AddMovie.vue'
 import AddMoviesWarehouse from './views/add/AddMoviesWarehouse.vue'
 import AddRentalOffice from './views/add/AddRentalOffice.vue'
 import RentPackage from './views/rent/RentPackage.vue'
+import ReturnPackage from './views/rent/ReturnPackage.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -130,5 +131,10 @@ export default new Router({
       name: 'RentPackage',
       component: RentPackage
     },
+    {
+      path: '/return',
+      name: 'ReturnPackage',
+      component: ReturnPackage
+    }
   ]
 })

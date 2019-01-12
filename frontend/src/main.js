@@ -8,8 +8,8 @@ Vue.use(VueSelect, { theme: 'bootstrap' })
 Vue.config.productionTip = false
 
 Vue.prototype.$tableHeight = 510
-Vue.prototype.$alertHeight = 150 //150
-Vue.prototype.$alertWidth = 400 //400
+Vue.prototype.$alertHeight = 200 //150
+Vue.prototype.$alertWidth = 450 //400
 Vue.use(VModal, { componentName: 'form-modal' })
 
 new Vue({

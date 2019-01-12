@@ -87,8 +87,6 @@ import axios from 'axios'
 import _ from 'lodash'
 import VueVirtualTable from 'vue-virtual-table'
 import { CoolSelect } from 'vue-cool-select'
-// TODO edit, delete
-// TODO dekrementacja quantity w warehouse
 export default {
   name: 'RentPackage',
   components: {
@@ -132,8 +130,6 @@ export default {
         clients: [],
         employees: []
       },
-      oldRecordData: {},
-      newRecordData: {},
       cleanPostObject: {},
       cleanRentalElementObject: {},
       alertText: '',
@@ -157,6 +153,9 @@ export default {
         for (i = 0; i < response.data.length; i++) {
           this.selectSuggestionsData.rentalOffices.push(new responseConstructor(response.data[i].idRentalOffice, response.data[i].rentalOfficeName))
         }
+      })
+      .then(() => {
+        this.$modal.show('selectOfficeModal')
       })
   },
   methods: {
