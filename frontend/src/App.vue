@@ -103,6 +103,7 @@
     color: #000;
   }
   #rent-package-buttons {
+    margin: 10px 0 0 0;
     height: 50px;
     display: inline-block;
     float: right;

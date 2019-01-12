@@ -2,7 +2,7 @@
   <div class="rent-package-wrapper">
     <h1>Rent movies</h1>
     <div id="rent-package-buttons">
-      <button @click="addRentalPackage()" id="rent-package-submit-button">Submit</button>
+      <button @click="submitRentalPackage()" id="rent-package-submit-button">Submit</button>
       <button @click="addRentalElement()" id="rent-package-add-button">Add record</button>
     </div>
     <vue-virtual-table
@@ -89,12 +89,13 @@
         <cool-select
           class="cool-select-input"
           v-model="RentalElementObject.idMovieWarehouse"
-          :items="selectSuggestionsData.movies"
-          item-text="titleID"
-          item-value="idMovie"/><br/>
-
-        <button @click="$modal.hide('selectRentalElementModal')">Cancel</button>
-        <button @click="goToAddRecordModal()" style="float:right;">Next</button>
+          :items="selectSuggestionsData.warehouseMovies"
+          item-text="titleDirectorQuantity"
+          item-value="idMovieWarehouse"/><br/>
+        Amount:<br/>
+        <input type="number" v-model="RentalElementObject.amountOfRentals"><br/>
+        <button @click="finishAddingRentalElementToTable()">Finish</button>
+        <button @click="addRentalElementToTable()" style="float:right;">Add</button>
       </div>
     </form-modal>
 
@@ -108,147 +109,149 @@
 </template>
 
 <script>
-  import axios from 'axios'
-  import TheDatabaseNavigation from '../../components/TheDatabaseNavigation.vue'
-  import VueVirtualTable from 'vue-virtual-table'
-  import { CoolSelect } from 'vue-cool-select'
-
-  export default {
-    name: 'RentalElement',
-    components: {
-      TheDatabaseNavigation,
-      VueVirtualTable,
-      CoolSelect
-    },
-    data () {
-      return {
-        tableConfig: [/* prop, name, width, sortable, searchable, filterable, numberFilter, summary, prefix, suffix */
-          { prop: 'title', name: 'Movie', searchable: true, sortable: true },
-          { prop: 'director', name: 'Director', width: 170, filterable: true, sortable: true },
-          { prop: 'amountOfRentals', name: 'Amount', width: 80, numberFilter: true, sortable: true },
-          { prop: 'clientName', name: 'Client', width: 200},
-          { prop: 'employeeName', name: 'Employee', width: 200},
-          { prop: 'rentalOfficeName', name: 'Office', width: 130},
-          { prop: '_action', name: 'Action', actionName: 'actionCommon', width: 130 }
-        ],
-        tableData: [],
-        RentalElementObject: {
-          amountOfRentals: '',
-          idMovieWarehouse: '',
-          idRental: ''
-        },
-        postObject: {
-          rental: {
-            rentalDate: '',
-            returnDate: '',
-            idClient: '',
-            idEmployee: ''
-          },
-          rentalElements: []
-        },
-        RentalEssentials: {
-          idRentalOffice: '',
-          idEmployee: '',
-          idClient: '',
-          rentalOfficeName: '',
-          employeeName: '',
-          clientName: ''
-        },
-        selectSuggestionsData: {
-          rentalOffices: [],
-          warehouseMovies: [],
-          clients: [],
-          employees: []
-        },
-        oldRecordData: {},
-        newRecordData: {},
-        cleanObject: {},
-        cleanRentalElementObject: {},
-        alertText: '',
-        isOfficeSpecified: false,
-        isEmployeeClientSpecified: false,
+import axios from 'axios'
+import _ from 'lodash'
+import VueVirtualTable from 'vue-virtual-table'
+import { CoolSelect } from 'vue-cool-select'
+// TODO edit, delete
+// TODO dekrementacja quantity w warehouse
+export default {
+  name: 'RentPackage',
+  components: {
+    VueVirtualTable,
+    CoolSelect
+  },
+  data () {
+    return {
+      tableConfig: [/* prop, name, width, sortable, searchable, filterable, numberFilter, summary, prefix, suffix */
+        { prop: 'title', name: 'Movie', searchable: true, sortable: true },
+        { prop: 'director', name: 'Director', width: 170, filterable: true, sortable: true },
+        { prop: 'amountOfRentals', name: 'Amount', width: 80, numberFilter: true, sortable: true },
+        { prop: 'clientName', name: 'Client', width: 200 },
+        { prop: 'employeeName', name: 'Employee', width: 200 },
+        { prop: 'rentalOfficeName', name: 'Office', width: 130 },
+        { prop: '_action', name: 'Action', actionName: 'actionCommon', width: 130 }
+      ],
+      tableData: [],
+      RentalElementObject: {
+        amountOfRentals: 1,
+        idMovieWarehouse: '',
+        idRental: ''
+      },
+      postObject: {
+        rental: {
+          rentalDate: '',
+          returnDate: ''
+        }
+      },
+      RentalEssentials: {
+        idRentalOffice: '',
+        idEmployee: '',
+        idClient: '',
+        rentalOfficeName: '',
+        employeeName: '',
+        clientName: ''
+      },
+      selectSuggestionsData: {
+        rentalOffices: [],
+        warehouseMovies: [],
+        clients: [],
+        employees: []
+      },
+      oldRecordData: {},
+      newRecordData: {},
+      cleanPostObject: {},
+      cleanRentalElementObject: {},
+      alertText: '',
+      RentalElementPostErrorFlag: false,
+      isOfficeSpecified: false,
+      isEmployeeClientSpecified: false,
+      isSelectSuggestionsLoaded: false
+    }
+  },
+  created () {
+    this.cleanRentalElementObject = _.cloneDeep(this.RentalElementObject)
+    this.cleanPostObject = _.cloneDeep(this.postObject)
+    axios.get('/rentalOffice/all')
+      .then(response => {
+        function responseConstructor (idRentalOffice, rentalOfficeName) {
+          this.idRentalOffice = idRentalOffice
+          this.rentalOfficeNameID = rentalOfficeName + ' ID: ' + idRentalOffice
+          this.rentalOfficeName = rentalOfficeName
+        }
+        let i
+        for (i = 0; i < response.data.length; i++) {
+          this.selectSuggestionsData.rentalOffices.push(new responseConstructor(response.data[i].idRentalOffice, response.data[i].rentalOfficeName))
+        }
+      })
+  },
+  methods: {
+    addRentalElement () {
+      if (!this.isOfficeSpecified) {
+        this.$modal.show('selectOfficeModal')
+      } else if (!this.isEmployeeClientSpecified) {
+        this.$modal.show('selectEmployeeClientModal')
+      } else {
+        this.$modal.show('selectRentalElementModal')
       }
     },
-    created () {
-      this.cleanAddRentalElementObject = _.cloneDeep(this.RentalElementObject)
-      axios.get('/rentalOffice/all')
-        .then(response => {
-          function responseConstructor (idRentalOffice, rentalOfficeName) {
-            this.idRentalOffice = idRentalOffice
-            this.rentalOfficeNameID = rentalOfficeName + ' ID: ' + idRentalOffice
-            this.rentalOfficeName = rentalOfficeName
-          }
-          let i
-          for (i = 0; i < response.data.length; i++) {
-            this.selectSuggestionsData.rentalOffices.push(new responseConstructor(response.data[i].idRentalOffice, response.data[i].rentalOfficeName))
-          }
-        })
-    },
-    methods: {
-      addRentalElement () {
-        if(!this.isOfficeSpecified) {
-          this.$modal.show('selectOfficeModal')
-        }
-        else if(!this.isEmployeeClientSpecified) {
-          this.$modal.show('selectEmployeeClientModal')
-        }
-        else {
-          this.$modal.show('selectRentalElementModal')
-        }
-      },
 
-
-      goToSelectEmployeeClientModal () {
-        axios.get('/rentalOffice/' + this.RentalEssentials.idRentalOffice + '/clients')
-          .then(response => {
-            function responseConstructor(idClient, clientFirstName, clientLastName, street, houseNumber){
-              this.idClient = idClient
-              this.clientNameAddress = clientFirstName + ' ' + clientLastName + ', ' + street + ' ' + houseNumber
-              this.clientName = clientFirstName + ' ' + clientLastName
-            }
-            let i
-            for(i=0; i<response.data.length; i++) {
-              this.selectSuggestionsData.clients.push(new responseConstructor(response.data[i].idClient, response.data[i].clientFirstName, response.data[i].clientLastName,
-                response.data[i].adress.street, response.data[i].adress.houseNumber))
-            }
-          })
-        axios.get('/rentalOffice/' + this.RentalEssentials.idRentalOffice + '/employees')
-          .then(response => {
-            function responseConstructor(idEmployee, firstName, lastName){
-              this.idEmployee = idEmployee
-              this.employeeNameID = firstName + ' ' + lastName + ' ID: ' + idEmployee
-              this.employeeName = firstName + ' ' + lastName
-            }
-            let i
-            for(i=0; i<response.data.length; i++) {
-              this.selectSuggestionsData.employees.push(new responseConstructor(response.data[i].idEmployee, response.data[i].firstName, response.data[i].lastName))
-            }
-          })
-        this.isOfficeSpecified = true
+    goToSelectEmployeeClientModal () {
+      if (this.RentalEssentials.idRentalOffice != null) {
+        if (!this.isSelectSuggestionsLoaded) {
+          axios.get('/rentalOffice/clients')
+            .then(response => {
+              function clientSuggestionConstructor (idClient, clientFirstName, clientLastName, street, houseNumber) {
+                this.idClient = idClient
+                this.clientNameAddress = clientFirstName + ' ' + clientLastName + ', ' + street + ' ' + houseNumber
+                this.clientName = clientFirstName + ' ' + clientLastName
+              }
+              let i
+              for (i = 0; i < response.data.length; i++) {
+                this.selectSuggestionsData.clients.push(new clientSuggestionConstructor(response.data[i].idClient, response.data[i].clientFirstName, response.data[i].clientLastName,
+                  response.data[i].adress.street, response.data[i].adress.houseNumber))
+              }
+            })
+          axios.get('/rentalOffice/' + this.RentalEssentials.idRentalOffice + '/employees')
+            .then(response => {
+              function employeeSuggestionConstructor (idEmployee, firstName, lastName) {
+                this.idEmployee = idEmployee
+                this.employeeNameID = firstName + ' ' + lastName + ' ID: ' + idEmployee
+                this.employeeName = firstName + ' ' + lastName
+              }
+              let i
+              for (i = 0; i < response.data.length; i++) {
+                this.selectSuggestionsData.employees.push(new employeeSuggestionConstructor(response.data[i].idEmployee, response.data[i].firstName, response.data[i].lastName))
+              }
+            })
+          let specifiedOfficeIndex = this.selectSuggestionsData.rentalOffices.findIndex(obj =>
+            obj.idRentalOffice == this.RentalEssentials.idRentalOffice)
+          this.RentalEssentials.rentalOfficeName = this.selectSuggestionsData.rentalOffices[specifiedOfficeIndex].rentalOfficeName
+          this.isOfficeSpecified = true
+          this.isSelectSuggestionsLoaded = true
+        }
         this.$modal.show('selectEmployeeClientModal')
         this.$modal.hide('selectOfficeModal')
-        let specifiedOfficeIndex = this.selectSuggestionsData.rentalOffices.findIndex(obj =>
-          obj.idRentalOffice == this.RentalEssentials.idRentalOffice)
-        this.RentalEssentials.rentalOfficeName = this.selectSuggestionsData.rentalOffices[specifiedOfficeIndex].rentalOfficeName
-      },
+      } else {
+        this.$modal.show('alertModal', { text: 'Please specify your rental office before continuing.' })
+      }
+    },
 
-
-      goToAddRecordModal () {
+    goToAddRecordModal () {
+      if (this.RentalEssentials.idClient != null && this.RentalEssentials.idEmployee != null) {
         axios.get('/rentalOffice/' + this.RentalEssentials.idRentalOffice + '/warehouse/all')
           .then(response => {
-            function responseConstructor(idMovieWarehouse, idMovie, title, quantity, charge, idRentalOffice, rentalOfficeName){
+            function warehouseSuggestionConstructor (idMovieWarehouse, title, director, quantity) {
               this.idMovieWarehouse = idMovieWarehouse
+              this.titleDirectorQuantity = title + ', by ' + director + ', Q: ' + quantity
               this.title = title
+              this.director = director
               this.quantity = quantity
-              this.charge = charge
-              this.idRentalOffice = idRentalOffice
-              this.rentalOfficeName = rentalOfficeName
             }
             let i
-            for(i=0; i<response.data.length; i++) {
-              this.tableData.push(new responseConstructor(response.data[i].idMovieWarehouse, response.data[i].movie.idMovie,
-                response.data[i].movie.title, response.data[i].quantity, response.data[i].charge,
-                response.data[i].rentalOffice.idRentalOffice, response.data[i].rentalOffice.rentalOfficeName,))
+            for (i = 0; i < response.data.length; i++) {
+              this.selectSuggestionsData.warehouseMovies.push(new warehouseSuggestionConstructor(response.data[i].idMovieWarehouse, response.data[i].movie.title,
+                response.data[i].movie.director, response.data[i].quantity))
             }
           })
         this.isEmployeeClientSpecified = true
@@ -260,56 +263,128 @@
         let specifiedClientIndex = this.selectSuggestionsData.clients.findIndex(obj =>
           obj.idClient == this.RentalEssentials.idClient)
         this.RentalEssentials.clientName = this.selectSuggestionsData.clients[specifiedClientIndex].clientName
-      },
-
-
-      editRecord: function (recordData) {
-        this.$modal.show('editModal')
-        this.oldRecordData = recordData
-        this.newRecordData = recordData
-      },
-
-
-      editRecordSubmit: function () {
-        axios.put('/rentalElement/' + this.oldRecordData.idMovieWarehouse + '/' + this.oldRecordData.idRental, this.newRecordData)
-          .then(response => {
-            this.$modal.show('alertModal', { text: 'Operation succeeded.' })
-            this.$modal.hide('editModal')
-            let editElemIndex = this.tableData.findIndex(tableElem =>
-              (tableElem.idRental == this.oldRecordData.idRental && tableElem.idMovieWarehouse == this.oldRecordData.idMovieWarehouse))
-            this.$set(this.tableData, editElemIndex, this.newRecordData)
-          })
-          .catch(error => {
-            if (error.response) {
-              this.$modal.show('alertModal',
-                { text: 'Operation failed.  |  ' + error.response.status + '  |  ' + error.response.data.error + '  |  ' + error.response.data.message })
-            }
-          })
-      },
-
-
-      deleteRecord: function (recordData) {
-        axios.delete('/rentalElement/' + recordData.idMovieWarehouse + '/' + recordData.idRental)
-          .then(() => {
-            this.$modal.show('alertModal', { text: 'Operation succeeded.' })
-            let deleteElemIndex = this.tableData.findIndex(tableElem =>
-              (tableElem.idMovieWarehouse == recordData.idMovieWarehouse && tableElem.idRental == recordData.idRental))
-            this.tableData.splice(deleteElemIndex, 1)
-          })
-          .catch(error => {
-            if (error.response) {
-              this.$modal.show('alertModal',
-                { text: 'Operation failed.  |  ' + error.response.status + '  |  ' + error.response.data.error + '  |  ' + error.response.data.message })
-            }
-          })
-      },
-
-
-      beforeOpenAlert (event) {
-        this.alertText = event.params.text
+      } else {
+        this.$modal.show('alertModal', { text: 'Please specify yourself and client before continuing.' })
       }
+    },
+
+    addRentalElementToTable () {
+      function tableDataConstructor (idMovieWarehouse, title, director, amountOfRentals, clientName, employeeName, rentalOfficeName) {
+        this.idMovieWarehouse = idMovieWarehouse
+        this.title = title
+        this.director = director
+        this.amountOfRentals = amountOfRentals
+        this.clientName = clientName
+        this.employeeName = employeeName
+        this.rentalOfficeName = rentalOfficeName
+      }
+      if (this.RentalElementObject.amountOfRentals > 0 && this.RentalElementObject.idMovieWarehouse != null) {
+        let addedMovieIndex = this.selectSuggestionsData.warehouseMovies.findIndex(obj =>
+          obj.idMovieWarehouse == this.RentalElementObject.idMovieWarehouse)
+        let specifiedMovieTitle = this.selectSuggestionsData.warehouseMovies[addedMovieIndex].title
+        let specifiedMovieDirector = this.selectSuggestionsData.warehouseMovies[addedMovieIndex].director
+        this.tableData.push(new tableDataConstructor(this.RentalElementObject.idMovieWarehouse, specifiedMovieTitle, specifiedMovieDirector,
+          this.RentalElementObject.amountOfRentals, this.RentalEssentials.clientName, this.RentalEssentials.employeeName,
+          this.RentalEssentials.rentalOfficeName))
+        this.RentalElementObject = _.cloneDeep(this.cleanRentalElementObject)
+      } else {
+        this.$modal.show('alertModal', { text: 'Please specify movie to rent and correct amount.' })
+      }
+    },
+
+    finishAddingRentalElementToTable () {
+      if (this.RentalElementObject.amountOfRentals == 1 && this.RentalElementObject.idMovieWarehouse == null) {
+        this.$modal.hide('selectRentalElementModal')
+      } else {
+        this.addRentalElementToTable()
+        this.$modal.hide('selectRentalElementModal')
+      }
+    },
+
+    submitRentalPackage () {
+      this.postObject.rental.rentalDate = new Date(Date.now()).toJSON()
+      axios.post('/rental/client/' + this.RentalEssentials.idClient + '/employee/' + this.RentalEssentials.idEmployee, this.postObject.rental)
+        .then(response => {
+          function rentalElementConstructor (amountOfRentals, idMovieWarehouse, idRental) {
+            this.amountOfRentals = amountOfRentals
+            this.idMovieWarehouse = idMovieWarehouse
+            this.idRental = idRental
+          }
+          let i
+          for (i = 0; i < this.tableData.length; i++) {
+            let rentalElementPostObject = new rentalElementConstructor(this.tableData[i].amountOfRentals, this.tableData[i].idMovieWarehouse,
+              response.data)
+            axios.post('/rentalElement/' + rentalElementPostObject.idMovieWarehouse + '/' + rentalElementPostObject.idRental + '/', rentalElementPostObject)
+              .catch(error => {
+                this.RentalElementPostErrorFlag = true
+              })
+            if (this.RentalElementPostErrorFlag) break
+          }
+          this.$modal.show('alertModal', { text: 'Operation succeeded.' })
+        })
+        .catch(error => {
+          if (error.response) {
+            this.$modal.show('alertModal',
+              { text: 'Operation failed.  |  ' + error.response.status + '  |  ' + error.response.data.error + '  |  ' + error.response.data.message })
+          }
+        })
+        .then(() => {
+          if (this.RentalElementPostErrorFlag) {
+            this.$modal.show('alertModal', { text: 'Operation failed. Please delete created records in Rental elements, then in Rentals.' })
+          }
+          this.postObject = _.cloneDeep(this.cleanPostObject)
+          this.tableData = []
+          this.RentalEssentials.idClient = ''
+          this.RentalEssentials.clientName = ''
+          this.isEmployeeClientSpecified = false
+          this.RentalElementPostErrorFlag = false
+        })
+    },
+
+    editRecord: function (recordData) {
+      this.$modal.show('editModal')
+      this.oldRecordData = recordData
+      this.newRecordData = recordData
+    },
+
+    editRecordSubmit: function () {
+      axios.put('/rentalElement/' + this.oldRecordData.idMovieWarehouse + '/' + this.oldRecordData.idRental, this.newRecordData)
+        .then(response => {
+          this.$modal.show('alertModal', { text: 'Operation succeeded.' })
+          this.$modal.hide('editModal')
+          let editElemIndex = this.tableData.findIndex(tableElem =>
+            (tableElem.idRental == this.oldRecordData.idRental && tableElem.idMovieWarehouse == this.oldRecordData.idMovieWarehouse))
+          this.$set(this.tableData, editElemIndex, this.newRecordData)
+        })
+        .catch(error => {
+          if (error.response) {
+            this.$modal.show('alertModal',
+              { text: 'Operation failed.  |  ' + error.response.status + '  |  ' + error.response.data.error + '  |  ' + error.response.data.message })
+          }
+        })
+    },
+
+    deleteRecord: function (recordData) {
+      axios.delete('/rentalElement/' + recordData.idMovieWarehouse + '/' + recordData.idRental)
+        .then(() => {
+          this.$modal.show('alertModal', { text: 'Operation succeeded.' })
+          let deleteElemIndex = this.tableData.findIndex(tableElem =>
+            (tableElem.idMovieWarehouse == recordData.idMovieWarehouse && tableElem.idRental == recordData.idRental))
+          this.tableData.splice(deleteElemIndex, 1)
+        })
+        .catch(error => {
+          if (error.response) {
+            this.$modal.show('alertModal',
+              { text: 'Operation failed.  |  ' + error.response.status + '  |  ' + error.response.data.error + '  |  ' + error.response.data.message })
+          }
+        })
+    },
+
+    beforeOpenAlert (event) {
+      this.alertText = event.params.text
     }
   }
+}
 </script>
 <style scoped>
 

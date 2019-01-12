@@ -90,7 +90,7 @@
           for(i=0; i<response.data.length; i++) {
             this.tableData.push(new responseConstructor(response.data[i].idMovieWarehouse, response.data[i].movie.idMovie,
               response.data[i].movie.title, response.data[i].quantity, response.data[i].charge,
-              response.data[i].rentalOffice.idRentalOffice, response.data[i].rentalOffice.rentalOfficeName,))
+              response.data[i].rentalOffice.idRentalOffice, response.data[i].rentalOffice.rentalOfficeName))
           }
         })
     },
