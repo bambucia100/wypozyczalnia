@@ -17,6 +17,11 @@ public interface RentalsRepository extends CrudRepository<Rentals, Integer>{
     @Query(value = "SELECT * FROM rentals where return_date is null", nativeQuery = true)
     List<Rentals> getAllRentalsByNullReturnDate();
 
+    @Query(value = "SELECT r.* FROM rentals r, employee e, rental_office ro " +
+            "where r.id_employee = e.id_employee and e.id_rental_office = ro.id_rental_office " +
+            "and r.return_date is null and ro.id_rental_office = :idRentalOffice", nativeQuery = true)
+    List<Rentals> getAllRentalsNotReturnedByRentalOffice(@Param("idRentalOffice") Integer idRentalOffice);
+
     @Query(value = "SELECT m.charge, re.amount_of_rentals, r.rental_date, r.return_date " +
             "FROM movies_warehouse m, rental_element re, rentals r " +
             "where m.id_warehouse = re.id_warehouse and r.id_rental = re.id_rental and r.id_rental = :idRental"
@@ -36,4 +41,8 @@ public interface RentalsRepository extends CrudRepository<Rentals, Integer>{
     @Query(value = "SELECT id_employee FROM rentals where id_rental = :idRental", nativeQuery = true)
     Integer getIdEmployeeByIdRental(@Param("idRental") Integer idRental);
 
+    @Query(value = "SELECT m.title FROM movies_warehouse mw, movie m, rental_element re, rentals r " +
+            "where m.id_movie = mw.id_movie and mw.id_warehouse = re.id_warehouse " +
+            "and re.id_rental = r.id_rental and r.id_rental = :idRental", nativeQuery = true)
+    List<String> getTitleMoviesByIdRental(@Param("idRental") Integer idRental);
 }

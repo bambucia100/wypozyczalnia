@@ -44,6 +44,11 @@ public class RentalsController {
 
 		return rentalsRepository.getAllRentalsByNullReturnDate();
 	}
+	@RequestMapping(method=RequestMethod.GET, value="rentals/{idRentalOffice}/notReturned")
+	public List<Rentals> getAllRentalsNotNullByRentalOffice(@PathVariable Integer idRentalOffice) {
+
+		return rentalService.getRentalsNotReturnedByIdRentalOffice(idRentalOffice);
+	}
 
 	@RequestMapping(method=RequestMethod.GET,value="/rentals/{idRental}")
 	public Optional<Rentals> getRental(@PathVariable Integer idRental) {
@@ -88,15 +93,27 @@ public class RentalsController {
 	public double returnRental(@RequestBody Rentals rental, @PathVariable Integer idRental) {
 
 
-		rental.setRentalDate(new Date(rentalsRepository.getRentalDateByIdRental(idRental).getTime()));
-		rental.setClient(new Client(rentalsRepository.getIdClientByIdRental(idRental), "", "",
-				null, "",0 , 0, 0));
-		rental.setEmployee(new Employee(rentalsRepository.getIdEmployeeByIdRental(idRental), "", "",
-				"", "", "", 0, 0));
-		rentalService.updateRental(idRental, rental);
-		rentalService.increaseAmount(idRental);
+		try {
+			rental.setRentalDate(new Date(rentalsRepository.getRentalDateByIdRental(idRental).getTime()));
+			rental.setClient(new Client(rentalsRepository.getIdClientByIdRental(idRental), "", "",
+					null, "",0 , 0, 0));
+			rental.setEmployee(new Employee(rentalsRepository.getIdEmployeeByIdRental(idRental), "", "",
+					"", "", "", 0, 0));
+			rentalService.updateRental(idRental, rental);
+			rentalService.increaseAmount(idRental);
+		} catch (EmptyResultDataAccessException ex) {
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Element does not exist", ex);
+		} catch (NoResultException ex) {
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "RETURN DATE has to be later than RENTAL DATE", ex);
+		}
 
 		return rentalService.getCharge(idRental);
+	}
+
+	@RequestMapping(method=RequestMethod.GET, value="/rental/{idRental}/titles")
+	public List<String> getRentalsTitleByIdRental(@PathVariable Integer idRental) {
+
+		return rentalService.getTitlesByIdRental(idRental);
 	}
 
 }
