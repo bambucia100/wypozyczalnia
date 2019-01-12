@@ -101,6 +101,8 @@ public class RentalsController {
 					"", "", "", 0, 0));
 			rentalService.updateRental(idRental, rental);
 			rentalService.increaseAmount(idRental);
+		} catch (EmptyResultDataAccessException ex) {
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Element does not exist", ex);
 		} catch (NoResultException ex) {
 			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "RETURN DATE has to be later than RENTAL DATE", ex);
 		}
