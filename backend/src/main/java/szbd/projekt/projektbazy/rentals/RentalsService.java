@@ -104,5 +104,15 @@ public class RentalsService {
 			query.execute();
 		}
 	}
+
+	public List<String> getTitlesByIdRental(Integer idRental) {
+
+		return rentalsRepository.getTitleMoviesByIdRental(idRental);
+	}
+
+	public List<Rentals> getRentalsNotReturnedByIdRentalOffice(Integer idRentalOffice) {
+
+		return rentalsRepository.getAllRentalsNotReturnedByRentalOffice(idRentalOffice);
+	}
 	
 }
