@@ -1,5 +1,6 @@
 package szbd.projekt.projektbazy.cast;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -42,17 +43,23 @@ public class CastController {
 
 
 		if(cast.getActorRating() > 10)
-			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Rating has to be less or equal than 10");
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
+					"Rating has to be less or equal than 10");
 
-		cast.setMovie(new Movie(idMovie, "", 0, "", 0, "", ""));
-		cast.setActor(new Actor(idActor, "", "", null));
-		castService.addCast(cast);
+		try {
+			cast.setMovie(new Movie(idMovie, "", 0, "", 0, "", ""));
+			cast.setActor(new Actor(idActor, "", "", null));
+			castService.addCast(cast);
+		} catch (Exception ex) {
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
+					"Actor is already added to movie");
+		}
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT,value="/movie/cast/{idMovie}/{idActor}")
 	public void updateCast(@RequestBody Cast cast,@PathVariable Integer idMovie,
 			@PathVariable Integer idActor) {
-		
+
 		if(cast.getActorRating() > 10)
 			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Rating has to be less or equal than 10");
 		CastId idCast = new CastId(idMovie, idActor);
