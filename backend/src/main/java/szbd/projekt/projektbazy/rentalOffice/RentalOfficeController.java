@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import org.springframework.web.server.ResponseStatusException;
 import szbd.projekt.projektbazy.adress.Adress;
-
+import szbd.projekt.projektbazy.adress.AdressService;
 
 
 @RestController
@@ -21,6 +21,8 @@ public class RentalOfficeController {
 
 	@Autowired
 	private RentalOfficeService rentalOfficeService;
+	@Autowired
+	AdressService adressService;
 	
 	@RequestMapping(method=RequestMethod.GET,value="/rentalOffice/all")
 	public List<RentalOffice> getAllRentalOfficies() {
@@ -42,6 +44,7 @@ public class RentalOfficeController {
 			rentalOffice.setAdress(new Adress(idAdress, "", "", "", "", ""));
 			rentalOfficeService.addRentalOffice(rentalOffice);
 		} catch(Exception ex) {
+			adressService.deleteAdress(idAdress);
 			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
 					"Rental Office with that name already exists");
 		}
