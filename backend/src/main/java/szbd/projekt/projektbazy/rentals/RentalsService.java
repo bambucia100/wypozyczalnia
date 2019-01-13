@@ -38,7 +38,7 @@ public class RentalsService {
 	}
 	
 	public void addRental(Rentals rental) {
-		
+
 		rentalsRepository.save(rental);
 	}
 
@@ -112,7 +112,12 @@ public class RentalsService {
 
 	public List<Rentals> getRentalsNotReturnedByIdRentalOffice(Integer idRentalOffice) {
 
-		return rentalsRepository.getAllRentalsNotReturnedByRentalOffice(idRentalOffice);
+		List<Rentals> myRentals = rentalsRepository.getAllRentalsNotReturnedByRentalOffice(idRentalOffice);
+//		for(int i = 0; i < 1) {
+//
+//		}
+
+		return myRentals;
 	}
 	
 }

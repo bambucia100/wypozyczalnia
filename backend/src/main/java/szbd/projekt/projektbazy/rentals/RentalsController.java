@@ -4,9 +4,11 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import com.sun.org.apache.xerces.internal.xs.datatypes.ObjectList;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,15 +46,32 @@ public class RentalsController {
 
 		return rentalsRepository.getAllRentalsByNullReturnDate();
 	}
-	@RequestMapping(method=RequestMethod.GET, value="rentals/{idRentalOffice}/notReturned")
+	@RequestMapping(method=RequestMethod.GET, value="rentals/{idRentalOffice}/notReturned/v1")
 	public List<Rentals> getAllRentalsNotNullByRentalOffice(@PathVariable Integer idRentalOffice) {
 
 		return rentalService.getRentalsNotReturnedByIdRentalOffice(idRentalOffice);
 	}
 
+	@RequestMapping(method=RequestMethod.GET, value="rentals/{idRentalOffice}/notReturned")
+	public List<Object> getAllRentalsNotNullByRentalOfficeTest(@PathVariable Integer idRentalOffice) {
+
+		List<Object> topList = new ArrayList<>();
+		List<Rentals> myRentals = rentalService.getRentalsNotReturnedByIdRentalOffice(idRentalOffice);
+
+		for (Rentals myRental : myRentals) {
+
+			List<Object> upperList = new ArrayList<>();
+			upperList.add(myRental);
+			upperList.add(rentalService.getTitlesByIdRental(myRental.getIdRental()));
+			topList.add(upperList);
+		}
+
+		return topList;
+	}
+
 	@RequestMapping(method=RequestMethod.GET,value="/rentals/{idRental}")
 	public Optional<Rentals> getRental(@PathVariable Integer idRental) {
-		
+
 		return rentalService.getRental(idRental);
 	}
 
