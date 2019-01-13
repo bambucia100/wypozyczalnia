@@ -23,6 +23,8 @@
         <input type="text" v-model="newRecordData.idRental" disabled><br/>
         ID Movie in warehouse:<br/>
         <input type="text" v-model="newRecordData.idMovieWarehouse" disabled><br/>
+        Amount taken:<br/>
+        <input type="number" v-model="newRecordData.amountOfRentals" required><br/>
         ID Client:<br/>
         <input type="text" v-model="newRecordData.idClient" disabled><br/>
         Client name:<br/>
@@ -35,8 +37,6 @@
         <input type="text" v-model="newRecordData.idMovie" disabled><br/>
         Movie title:<br/>
         <input type="text" v-model="newRecordData.title" disabled><br/>
-        Amount taken:<br/>
-        <input type="text" v-model="newRecordData.amountOfRentals"><br/>
         <button @click="editRecordSubmit" style="float:right;">Submit</button><button @click="$modal.hide('editModal')" >Cancel</button>
       </div>
     </form-modal>

@@ -21,7 +21,7 @@
         Roles:<br/>
         <input type="text" v-model="postObject.characters"><br/>
         Role play rating:<br/>
-        <input type="text" v-model="postObject.actorRating"><br/>
+        <input type="number" v-model="postObject.actorRating"><br/>
         <button @click="clearInputData()">Clear</button>
         <button @click="postObjectToDatabase()" style="float: right;">Submit</button>
       </div>

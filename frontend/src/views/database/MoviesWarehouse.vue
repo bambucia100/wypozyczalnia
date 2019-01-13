@@ -26,9 +26,9 @@
         Movie title:<br/>
         <input type="text" v-model="newRecordData.title" disabled><br/>
         Quantity in warehouse:<br/>
-        <input type="text" v-model="newRecordData.quantity"><br/>
+        <input type="text" v-model="newRecordData.quantity" required><br/>
         Daily charge:<br/>
-        <input type="text" v-model="newRecordData.charge"><br/>
+        <input type="text" v-model="newRecordData.charge" required><br/>
         ID Rental office:<br/>
         <input type="text" v-model="newRecordData.idRentalOffice" disabled><br/>
         Rental office name:<br/>

@@ -11,7 +11,7 @@
       :data="tableData"
       :minWidth="800"
       :height=$tableHeight
-      :itemHeight="45"
+      :itemHeight="34"
       :bordered="true"
     >
       <template slot-scope="scope" slot="actionCommon">

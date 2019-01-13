@@ -30,7 +30,7 @@
         Roles:<br/>
         <input type="text" v-model="newRecordData.characters"><br/>
         Role play rating:<br/>
-        <input type="text" v-model="newRecordData.actorRating"><br/>
+        <input type="number" v-model="newRecordData.actorRating"><br/>
         <button @click="editRecordSubmit" style="float:right;">Submit</button><button @click="$modal.hide('editModal')" >Cancel</button>
       </div>
     </form-modal>

@@ -21,16 +21,16 @@
         <span class="modal-box-title">Edit record:</span>
         ID:<br/>
         <input type="text" v-model="newRecordData.idAdress" disabled><br/>
+        City:<br/>
+        <input type="text" v-model="newRecordData.city" required><br/>
+        Street:<br/>
+        <input type="text" v-model="newRecordData.street" required><br/>
+        House number:<br/>
+        <input type="number" v-model="newRecordData.houseNumber" required><br/>
         Country:<br/>
         <input type="text" v-model="newRecordData.country"><br/>
         Province:<br/>
         <input type="text" v-model="newRecordData.province"><br/>
-        City:<br/>
-        <input type="text" v-model="newRecordData.city"><br/>
-        Street:<br/>
-        <input type="text" v-model="newRecordData.street"><br/>
-        House number:<br/>
-        <input type="text" v-model="newRecordData.houseNumber"><br/>
         <button @click="editRecordSubmit" style="float:right;">Submit</button><button @click="$modal.hide('editModal')" >Cancel</button>
       </div>
     </form-modal>

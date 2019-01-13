@@ -5,7 +5,7 @@
     <div class="form-wrapper">
       <div class="form-area">
         Name:<br/>
-        <input type="text" v-model="postObject.genreName"><br/>
+        <input type="text" v-model="postObject.genreName" required><br/>
         Description:<br/>
         <textarea rows="6" v-model="postObject.genreDescription"></textarea><br/>
         <button @click="clearInputData()">Clear</button>

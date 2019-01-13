@@ -5,13 +5,13 @@
     <div class="form-wrapper">
       <div class="form-area">
         First name:<br/>
-        <input type="text" v-model="postObject.employee.firstName"><br/>
+        <input type="text" v-model="postObject.employee.firstName" required><br/>
         Last name:<br/>
-        <input type="text" v-model="postObject.employee.lastName"><br/>
+        <input type="text" v-model="postObject.employee.lastName" required><br/>
         Position:<br/>
-        <input type="text" v-model="postObject.employee.position"><br/>
+        <input type="text" v-model="postObject.employee.position" required><br/>
         E-mail:<br/>
-        <input type="text" v-model="postObject.employee.email"><br/>
+        <input type="email" v-model="postObject.employee.email"><br/>
         Phone number:<br/>
         <input type="text" v-model="postObject.employee.phone"><br/>
         Rental office:
@@ -26,11 +26,11 @@
         Province:<br/>
         <input type="text" v-model="postObject.adress.province"><br/>
         City:<br/>
-        <input type="text" v-model="postObject.adress.city"><br/>
+        <input type="text" v-model="postObject.adress.city" required><br/>
         Street:<br/>
-        <input type="text" v-model="postObject.adress.street"><br/>
+        <input type="text" v-model="postObject.adress.street" required><br/>
         House number:<br/>
-        <input type="text" v-model="postObject.adress.houseNumber"><br/>
+        <input type="number" v-model="postObject.adress.houseNumber" required><br/>
         <button @click="clearInputData()">Clear</button>
         <button @click="postObjectToDatabase()" style="float: right;">Submit</button>
       </div>

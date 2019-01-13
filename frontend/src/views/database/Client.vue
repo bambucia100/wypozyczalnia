@@ -22,13 +22,13 @@
         ID Client:<br/>
         <input type="text" v-model="newRecordData.idClient" disabled><br/>
         First name:<br/>
-        <input type="text" v-model="newRecordData.clientFirstName"><br/>
+        <input type="text" v-model="newRecordData.clientFirstName" required><br/>
         Last name:<br/>
-        <input type="text" v-model="newRecordData.clientLastName"><br/>
+        <input type="text" v-model="newRecordData.clientLastName" required><br/>
         Registration date:<br/>
         <input type="date" v-model="newRecordData.registrationDate"><br/>
         E-mail:<br/>
-        <input type="text" v-model="newRecordData.email"><br/>
+        <input type="email" v-model="newRecordData.email"><br/>
         Phone number:<br/>
         <input type="text" v-model="newRecordData.number"><br/>
         ID Rental office:<br/>

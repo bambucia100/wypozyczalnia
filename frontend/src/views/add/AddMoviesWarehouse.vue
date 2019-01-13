@@ -19,9 +19,9 @@
           item-text="rentalOfficeNameID"
           item-value="idRentalOffice"/><br/>
         Quantity in warehouse:<br/>
-        <input type="text" v-model="postObject.quantity"><br/>
+        <input type="number" v-model="postObject.quantity" required><br/>
         Daily charge:<br/>
-        <input type="text" v-model="postObject.charge"><br/>
+        <input type="number" v-model="postObject.charge" required><br/>
         <button @click="clearInputData()">Clear</button>
         <button @click="postObjectToDatabase()" style="float: right;">Submit</button>
       </div>

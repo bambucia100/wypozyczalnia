@@ -12,6 +12,7 @@
       :bordered="true"
     >
       <template slot-scope="scope" slot="actionCommon">
+        <button @click="getAverageRating(scope.row)">Average rating</button>
         <button @click="editRecord(scope.row)">Edit</button>
         <button @click="deleteRecord(scope.row)">Delete</button>
       </template>
@@ -22,9 +23,9 @@
         ID:<br/>
         <input type="text" v-model="newRecordData.idActor" disabled><br/>
         First name:<br/>
-        <input type="text" v-model="newRecordData.actorFirstName"><br/>
+        <input type="text" v-model="newRecordData.actorFirstName" required><br/>
         Last name:<br/>
-        <input type="text" v-model="newRecordData.actorLastName"><br/>
+        <input type="text" v-model="newRecordData.actorLastName" required><br/>
         Date of birth:<br/>
         <input type="date" v-model="newRecordData.dateOfBirth"><br/>
         <button @click="editRecordSubmit" style="float:right;">Submit</button><button @click="$modal.hide('editModal')" >Cancel</button>
@@ -57,7 +58,7 @@ export default {
         { prop: 'actorFirstName', name: 'First name', searchable: true, sortable: true },
         { prop: 'actorLastName', name: 'Last name', searchable: true, sortable: true },
         { prop: 'dateOfBirth', name: 'Date of birth', searchable: true, sortable: true, width: 150 },
-        { prop: '_action', name: 'Action', actionName: 'actionCommon', width: 130 }
+        { prop: '_action', name: 'Action', actionName: 'actionCommon', width: 250 }
       ],
       tableData: [],
       oldRecordData: {},
@@ -72,6 +73,13 @@ export default {
       })
   },
   methods: {
+    getAverageRating (recordData) {
+      axios.get('/actor/' + recordData.idActor + '/avgrating')
+        .then(response => {
+          this.$modal.show('alertModal', { text: 'Average actor rating: ' + response.data })
+        })
+    },
+
     editRecord: function (recordData) {
       this.$modal.show('editModal')
       this.oldRecordData = recordData

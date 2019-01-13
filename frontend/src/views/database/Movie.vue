@@ -22,17 +22,21 @@
         ID Client:<br/>
         <input type="text" v-model="newRecordData.idMovie" disabled><br/>
         Movie title:<br/>
-        <input type="text" v-model="newRecordData.title"><br/>
+        <input type="text" v-model="newRecordData.title" required><br/>
+        Genre:<br/>
+        <cool-select
+          class="cool-select-input"
+          style="width: 95%"
+          v-model="newRecordData.genreName"
+          :items="selectSuggestionDataGenreNames"/><br/>
         Length of movie:<br/>
-        <input type="text" v-model="newRecordData.length"><br/>
+        <input type="number" v-model="newRecordData.length"><br/>
         Director:<br/>
         <input type="text" v-model="newRecordData.director"><br/>
         Rating:<br/>
-        <input type="text" v-model="newRecordData.rating"><br/>
+        <input type="number" v-model="newRecordData.rating"><br/>
         Description:<br/>
         <textarea rows="6" v-model="newRecordData.description"></textarea><br/>
-        Genre:<br/>
-        <input type="text" v-model="newRecordData.genreName"><br/> <!--TODO cool select-->
         <button @click="editRecordSubmit" style="float:right;">Submit</button><button @click="$modal.hide('editModal')" >Cancel</button>
       </div>
     </form-modal>
@@ -49,12 +53,14 @@
 import axios from 'axios'
 import TheDatabaseNavigation from '../../components/TheDatabaseNavigation.vue'
 import VueVirtualTable from 'vue-virtual-table'
+import { CoolSelect } from 'vue-cool-select'
 
 export default {
   name: 'Movie',
   components: {
     TheDatabaseNavigation,
-    VueVirtualTable
+    VueVirtualTable,
+    CoolSelect
   },
   data () {
     return {
@@ -71,6 +77,7 @@ export default {
       tableData: [],
       oldRecordData: {},
       newRecordData: {},
+      selectSuggestionDataGenreNames: [],
       alertText: ''
     }
   },
@@ -94,6 +101,14 @@ export default {
             response.data[i].director, response.data[i].rating, response.data[i].description, genreName))
         }
       })
+    axios.get('/genre/all')
+      .then(response => {
+        let i
+        for (i = 0; i < response.data.length; i++) {
+          this.selectSuggestionDataGenreNames.push(response.data[i].genreName)
+        }
+      })
+
   },
   methods: {
     editRecord: function (recordData) {

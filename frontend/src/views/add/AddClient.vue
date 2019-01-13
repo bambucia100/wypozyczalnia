@@ -5,13 +5,13 @@
     <div class="form-wrapper">
       <div class="form-area">
         First name:<br/>
-        <input type="text" v-model="postObject.client.clientFirstName"><br/>
+        <input type="text" v-model="postObject.client.clientFirstName" required><br/>
         Last name:<br/>
-        <input type="text" v-model="postObject.client.clientLastName"><br/>
+        <input type="text" v-model="postObject.client.clientLastName" required><br/>
         Registration date:<br/>
         <input type="date" v-model="postObject.client.registrationDate"><br/>
         E-mail:<br/>
-        <input type="text" v-model="postObject.client.email"><br/>
+        <input type="email" v-model="postObject.client.email"><br/>
         Phone number:<br/>
         <input type="text" v-model="postObject.client.number"><br/>
         Rental office:
@@ -26,11 +26,11 @@
         Province:<br/>
         <input type="text" v-model="postObject.adress.province"><br/>
         City:<br/>
-        <input type="text" v-model="postObject.adress.city"><br/>
+        <input type="text" v-model="postObject.adress.city" required><br/>
         Street:<br/>
-        <input type="text" v-model="postObject.adress.street"><br/>
+        <input type="text" v-model="postObject.adress.street" required><br/>
         House number:<br/>
-        <input type="text" v-model="postObject.adress.houseNumber"><br/>
+        <input type="number" v-model="postObject.adress.houseNumber" required><br/>
         <button @click="clearInputData()">Clear</button>
         <button @click="postObjectToDatabase()" style="float: right;">Submit</button>
       </div>

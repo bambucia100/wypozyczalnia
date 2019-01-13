@@ -22,13 +22,13 @@
         ID Employee:<br/>
         <input type="text" v-model="newRecordData.idEmployee" disabled><br/>
         First name:<br/>
-        <input type="text" v-model="newRecordData.firstName"><br/>
+        <input type="text" v-model="newRecordData.firstName" required><br/>
         Last name:<br/>
-        <input type="text" v-model="newRecordData.lastName"><br/>
+        <input type="text" v-model="newRecordData.lastName" required><br/>
         Position:<br/>
-        <input type="text" v-model="newRecordData.position"><br/>
+        <input type="text" v-model="newRecordData.position" required><br/>
         E-mail:<br/>
-        <input type="text" v-model="newRecordData.email"><br/>
+        <input type="email" v-model="newRecordData.email"><br/>
         Phone number:<br/>
         <input type="text" v-model="newRecordData.phone"><br/>
         ID Rental office:<br/>

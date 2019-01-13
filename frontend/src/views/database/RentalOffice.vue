@@ -22,7 +22,7 @@
         ID Rental office:<br/>
         <input type="text" v-model="newRecordData.idRentalOffice" disabled><br/>
         Rental office name:<br/>
-        <input type="text" v-model="newRecordData.rentalOfficeName"><br/>
+        <input type="text" v-model="newRecordData.rentalOfficeName" required><br/>
         ID Address:<br/>
         <input type="text" v-model="newRecordData.idAdress" disabled><br/>
         Address:<br/>

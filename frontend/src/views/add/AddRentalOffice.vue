@@ -5,17 +5,17 @@
     <div class="form-wrapper">
       <div class="form-area">
         Rental office name:<br/>
-        <input type="text" v-model="postObject.rentalOffice.rentalOfficeName"><br/>
+        <input type="text" v-model="postObject.rentalOffice.rentalOfficeName" required><br/>
         Country:<br/>
         <input type="text" v-model="postObject.adress.country"><br/>
         Province:<br/>
         <input type="text" v-model="postObject.adress.province"><br/>
         City:<br/>
-        <input type="text" v-model="postObject.adress.city"><br/>
+        <input type="text" v-model="postObject.adress.city" required><br/>
         Street:<br/>
-        <input type="text" v-model="postObject.adress.street"><br/>
+        <input type="text" v-model="postObject.adress.street" required><br/>
         House number:<br/>
-        <input type="number" v-model="postObject.adress.houseNumber"><br/>
+        <input type="number" v-model="postObject.adress.houseNumber" required><br/>
         <button @click="clearInputData()">Clear</button>
         <button @click="postObjectToDatabase()" style="float: right;">Submit</button>
       </div>

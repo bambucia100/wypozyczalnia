@@ -5,13 +5,13 @@
     <div class="form-wrapper">
       <div class="form-area">
         Movie title:<br/>
-        <input type="text" v-model="postObject.title"><br/>
+        <input type="text" v-model="postObject.title" required><br/>
         Length of movie:<br/>
-        <input type="text" v-model="postObject.length"><br/>
+        <input type="number" v-model="postObject.length"><br/>
         Director:<br/>
         <input type="text" v-model="postObject.director"><br/>
         Rating:<br/>
-        <input type="text" v-model="postObject.rating"><br/>
+        <input type="number" v-model="postObject.rating"><br/>
         Description:<br/>
         <textarea rows="6" v-model="postObject.description"></textarea><br/>
         Genre:

@@ -5,9 +5,9 @@
     <div class="form-wrapper">
       <div class="form-area">
         First name:<br/>
-        <input type="text" v-model="postObject.actorFirstName"><br/>
+        <input type="text" v-model="postObject.actorFirstName" required><br/>
         Last name:<br/>
-        <input type="text" v-model="postObject.actorLastName"><br/>
+        <input type="text" v-model="postObject.actorLastName" required><br/>
         Date of birth:<br/>
         <input type="date" v-model="postObject.dateOfBirth"><br/>
         <button @click="clearInputData()">Clear</button>
