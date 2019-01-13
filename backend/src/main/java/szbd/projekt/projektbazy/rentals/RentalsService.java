@@ -66,21 +66,23 @@ public class RentalsService {
 
 	public double getCharge(Integer idRental) {
 
-		double charge = 0;
+		double fullCharge = 0;
 		List<Object[]> lOb = rentalsRepository.getCharge(idRental);
 		for (Object o[] : lOb) {
 			double tempCharge;
-			BigDecimal quantity = (BigDecimal) o[0];
+			BigDecimal charge = (BigDecimal) o[0];
 			Integer amount = (Integer) o[1];
 			Timestamp rentalDate = (Timestamp) o[2];
 			Timestamp returnDate = (Timestamp) o[3];
 
 			long diff = returnDate.getTime() - rentalDate.getTime();
 			int diffDays = (int) (diff / (24*60*60*1000));
-			tempCharge = quantity.doubleValue() * amount * diffDays;
-			charge = charge + tempCharge;
+			if(diffDays == 0)
+				diffDays = 1;
+			tempCharge = charge.doubleValue() * amount * diffDays;
+			fullCharge = fullCharge + tempCharge;
 		}
-		return charge;
+		return fullCharge;
 	}
 
 
@@ -112,12 +114,7 @@ public class RentalsService {
 
 	public List<Rentals> getRentalsNotReturnedByIdRentalOffice(Integer idRentalOffice) {
 
-		List<Rentals> myRentals = rentalsRepository.getAllRentalsNotReturnedByRentalOffice(idRentalOffice);
-//		for(int i = 0; i < 1) {
-//
-//		}
-
-		return myRentals;
+		return rentalsRepository.getAllRentalsNullReturnedByRentalOffice(idRentalOffice);
 	}
 	
 }

@@ -20,7 +20,7 @@ public interface RentalsRepository extends CrudRepository<Rentals, Integer>{
     @Query(value = "SELECT r.* FROM rentals r, employee e, rental_office ro " +
             "where r.id_employee = e.id_employee and e.id_rental_office = ro.id_rental_office " +
             "and r.return_date is null and ro.id_rental_office = :idRentalOffice", nativeQuery = true)
-    List<Rentals> getAllRentalsNotReturnedByRentalOffice(@Param("idRentalOffice") Integer idRentalOffice);
+    List<Rentals> getAllRentalsNullReturnedByRentalOffice(@Param("idRentalOffice") Integer idRentalOffice);
 
     @Query(value = "SELECT m.charge, re.amount_of_rentals, r.rental_date, r.return_date " +
             "FROM movies_warehouse m, rental_element re, rentals r " +

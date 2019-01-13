@@ -47,13 +47,13 @@ public class RentalsController {
 		return rentalsRepository.getAllRentalsByNullReturnDate();
 	}
 	@RequestMapping(method=RequestMethod.GET, value="rentals/{idRentalOffice}/notReturned/v1")
-	public List<Rentals> getAllRentalsNotNullByRentalOffice(@PathVariable Integer idRentalOffice) {
+	public List<Rentals> getAllRentalsNullByRentalOfficeV1(@PathVariable Integer idRentalOffice) {
 
 		return rentalService.getRentalsNotReturnedByIdRentalOffice(idRentalOffice);
 	}
 
 	@RequestMapping(method=RequestMethod.GET, value="rentals/{idRentalOffice}/notReturned")
-	public List<Object> getAllRentalsNotNullByRentalOfficeTest(@PathVariable Integer idRentalOffice) {
+	public List<Object> getAllRentalsNullByRentalOffice(@PathVariable Integer idRentalOffice) {
 
 		List<Object> topList = new ArrayList<>();
 		List<Rentals> myRentals = rentalService.getRentalsNotReturnedByIdRentalOffice(idRentalOffice);

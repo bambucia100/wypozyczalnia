@@ -5,12 +5,14 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import org.springframework.web.server.ResponseStatusException;
 import szbd.projekt.projektbazy.actor.Actor;
 import szbd.projekt.projektbazy.movie.Movie;
 
@@ -37,7 +39,11 @@ public class CastController {
 	@RequestMapping(method=RequestMethod.POST,value="/movie/cast/{idMovie}/{idActor}")
 	public void addCast(@RequestBody Cast cast, @PathVariable Integer idMovie, 
 			@PathVariable Integer idActor) {
-		
+
+
+		if(cast.getActorRating() > 10)
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Rating has to be less or equal than 10");
+
 		cast.setMovie(new Movie(idMovie, "", 0, "", 0, "", ""));
 		cast.setActor(new Actor(idActor, "", "", null));
 		castService.addCast(cast);
@@ -47,6 +53,8 @@ public class CastController {
 	public void updateCast(@RequestBody Cast cast,@PathVariable Integer idMovie,
 			@PathVariable Integer idActor) {
 		
+		if(cast.getActorRating() > 10)
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Rating has to be less or equal than 10");
 		CastId idCast = new CastId(idMovie, idActor);
 		cast.setId(idCast);
 		cast.setMovie(new Movie(idMovie, "", 0, "", 0, "", ""));
