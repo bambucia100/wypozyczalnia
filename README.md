@@ -26,5 +26,5 @@ npm run serve
 ```
 3. Przejdź do adresu http://localhost:8080/ w przeglądarce.
 ## Autorzy:
-- Bartosz Żywicki
-- Tomasz Pućka
+- Bartosz Żywicki - backend and database modeling
+- Tomasz Pućka - frontend and database modeling
